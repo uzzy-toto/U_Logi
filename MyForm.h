@@ -757,7 +757,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 	unsigned char yokotatemax,est, est2, est3, tuyogari;
 	int komatta2, komatta4, komatta6;
 	int i, ii, iii, iiii, i5, i6, i7, i8, i9;
-	int k1, k2, k3, timer;
+	int k1, k2, k3, timer, umatta;
 	int estp, estp2, estp3, count1, err, pn, pn2, pn3;
 	int errnum[20] = {};
 
@@ -772,6 +772,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 	komatta5 = 0;
 	komatta7 = 0;
 	tuyogari = 0;
+	umatta = 0;
 
 	yokotatemax = 0;
 	for (i = 0; i < tate; i++) {
@@ -1073,7 +1074,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 
 					//仮定中に完成局面が一度みえたら保存しておき、次にみえたら二つを比較する。同じなら何もしない。違うなら計算終わり。
 					//仮定せずに完成局面がみえたら計算終わり。
-					for (i = 0; i < yoko*tate && paint[i % yoko][i / yoko] > 0; i++) {}
+					if (est == 0 && est2 == 0 && est3 == 0) {
+						for (i = umatta; i < yoko*tate && paint[i % yoko][i / yoko] > 0; i++) {
+							umatta = i + 1;
+						}
+					}
+					else {
+						for (i = umatta; i < yoko*tate && paint[i % yoko][i / yoko] > 0; i++) {	}
+					}
 					if (i == yoko * tate) {
 						if (est == 1 || est2 == 1 || est3 == 1) {
 							if (tuyogari == 1) {
