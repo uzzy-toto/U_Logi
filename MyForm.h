@@ -1029,32 +1029,6 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 			for (i = 0; i < yoko; i++) { tatechk2[i] = 1; }
 			for (i5 = 0; i5 < hairi1 && komatta3 == 0; i5++) {
 
-				//計算進捗報告＋終われボタンの処理
-				if (i7 == 0 && i5 % 3000 == 2999) {
-					w = L"";
-					for (i = 0; i < yoko*tate; i++) {
-						if (paint[i % yoko][i / yoko] == 1) {
-							w += L"■‌";
-						}
-						else if (paint[i % yoko][i / yoko] > 9) {
-							w += L"×‌";
-						}
-						else {
-							w += L"        ";
-						}
-						if (i % yoko == yoko - 1) {
-							w += L"\n";
-						}
-					}
-					t2 = clock();
-					timer = t2 - t;
-					w2 = L"i7 = " + i7 + L"\ntimer=\n" + timer;
-					backgroundWorker1->ReportProgress(0);
-					if (backgroundWorker1->CancellationPending) {
-						goto theend;
-					}
-				}
-
 				//背理法でエラーが出ていた時に嬉々として1マス塗る
 				if (est > 0 && err == 1) {
 					for (i = 0; i < tate; i++) {
@@ -1097,10 +1071,11 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 				}
 				else if (komatta == 1) {
 
-					//完成局面が一度みえたら保存しておき、次にみえたら二つを比較する。同じなら何もしない。違うなら計算終わり。
-					if (est == 1 || est2 == 1) {
-						for (i = 0; i < yoko*tate && paint[i % yoko][i / yoko] > 0; i++) {}
-						if (i == yoko * tate) {
+					//仮定中に完成局面が一度みえたら保存しておき、次にみえたら二つを比較する。同じなら何もしない。違うなら計算終わり。
+					//仮定せずに完成局面がみえたら計算終わり。
+					for (i = 0; i < yoko*tate && paint[i % yoko][i / yoko] > 0; i++) {}
+					if (i == yoko * tate) {
+						if (est == 1 || est2 == 1 || est3 == 1) {
 							if (tuyogari == 1) {
 								for (ii = 0; ii < yoko*tate && paint[ii % yoko][ii / yoko] == paint5[ii % yoko][ii / yoko]; ii++) {}
 								if (ii != yoko * tate) { tuyogari = 2; goto theend; }
@@ -1112,6 +1087,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 								}
 							}
 						}
+						else { goto theend; }
 					}
 
 					//手詰まりの時、仮定してなかったら現局面保存して仮定に備える
