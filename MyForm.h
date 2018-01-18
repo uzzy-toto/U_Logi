@@ -1255,10 +1255,6 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 								for (ii = 0; ii + yokonum[i][1] + yokonummin[i][1] < yoko; ii++) {
 									if (paint[ii][i] == 1) {
 
-
-//										w += L"" + ii;
-
-
 										//minを見ながら黒地を担当できる数字じゃなかったら却下して次の数字へ
 										while (yokonummin[i][yokonum[i][0] - iii] > yoko - ii - 1) {
 											iii++;
