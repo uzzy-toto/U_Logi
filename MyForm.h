@@ -753,8 +753,9 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 	unsigned char yokochk2[256];
 	unsigned char tatechk2[256];
 
-	unsigned char komatta, komatta2, komatta3, komatta4, komatta5, komatta6, komatta7;
+	unsigned char komatta, komatta3, komatta5, komatta7;
 	unsigned char yokotatemax,est, est2, est3, tuyogari;
+	int komatta2, komatta4, komatta6;
 	int i, ii, iii, iiii, i5, i6, i7, i8, i9;
 	int k1, k2, k3, timer;
 	int estp, estp2, estp3, count1, err, pn, pn2, pn3;
@@ -797,7 +798,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 
 	//背理法深さ３！
 	est3 = 0;
-	komatta6 = 1;
+	komatta6 = 0;
 	estp3 = 0;
 	pn3 = 0;
 	for (i9 = 0; i9 < hairi2 && komatta7 == 0; i9++) {
@@ -819,7 +820,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 			else if (pn3 == 2) { paint[estp3 % yoko][estp3 / yoko] = 1; }
 			err = 0;
 			est3 = 0;
-			komatta6 = 0;
+			komatta6 = estp3;
 			pn3 = 0;
 			yokochk[estp3 / yoko] = 2;
 			tatechk[estp3 % yoko] = 2;
@@ -866,12 +867,15 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					break;
 				}
 			}
+			if (komatta6 + yoko * tate < estp3) {
+				komatta7 = 1;
+				break;
+			}
 			if (i == yoko * tate) {
 				est3 = 0;
 				estp3 = 0;
 				pn3 = 0;
-				if (komatta6 == 1) { komatta7 = 1; break; }
-				else { komatta6 = 1; }
+				komatta6 -= yoko * tate;
 			}
 
 			//黒塗りを仮定するのか×を仮定するのか
@@ -893,7 +897,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 
 		//背理法深さ２
 		est2 = 0;
-		komatta4 = 1;
+		komatta4 = 0;
 		estp2 = 0;
 		pn2 = 0;
 		for (i7 = 0; i7 < hairi2 && komatta5 == 0; i7++) {
@@ -941,7 +945,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 				else if (pn2 == 2) { paint[estp2 % yoko][estp2 / yoko] = 1; }
 				err = 0;
 				est2 = 0;
-				komatta4 = 0;
+				komatta4 = estp2;
 				pn2 = 0;
 				yokochk[estp2 / yoko] = 2;
 				tatechk[estp2 % yoko] = 2;
@@ -988,12 +992,15 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 						break;
 					}
 				}
+				if (komatta4 + yoko * tate < estp2) {
+					komatta5 = 1;
+					break;
+				}
 				if (i == yoko * tate) {
 					est2 = 0;
 					estp2 = 0;
 					pn2 = 0;
-					if (komatta4 == 1) { komatta5 = 1; break; }
-					else { komatta4 = 1; }
+					komatta4 -= yoko * tate;
 				}
 
 				//黒塗りを仮定するのか×を仮定するのか
@@ -1015,7 +1022,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 
 			//背理法深さ１
 			est = 0;
-			komatta2 = 1;
+			komatta2 = 0;
 			estp = 0;
 			pn = 0;
 			for (i = 0; i < tate; i++) { yokochk2[i] = 1; }
@@ -1079,7 +1086,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					else if (pn == 2) { paint[estp % yoko][estp / yoko] = 1; }
 					err = 0;
 					est = 0;
-					komatta2 = 0;
+					komatta2 = estp;
 					pn = 0;
 					yokochk[estp / yoko] = 2;
 					tatechk[estp % yoko] = 2;
@@ -1172,12 +1179,15 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 							break;
 						}
 					}
+					if (komatta2 + yoko * tate < estp) {
+						komatta3 = 1;
+						break;
+					}
 					if (i == yoko * tate) {
 						est = 0;
 						estp = 0;
 						pn = 0;
-						if (komatta2 == 1) { komatta3 = 1;  break; }
-						else { komatta2 = 1; }
+						komatta2 -= yoko*tate; 
 					}
 
 					//黒塗りを仮定するのか×を仮定するのか
