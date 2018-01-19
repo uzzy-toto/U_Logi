@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include <stdio.h>
 #include <string>
 #include <windows.h>
@@ -1078,12 +1078,11 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 						for (i = umatta; i < yoko*tate && paint[i % yoko][i / yoko] > 0; i++) {
 							umatta = i + 1;
 						}
+						if (i == yoko * tate) { goto theend; }
 					}
 					else {
 						for (i = umatta; i < yoko*tate && paint[i % yoko][i / yoko] > 0; i++) {	}
-					}
-					if (i == yoko * tate) {
-						if (est == 1 || est2 == 1 || est3 == 1) {
+						if (i == yoko * tate) { 
 							if (tuyogari == 1) {
 								for (ii = 0; ii < yoko*tate && paint[ii % yoko][ii / yoko] == paint5[ii % yoko][ii / yoko]; ii++) {}
 								if (ii != yoko * tate) { tuyogari = 2; goto theend; }
@@ -1095,7 +1094,6 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 								}
 							}
 						}
-						else { goto theend; }
 					}
 
 					//手詰まりの時、仮定してなかったら現局面保存して仮定に備える
