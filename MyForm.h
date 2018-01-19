@@ -762,6 +762,8 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 	int errnum[20] = {};
 
 	w = L"";
+	w2 = L"";
+	backgroundWorker1->ReportProgress(0);
 
 	for (i = 0; i < tate; i++) { yokochk[i] = 2; }
 	for (i = 0; i < yoko; i++) { tatechk[i] = 2; }
@@ -904,7 +906,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 		for (i7 = 0; i7 < hairi2 && komatta5 == 0; i7++) {
 
 			//計算進捗報告＋終われボタンの処理
-			if (i7 % 5 == 0) {
+			if (i7 % 9 == 1) {
 				w = L"";
 				for (i = 0; i < yoko*tate; i++) {
 					if (paint[i % yoko][i / yoko] == 1) {
@@ -1407,26 +1409,24 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										}
 									}
 
-									//「黒地の長さ以上の数字の中の最小値」が黒地の長さ以上であれば
+									//「黒地の長さ以上の数字の中の最小値」が黒地の長さより大きければ
 									//近辺に×があれば黒がいくらか確定する
-									if (k1 > i6) {
-										for (iii = 0; iii + i6 < k1; iii++) {
-											if (paint[yoko - ii - i6 - iii - 1][i] > 9) {
-												for (i8 = 0; i8 + i6 + iii < k1; i8++) {
-													if (paint[yoko - ii + i8][i] == 0 && i8 < ii) {
-														paint[yoko - ii + i8][i] = 1;
-														tatechk[yoko - ii + i8] = 2;
-														tatechk2[yoko - ii + i8] = 1;
-													}
+									for (iii = 0; iii + i6 < k1; iii++) {
+										if (paint[yoko - ii - i6 - iii - 1][i] > 9) {
+											for (i8 = 0; i8 + i6 + iii < k1; i8++) {
+												if (paint[yoko - ii + i8][i] == 0 && i8 < ii) {
+													paint[yoko - ii + i8][i] = 1;
+													tatechk[yoko - ii + i8] = 2;
+													tatechk2[yoko - ii + i8] = 1;
 												}
 											}
-											if (paint[yoko - ii + iii][i] > 9) {
-												for (i8 = 0; i8 + i6 + iii < k1; i8++) {
-													if (paint[yoko - ii - i6 - i8 - 1][i] == 0 && yoko > ii + i6 + i8) {
-														paint[yoko - ii - i6 - i8 - 1][i] = 1;
-														tatechk[yoko - ii - i6 - i8 - 1] = 2;
-														tatechk2[yoko - ii - i6 - i8 - 1] = 1;
-													}
+										}
+										if (paint[yoko - ii + iii][i] > 9) {
+											for (i8 = 0; i8 + i6 + iii < k1; i8++) {
+												if (paint[yoko - ii - i6 - i8 - 1][i] == 0 && yoko > ii + i6 + i8) {
+													paint[yoko - ii - i6 - i8 - 1][i] = 1;
+													tatechk[yoko - ii - i6 - i8 - 1] = 2;
+													tatechk2[yoko - ii - i6 - i8 - 1] = 1;
 												}
 											}
 										}
@@ -1672,26 +1672,24 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										}
 									}
 
-									//「黒地の長さ以上の数字の中の最小値」が黒地の長さ以上であれば
+									//「黒地の長さ以上の数字の中の最小値」が黒地の長さより大きければ
 									//近辺に×があれば黒がいくらか確定する
-									if (k1 > i6) {
-										for (iii = 0; iii + i6 < k1; iii++) {
-											if (paint[i][tate - ii - i6 - iii - 1] > 9) {
-												for (i8 = 0; i8 + i6 + iii < k1; i8++) {
-													if (paint[i][tate - ii + i8] == 0 && i8 < ii) {
-														paint[i][tate - ii + i8] = 1;
-														yokochk[tate - ii + i8] = 2;
-														yokochk2[tate - ii + i8] = 1;
-													}
+									for (iii = 0; iii + i6 < k1; iii++) {
+										if (paint[i][tate - ii - i6 - iii - 1] > 9) {
+											for (i8 = 0; i8 + i6 + iii < k1; i8++) {
+												if (paint[i][tate - ii + i8] == 0 && i8 < ii) {
+													paint[i][tate - ii + i8] = 1;
+													yokochk[tate - ii + i8] = 2;
+													yokochk2[tate - ii + i8] = 1;
 												}
 											}
-											if (paint[i][tate - ii + iii] > 9) {
-												for (i8 = 0; i8 + i6 + iii < k1; i8++) {
-													if (paint[i][tate - ii - i6 - i8 - 1] == 0 && tate > ii + i6 + i8) {
-														paint[i][tate - ii - i6 - i8 - 1] = 1;
-														yokochk[tate - ii - i6 - i8 - 1] = 2;
-														yokochk2[tate - ii - i6 - i8 - 1] = 1;
-													}
+										}
+										if (paint[i][tate - ii + iii] > 9) {
+											for (i8 = 0; i8 + i6 + iii < k1; i8++) {
+												if (paint[i][tate - ii - i6 - i8 - 1] == 0 && tate > ii + i6 + i8) {
+													paint[i][tate - ii - i6 - i8 - 1] = 1;
+													yokochk[tate - ii - i6 - i8 - 1] = 2;
+													yokochk2[tate - ii - i6 - i8 - 1] = 1;
 												}
 											}
 										}
