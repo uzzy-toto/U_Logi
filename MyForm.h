@@ -1225,13 +1225,9 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										while (k1 != 0) {
 											k1 = 0;
 											k2 = 0;
-											while (paint[yoko - yokonum[i][iii] - ii + k2 - 1][i] == 1 && yoko + k2 > yokonum[i][iii] + ii) { k2++; }
-											if (paint[yoko - ii + k2][i] == 1 && k2 < ii) {
-												k1 = k2 + 1;
-											}
-											else {
-												k1 = k2;
-											}
+											if (paint[yoko - yokonum[i][iii] - ii + k2 - 1][i] == 1 && yoko + k2 > yokonum[i][iii] + ii) { k2++; }
+											if (paint[yoko - ii + k2][i] == 1 && k2 < ii) { k1 = k2 + 1; }
+											else { k1 = k2; }
 											for (i6 = 0; i6 < yokonum[i][iii]; i6++) {
 												if (paint[yoko - yokonum[i][iii] - ii + i6 + k2][i] > 9) { k1 = k2 + i6 + 1; }
 											}
@@ -1264,13 +1260,9 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										while (k1 != 0) {
 											k1 = 0;
 											k2 = 0;
-											while (paint[yokonum[i][yokonum[i][0] - iii] + ii - k2][i] == 1 && yoko > yokonum[i][yokonum[i][0] - iii] + ii - k2) { k2++; }
-											if (paint[ii - k2 - 1][i] == 1 && k2 < ii) {
-												k1 = k2 + 1;
-											}
-											else {
-												k1 = k2;
-											}
+											if (paint[yokonum[i][yokonum[i][0] - iii] + ii - k2][i] == 1 && yoko > yokonum[i][yokonum[i][0] - iii] + ii - k2) { k2++; }
+											if (paint[ii - k2 - 1][i] == 1 && k2 < ii) { k1 = k2 + 1; }
+											else { k1 = k2; }
 											for (i6 = 0; i6 < yokonum[i][yokonum[i][0] - iii]; i6++) {
 												if (paint[yokonum[i][yokonum[i][0] - iii] + ii - k2 - i6 - 1][i] > 9) { k1 = k2 + i6 + 1; }
 											}
@@ -1300,13 +1292,11 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									while (k2 != 0) {
 										k1 = 0;
 										k2 = 0;
-										while (paint[yoko - yokonummin[i][ii + 1] - k1][i] == 1 && yokonummin[i][ii + 1] > 0) { k1 += 1; }
+										if (paint[yoko - yokonummin[i][ii + 1] - k1][i] == 1 && yokonummin[i][ii + 1] > 0) { k1 += 1; }
 										if (paint[yoko - yokonummin[i][ii + 1] - yokonum[i][ii + 1] - k1 - 1][i] == 1 && yoko > yokonummin[i][ii + 1] + yokonum[i][ii + 1] + k1) {
 											k2 = k1 + 1;
 										}
-										else {
-											k2 = k1;
-										}
+										else { k2 = k1; }
 										for (iii = 0; iii < yokonum[i][ii + 1]; iii++) {
 											if (paint[yoko - yokonummin[i][ii + 1] - iii - k1 - 1][i] > 9) { k2 = k1 + iii + 1; }
 										}
@@ -1326,13 +1316,11 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									while (k2 != 0) {
 										k1 = 0;
 										k2 = 0;
-										while (paint[yokonummax[i][yokonum[i][0] - ii] + k1 - 1][i] == 1 && yokonummax[i][yokonum[i][0] - ii] > 0) { k1 += 1; }
+										if (paint[yokonummax[i][yokonum[i][0] - ii] + k1 - 1][i] == 1 && yokonummax[i][yokonum[i][0] - ii] > 0) { k1 += 1; }
 										if (paint[yokonummax[i][yokonum[i][0] - ii] + yokonum[i][yokonum[i][0] - ii] + k1][i] == 1 && yokonummax[i][yokonum[i][0] - ii] + yokonum[i][yokonum[i][0] - ii] + k1 < yoko) {
 											k2 = k1 + 1;
 										}
-										else {
-											k2 = k1;
-										}
+										else { k2 = k1; }
 										for (iii = 0; iii < yokonum[i][yokonum[i][0] - ii]; iii++) {
 											if (paint[yokonummax[i][yokonum[i][0] - ii] + iii + k1][i] > 9) { k2 = k1 + iii + 1; }
 										}
@@ -1489,13 +1477,9 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										while (k1 != 0) {
 											k1 = 0;
 											k2 = 0;
-											while (paint[i][tate - tatenum[i][iii] - ii + k2 - 1] == 1 && tate + k2 > tatenum[i][iii] + ii) { k2++; }
-											if (paint[i][tate - ii + k2] == 1 && k2 < ii) {
-												k1 = k2 + 1;
-											}
-											else {
-												k1 = k2;
-											}
+											if (paint[i][tate - tatenum[i][iii] - ii + k2 - 1] == 1 && tate + k2 > tatenum[i][iii] + ii) { k2++; }
+											if (paint[i][tate - ii + k2] == 1 && k2 < ii) { k1 = k2 + 1; }
+											else { k1 = k2; }
 											for (i6 = 0; i6 < tatenum[i][iii]; i6++) {
 												if (paint[i][tate - tatenum[i][iii] - ii + i6 + k2] > 9) { k1 = k2 + i6 + 1; }
 											}
@@ -1529,13 +1513,9 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										while (k1 != 0) {
 											k1 = 0;
 											k2 = 0;
-											while (paint[i][tatenum[i][tatenum[i][0] - iii] + ii - k2] == 1 && tate > tatenum[i][tatenum[i][0] - iii] + ii - k2) { k2++; }
-											if (paint[i][ii - k2 - 1] == 1 && k2 < ii) {
-												k1 = k2 + 1;
-											}
-											else {
-												k1 = k2;
-											}
+											if (paint[i][tatenum[i][tatenum[i][0] - iii] + ii - k2] == 1 && tate > tatenum[i][tatenum[i][0] - iii] + ii - k2) { k2++; }
+											if (paint[i][ii - k2 - 1] == 1 && k2 < ii) { k1 = k2 + 1; }
+											else { k1 = k2; }
 											for (i6 = 0; i6 < tatenum[i][tatenum[i][0] - iii]; i6++) {
 												if (paint[i][tatenum[i][tatenum[i][0] - iii] + ii - k2 - i6 - 1] > 9) { k1 = k2 + i6 + 1; }
 											}
@@ -1565,13 +1545,11 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									while (k2 != 0) {
 										k1 = 0;
 										k2 = 0;
-										while (paint[i][tate - tatenummin[i][ii + 1] - k1] == 1 && tatenummin[i][ii + 1] > 0) { k1 += 1; }
+										if (paint[i][tate - tatenummin[i][ii + 1] - k1] == 1 && tatenummin[i][ii + 1] > 0) { k1 += 1; }
 										if (paint[i][tate - tatenummin[i][ii + 1] - tatenum[i][ii + 1] - 1 - k1] == 1 && tate > tatenummin[i][ii + 1] + tatenum[i][ii + 1] + k1) {
 											k2 = k1 + 1;
 										}
-										else {
-											k2 = k1;
-										}
+										else { k2 = k1; }
 										for (iii = 0; iii < tatenum[i][ii + 1]; iii++) {
 											if (paint[i][tate - tatenummin[i][ii + 1] - iii - 1 - k1] > 9) { k2 = k1 + iii + 1; }
 										}
@@ -1591,13 +1569,11 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									while (k2 != 0) {
 										k1 = 0;
 										k2 = 0;
-										while (paint[i][tatenummax[i][tatenum[i][0] - ii] + k1 - 1] == 1 && tatenummax[i][tatenum[i][0] - ii] > 0) { k1 += 1; }
+										if (paint[i][tatenummax[i][tatenum[i][0] - ii] + k1 - 1] == 1 && tatenummax[i][tatenum[i][0] - ii] > 0) { k1 += 1; }
 										if (paint[i][tatenummax[i][tatenum[i][0] - ii] + tatenum[i][tatenum[i][0] - ii] + k1] == 1 && tatenummax[i][tatenum[i][0] - ii] + tatenum[i][tatenum[i][0] - ii] + k1 < tate) {
 											k2 = k1 + 1;
 										}
-										else {
-											k2 = k1;
-										}
+										else { k2 = k1; }
 										for (iii = 0; iii < tatenum[i][tatenum[i][0] - ii]; iii++) {
 											if (paint[i][tatenummax[i][tatenum[i][0] - ii] + iii + k1] > 9) { k2 = k1 + iii + 1; }
 										}
