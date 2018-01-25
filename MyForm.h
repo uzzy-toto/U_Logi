@@ -2215,11 +2215,11 @@ private: System::Void U_Logi_KeyDown(System::Object^  sender, System::Windows::F
 	String^ tatekaki;
 	std::string keystring;
 	unsigned char keynum, i, ii,tatemax;
-
-	tate = Decimal::ToByte(numericUpDown1->Value);
-	yoko = Decimal::ToByte(numericUpDown2->Value);
-
+	
 	if (button5->Text == L"戻る") {
+
+		tate = Decimal::ToByte(numericUpDown1->Value);
+		yoko = Decimal::ToByte(numericUpDown2->Value);
 
 		//数字のボタンもしくはテンキーの数字のボタンが押されたとき
 		if ((e->KeyCode > Keys::Delete && e->KeyCode < Keys::A) || (e->KeyCode > Keys::Z && e->KeyCode < Keys::Multiply)) {
