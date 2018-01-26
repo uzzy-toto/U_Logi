@@ -1301,9 +1301,9 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										for (iii = 0; iii < yokonum[i][ii + 1]; iii++) {
 											if (paint[yoko - yokonummin[i][ii + 1] - iii - k1 - 1][i] > 9) { k2 = k1 + iii + 1; }
 										}
-										if (yokonummin[i][ii + 1] + yokonummax[i][ii + 1] + yokonum[i][ii + 1] > yoko) { err = 1; goto errend; }
 										if (k2 > 0) {
 											yokonummin[i][ii + 1] += k2;
+											if (yokonummin[i][ii + 1] + yokonummax[i][ii + 1] + yokonum[i][ii + 1] > yoko) { err = 1; goto errend; }
 											yokochk[i] = 2;
 										}
 									}
@@ -1325,9 +1325,9 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										for (iii = 0; iii < yokonum[i][yokonum[i][0] - ii]; iii++) {
 											if (paint[yokonummax[i][yokonum[i][0] - ii] + iii + k1][i] > 9) { k2 = k1 + iii + 1; }
 										}
-										if (yokonummin[i][yokonum[i][0] - ii] + yokonummax[i][yokonum[i][0] - ii] + yokonum[i][yokonum[i][0] - ii] > yoko) { err = 1; goto errend; }
 										if (k2 > 0) {
 											yokonummax[i][yokonum[i][0] - ii] += k2;
+											if (yokonummin[i][yokonum[i][0] - ii] + yokonummax[i][yokonum[i][0] - ii] + yokonum[i][yokonum[i][0] - ii] > yoko) { err = 1; goto errend; }
 											yokochk[i] = 2;
 										}
 									}
@@ -1559,9 +1559,9 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										for (iii = 0; iii < tatenum[i][ii + 1]; iii++) {
 											if (paint[i][tate - tatenummin[i][ii + 1] - iii - 1 - k1] > 9) { k2 = k1 + iii + 1; }
 										}
-										tatenummin[i][ii + 1] += k2;
-										if (tatenummin[i][ii + 1] + tatenummax[i][ii + 1] + tatenum[i][ii + 1] > tate) { err = 1; goto errend; }
 										if (k2 > 0) {
+											tatenummin[i][ii + 1] += k2;
+											if (tatenummin[i][ii + 1] + tatenummax[i][ii + 1] + tatenum[i][ii + 1] > tate) { err = 1; goto errend; }
 											tatechk[i] = 2;
 										}
 									}
@@ -1583,9 +1583,9 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										for (iii = 0; iii < tatenum[i][tatenum[i][0] - ii]; iii++) {
 											if (paint[i][tatenummax[i][tatenum[i][0] - ii] + iii + k1] > 9) { k2 = k1 + iii + 1; }
 										}
-										tatenummax[i][tatenum[i][0] - ii] += k2;
-										if (tatenummin[i][tatenum[i][0] - ii] + tatenummax[i][tatenum[i][0] - ii] + tatenum[i][tatenum[i][0] - ii] > tate) { err = 1;  goto errend; }
 										if (k2 > 0) {
+											tatenummax[i][tatenum[i][0] - ii] += k2;
+											if (tatenummin[i][tatenum[i][0] - ii] + tatenummax[i][tatenum[i][0] - ii] + tatenum[i][tatenum[i][0] - ii] > tate) { err = 1;  goto errend; }
 											tatechk[i] = 2;
 										}
 									}
