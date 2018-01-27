@@ -1442,6 +1442,43 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									ii += i6;
 								}
 							}
+
+							//×ではさまれた空間を×で埋め尽くせる可能性
+							for (ii = 2; ii < yoko - 4; ii++) {
+								if (paint[yoko - ii - 1][i] > 9) {
+									for (iii = 0; paint[yoko - ii - iii - 2][i] > 9 && ii + iii + 4 < yoko; iii++) {}
+									ii += iii;
+									if (ii + 5 > yoko) { break; }
+									if (paint[yoko - ii - 2][i] == 0) {
+										for (iii = 1; paint[yoko - ii - iii - 2][i] == 0 && ii + iii + 3 < yoko; iii++) {}
+										if (ii + iii + 4 > yoko) { break; }
+										if (paint[yoko - ii - iii - 2][i] > 9) {
+											k1 = yoko;
+											for (i6 = 0; i6 < yokonum[i][0]; i6++) {
+												if (yokonummin[i][i6 + 1] < ii + iii + 1 && yokonummax[i][i6 + 1] < yoko - ii) {
+													if (k1 > yokonum[i][i6 + 1]) {
+														k1 = yokonum[i][i6 + 1];
+													}
+												}
+											}
+											if (iii < k1) {
+												for (i6 = 0; i6 < iii; i6++) {
+													paint[yoko - ii - i6 - 2][i] = 10;
+													tatechk[yoko - ii - i6 - 2] = 2;
+													tatechk2[yoko - ii - i6 - 2] = 1;
+												}
+											}
+											ii += iii;
+										}
+										else {
+											ii += iii + 1;
+										}
+									}
+									else {
+										ii += 1;
+									}
+								}
+							}
 						}
 						yokochk[i] = 0;
 					}
@@ -1698,6 +1735,43 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										yokochk2[tate - ii - i6 - 1] = 1;
 									}
 									ii += i6;
+								}
+							}
+
+							//×ではさまれた空間を×で埋め尽くせる可能性
+							for (ii = 2; ii < tate - 4; ii++) {
+								if (paint[i][tate - ii - 1] > 9) {
+									for (iii = 0; paint[i][tate - ii - iii - 2] > 9 && ii + iii + 4 < tate; iii++) {}
+									ii += iii;
+									if (ii + 5 > tate) { break; }
+									if (paint[i][tate - ii - 2] == 0) {
+										for (iii = 1; paint[i][tate - ii - iii - 2] == 0 && ii + iii + 3 < tate; iii++) {}
+										if (ii + iii + 4 > tate) { break; }
+										if (paint[i][tate - ii - iii - 2] > 9) {
+											k1 = tate;
+											for (i6 = 0; i6 < tatenum[i][0]; i6++) {
+												if (tatenummin[i][i6 + 1] < ii + iii + 1 && tatenummax[i][i6 + 1] < tate - ii) {
+													if (k1 > tatenum[i][i6 + 1]) {
+														k1 = tatenum[i][i6 + 1];
+													}
+												}
+											}
+											if (iii < k1) {
+												for (i6 = 0; i6 < iii; i6++) {
+													paint[i][tate - ii - i6 - 2] = 10;
+													yokochk[tate - ii - i6 - 2] = 2;
+													yokochk2[tate - ii - i6 - 2] = 1;
+												}
+											}
+											ii += iii;
+										}
+										else {
+											ii += iii + 1;
+										}
+									}
+									else {
+										ii += 1;
+									}
 								}
 							}
 						}
