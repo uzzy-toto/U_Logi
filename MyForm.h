@@ -754,11 +754,12 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 	unsigned char tatechk2[256];
 
 	unsigned char komatta, komatta3, komatta5, komatta7;
-	unsigned char yokotatemax,est, est2, est3, tuyogari;
+	unsigned char yokotatemax, est, est2, est3, tuyogari;
 	int komatta2, komatta4, komatta6;
 	int i, ii, iii, iiii, i5, i6, i7, i8, i9;
-	int k1, k2, k3, timer, umatta;
+	int k1, k2, k3, timer, repotime, umatta;
 	int estp, estp2, estp3, count1, err, pn, pn2, pn3;
+	int estnum, estmm, estmmchk;
 	int errnum[20] = {};
 
 	w = L"";
@@ -775,6 +776,8 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 	komatta7 = 0;
 	tuyogari = 0;
 	umatta = 0;
+	estmmchk = 0;
+	repotime = 0;
 
 	yokotatemax = 0;
 	for (i = 0; i < tate; i++) {
@@ -797,7 +800,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 			for (ii = 0; ii < tate; ii++) { paint[i][ii] = 10; }
 		}
 	}
-	
+
 
 	//背理法深さ３！
 	est3 = 0;
@@ -905,8 +908,11 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 		pn2 = 0;
 		for (i7 = 0; i7 < hairi2 && komatta5 == 0; i7++) {
 
+			t2 = clock();
+			timer = t2 - t;
 			//計算進捗報告＋終われボタンの処理
-			if (i7 % 9 == 1) {
+			if (timer > repotime + 100) {
+				repotime = timer;
 				w = L"";
 				for (i = 0; i < yoko*tate; i++) {
 					if (paint[i % yoko][i / yoko] == 1) {
@@ -922,8 +928,6 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 						w += L"\n";
 					}
 				}
-				t2 = clock();
-				timer = t2 - t;
 				w2 = L"i7 = " + i7 + L"\ni9 = " + i9 + L"\ntimer=\n" + timer;
 				backgroundWorker1->ReportProgress(0);
 				if (backgroundWorker1->CancellationPending) {
@@ -1026,13 +1030,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 			//背理法深さ１
 			est = 0;
 			komatta2 = 0;
-			estp = 0;
 			pn = 0;
+			estnum = 0;
+			estmm = 0;
 			for (i = 0; i < tate; i++) { yokochk2[i] = 1; }
 			for (i = 0; i < yoko; i++) { tatechk2[i] = 1; }
 			for (i5 = 0; i5 < hairi1 && komatta3 == 0; i5++) {
 
-				//背理法でエラーが出ていた時に嬉々として1マス塗る
+				//背理法でエラーが出ていた時にまず局面戻す
 				if (est > 0 && err == 1) {
 					for (i = 0; i < tate; i++) {
 						if (yokochk2[i] == 1) {
@@ -1059,19 +1064,70 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 						}
 					}
 
-					if (pn == 1) { paint[estp % yoko][estp / yoko] = 10; }
-					else if (pn == 2) { paint[estp % yoko][estp / yoko] = 1; }
-					err = 0;
-					est = 0;
-					komatta2 = estp;
-					pn = 0;
-					yokochk[estp / yoko] = 2;
-					tatechk[estp % yoko] = 2;
-					yokochk2[estp / yoko] = 1;
-					tatechk2[estp % yoko] = 1;
-					estp++;
-					komatta = 0;
+					//通常背理法では嬉々として1マス塗って一度は通常探索に行ってもらう
+					if (est == 1) {
+						if (pn == 1) { paint[estp % yoko][estp / yoko] = 10; }
+						else if (pn == 2) { paint[estp % yoko][estp / yoko] = 1; }
+						err = 0;
+						est = 0;
+						komatta2 = estnum;
+						pn = 0;
+						yokochk[estp / yoko] = 2;
+						tatechk[estp % yoko] = 2;
+						yokochk2[estp / yoko] = 1;
+						tatechk2[estp % yoko] = 1;
+						estnum++;
+						komatta = 0;
+					}
+
+					//お手製背理法では次のちょっとずれた仮定にそのままうつる
+					else if (estnum < 260 * tate) {
+						err = 0;
+						estmmchk = 1;
+						estmm++;
+						komatta2 = estnum;
+						if (estnum < 130 * tate) {
+							if (yokonummax[estnum / 130][estp] > yoko - estmm - yokonum[estnum / 130][estp]) { err = 1; break; }
+							yokochk[estnum / 130] = 2;
+							yokochk2[estnum / 130] = 1;
+							yokonummin2[estnum / 130][estp] = estmm;
+							yokonummin[estnum / 130][estp] = estmm;
+							yokonummax[estnum / 130][estp] = yoko - estmm - yokonum[estnum / 130][estp];
+						}
+						else {
+							if (yokonummin[estnum / 130 - tate][estp] > yoko - estmm - yokonum[estnum / 130 - tate][estp]) { err = 1; break; }
+							yokochk[estnum / 130 - tate] = 2;
+							yokochk2[estnum / 130 - tate] = 1;
+							yokonummax2[estnum / 130 - tate][estp] = estmm;
+							yokonummin[estnum / 130 - tate][estp] = yoko - estmm - yokonum[estnum / 130 - tate][estp];
+							yokonummax[estnum / 130 - tate][estp] = estmm;
+						}
+					}
+					else {
+						err = 0;
+						estmmchk = 1;
+						estmm++;
+						komatta2 = estnum;
+						if (estnum < 260 * tate + 130 * yoko) {
+							if (tatenummax[estnum / 130 - 2 * tate][estp] > tate - estmm - tatenum[estnum / 130 - 2 * tate][estp]){ err = 1; break; }
+							tatechk[estnum / 130 - 2 * tate] = 2;
+							tatechk2[estnum / 130 - 2 * tate] = 1;
+							tatenummin2[estnum / 130 - 2 * tate][estp] = estmm;
+							tatenummin[estnum / 130 - 2 * tate][estp] = estmm;
+							tatenummax[estnum / 130 - 2 * tate][estp] = tate - estmm - tatenum[estnum / 130 - 2 * tate][estp];
+						}
+						else {
+							if (tatenummin[estnum / 130 - 2 * tate - yoko][estp] > tate - estmm - tatenum[estnum / 130 - 2 * tate - yoko][estp]) { err = 1; break; }
+							tatechk[estnum / 130 - 2 * tate - yoko] = 2;
+							tatechk2[estnum / 130 - 2 * tate - yoko] = 1;
+							tatenummax2[estnum / 130 - 2 * tate - yoko][estp] = estmm;
+							tatenummin[estnum / 130 - 2 * tate - yoko][estp] = tate - estmm - tatenum[estnum / 130 - 2 * tate - yoko][estp];
+							tatenummax[estnum / 130 - 2 * tate - yoko][estp] = estmm;
+						}
+					}
 				}
+
+				//なんらかの手詰まりのとき
 				else if (komatta == 1) {
 
 					//仮定中に完成局面が一度みえたら保存しておき、次にみえたら二つを比較する。同じなら何もしない。違うなら計算終わり。
@@ -1083,8 +1139,8 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 						if (i == yoko * tate) { goto theend; }
 					}
 					else {
-						for (i = umatta; i < yoko*tate && paint[i % yoko][i / yoko] > 0; i++) {	}
-						if (i == yoko * tate) { 
+						for (i = umatta; i < yoko*tate && paint[i % yoko][i / yoko] > 0; i++) {}
+						if (i == yoko * tate) {
 							if (tuyogari == 1) {
 								for (ii = 0; ii < yoko*tate && paint[ii % yoko][ii / yoko] == paint5[ii % yoko][ii / yoko]; ii++) {}
 								if (ii != yoko * tate) { tuyogari = 2; goto theend; }
@@ -1154,40 +1210,149 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 						}
 					}
 
-					//仮定する1マスを選ぶ
-					est = 1;
-					if (pn == 2) { estp += 1; }
-					for (i = estp; i < yoko*tate; i++) {
-						if (paint[i % yoko][i / yoko] == 0) {
-							estp = i;
-							break;
-						}
-					}
-					if (komatta2 + yoko * tate < estp) {
-						komatta3 = 1;
-						break;
-					}
-					if (i == yoko * tate) {
+					//背理法の闇への入り口
+					komatta = 0;
+
+					//お手製背理法が成功していたら一度は仮定なしで通常探索
+					if (estmmchk == 1) {
 						est = 0;
-						estp = 0;
-						pn = 0;
-						komatta2 -= yoko*tate; 
+						estmmchk = 0;
+						if (estnum < 130 * tate) { yokochk[estnum / 130] = 2; yokochk2[estnum / 130] = 1; }
+						else if (estnum < 260 * tate) { yokochk[estnum / 130 - tate] = 2; yokochk2[estnum / 130 - tate] = 1; }
+						else if (estnum < 130 * (2 * tate + yoko)) { tatechk[estnum / 130 - 2 * tate] = 2; tatechk2[estnum / 130 - 2 * tate] = 1; }
+						else { tatechk[estnum / 130 - 2 * tate - yoko] = 2; tatechk2[estnum / 130 - 2 * tate - yoko] = 1; }
 					}
 
-					//黒塗りを仮定するのか×を仮定するのか
-					else if (pn == 0 || pn == 2) {
-						paint[estp % yoko][estp / yoko] = 1;
-						pn = 1;
+					//お手製背理法の仮定4連
+					else if (estnum < 130 * tate) {
+						est = 0;
+						for (i = estnum / 130; i < tate; i++) {
+							for (ii = estnum % 130 + 1; ii < yokonum[i][0] + 1; ii++) {
+								if (yokonummax[i][ii] != yoko - yokonum[i][ii] - estmm) {
+									if (komatta2 + yoko * tate + 260 * (tate + yoko) < estnum) {
+										komatta3 = 1;
+										break;
+									}
+									est = 2;
+									estp = ii;
+									estnum = i * 130 + ii;
+									estmm = yokonummin[i][ii];
+									yokonummax[i][ii] = yoko - yokonum[i][ii] - estmm;
+									yokochk[i] = 2;
+									yokochk2[i] = 1;
+									break;
+								}
+							}
+							if (est == 2 || komatta3 == 1) { break; }
+							estnum = estnum - estnum % 130 + 130;
+						}
 					}
+					else if (estnum < 260 * tate) {
+						est = 0;
+						for (i = estnum / 130 - tate; i < tate; i++) {
+							for (ii = yokonum[i][0] - estnum % 130; ii > 0; ii--) {
+								if (yokonummin[i][ii] != yoko - yokonum[i][ii] - estmm) {
+									if (komatta2 + yoko * tate + 260 * (tate + yoko) < estnum) {
+										komatta3 = 1;
+										break;
+									}
+									est = 2;
+									estp = ii;
+									estnum = (tate + i) * 130 + yokonum[i][0] - ii + 1;
+									estmm = yokonummax[i][ii];
+									yokonummin[i][ii] = yoko - yokonum[i][ii] - estmm;
+									yokochk[i] = 2;
+									yokochk2[i] = 1;
+									break;
+								}
+							}
+							if (est == 2 || komatta3 == 1) { break; }
+							estnum = estnum - estnum % 130 + 130;
+						}
+					}
+					else if (estnum < 130 * (2 * tate + yoko)) {
+						est = 0;
+						for (i = estnum / 130 - 2 * tate; i < yoko; i++) {
+							for (ii = estnum % 130 + 1; ii < tatenum[i][0] + 1; ii++) {
+								if (tatenummax[i][ii] != tate - tatenum[i][ii] - estmm) {
+									if (komatta2 + yoko * tate + 260 * (tate + yoko) < estnum) {
+										komatta3 = 1;
+										break;
+									}
+									est = 2;
+									estp = ii;
+									estnum = (2 * tate + i) * 130 + ii;
+									estmm = tatenummin[i][ii];
+									tatenummax[i][ii] = tate - tatenum[i][ii] - estmm;
+									tatechk[i] = 2;
+									tatechk2[i] = 1;
+									break;
+								}
+							}
+							if (est == 2 || komatta3 == 1) { break; }
+							estnum = estnum - estnum % 130 + 130;
+						}
+					}
+					else if (estnum < 260 * (tate + yoko)) {
+						est = 0;
+						for (i = estnum / 130 - 2 * tate - yoko; i < yoko; i++) {
+							for (ii = tatenum[i][0] - estnum % 130; ii > 0; ii--) {
+								if (tatenummin[i][ii] != tate - tatenum[i][ii] - estmm) {
+									if (komatta2 + yoko * tate + 260 * (tate + yoko) < estnum) {
+										komatta3 = 1;
+										break;
+									}
+									est = 2;
+									estp = ii;
+									estnum = (2 * tate + yoko + i) * 130 + tatenum[i][0] - ii + 1;
+									estmm = tatenummax[i][ii];
+									tatenummin[i][ii] = tate - tatenum[i][ii] - estmm;
+									tatechk[i] = 2;
+									tatechk2[i] = 1;
+									break;
+								}
+							}
+							if (est == 2 || komatta3 == 1) { break; }
+							estnum = estnum - estnum % 130 + 130;
+						}
+					}
+
+					//通常背理法。まず仮定する1マスを選ぶ
 					else {
-						paint[estp % yoko][estp / yoko] = 10;
-						pn = 2;
+						est = 1;
+						if (pn == 2) { estnum += 1; }
+						for (i = estnum - 260 * (tate + yoko); i < yoko*tate; i++) {
+							if (paint[i % yoko][i / yoko] == 0) {
+								estnum = i + 260 * (tate + yoko);
+								break;
+							}
+						}
+						if (komatta2 + yoko * tate + 260 * (tate + yoko) < estnum) {
+							komatta3 = 1;
+							break;
+						}
+						estp = estnum - 260 * (tate + yoko);
+						if (i == yoko * tate) {
+							est = 0;
+							estnum = -1;
+							pn = 0;
+							komatta2 -= yoko * tate + 260 * (tate + yoko);
+						}
+
+						//黒塗りを仮定するのか×を仮定するのか
+						else if (pn == 0 || pn == 2) {
+							paint[estp % yoko][estp / yoko] = 1;
+							pn = 1;
+						}
+						else {
+							paint[estp % yoko][estp / yoko] = 10;
+							pn = 2;
+						}
+						yokochk[estp / yoko] = 2;
+						tatechk[estp % yoko] = 2;
+						yokochk2[estp / yoko] = 1;
+						tatechk2[estp % yoko] = 1;
 					}
-					yokochk[estp / yoko] = 2;
-					tatechk[estp % yoko] = 2;
-					yokochk2[estp / yoko] = 1;
-					tatechk2[estp % yoko] = 1;
-					komatta = 0;
 				}
 
 				else if (est == 0 && err == 1) { break; }
@@ -1203,7 +1368,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 						if (yokochk[i] > 0) {
 
 							//黒や×をつける前に精一杯minとmaxの調整を行う
-							for (i8 = 0; yokochk[i] == 2 && i8 < 20;i8++) {
+							for (i8 = 0; yokochk[i] == 2 && i8 < 20; i8++) {
 								yokochk[i] = 1;
 
 								//黒地をスキャンして、横のminとmaxを調整
@@ -1282,7 +1447,6 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 								//繰り返し中に黒地スキャンで変化が無いなら数字スキャンはしなくて良いはずである。
 								//ただし、一回目のスキャンは両方必須。
 								if (yokochk[i] == 1 && i8 > 0) { break; }
-								else if (yokochk[i] == 1) { yokochk[i] = 3; }
 								else { yokochk[i] = 1; }
 
 								//ヒントの数字をスキャンして、横のminとmaxを調整。
@@ -1338,45 +1502,41 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 								}
 							}
 
-							//minとmaxに変化がないときはyokochk[i]=3なので塗りの一部は省略可能
-							if (yokochk[i] == 1) {
+							//やっと黒地を塗る
+							for (ii = 0; ii < yokonum[i][0]; ii++) {
+								k1 = yokonummin[i][ii + 1] + yokonum[i][ii + 1];
+								k2 = yokonummax[i][ii + 1] + yokonum[i][ii + 1];
+								for (iii = yoko; iii < k1 + k2; iii++) {
+									if (paint[iii - k1][i] == 0) {
+										tatechk[iii - k1] = 2;
+										tatechk2[iii - k1] = 1;
+										paint[iii - k1][i] = 1;
+									}
+								}
+							}
 
-								//やっと黒地を塗る
-								for (ii = 0; ii < yokonum[i][0]; ii++) {
-									k1 = yokonummin[i][ii + 1] + yokonum[i][ii + 1];
-									k2 = yokonummax[i][ii + 1] + yokonum[i][ii + 1];
-									for (iii = yoko; iii < k1 + k2; iii++) {
-										if (paint[iii - k1][i] == 0) {
-											tatechk[iii - k1] = 2;
-											tatechk2[iii - k1] = 1;
-											paint[iii - k1][i] = 1;
-										}
+							//横の各数字の間や壁との間に空白が確定してたら×をつける
+							for (ii = 1; ii < yokonum[i][0]; ii++) {
+								for (iii = 0; yokonummax[i][ii] + yokonummin[i][ii + 1] > yoko + iii; iii++) {
+									if (paint[yokonummax[i][ii] - iii - 1][i] == 0) {
+										tatechk[yokonummax[i][ii] - iii - 1] = 2;
+										tatechk2[yokonummax[i][ii] - iii - 1] = 1;
+										paint[yokonummax[i][ii] - iii - 1][i] = 10;
 									}
 								}
-
-								//横の各数字の間や壁との間に空白が確定してたら×をつける
-								for (ii = 1; ii < yokonum[i][0]; ii++) {
-									for (iii = 0; yokonummax[i][ii] + yokonummin[i][ii + 1] > yoko + iii; iii++) {
-										if (paint[yokonummax[i][ii] - iii - 1][i] == 0) {
-											tatechk[yokonummax[i][ii] - iii - 1] = 2;
-											tatechk2[yokonummax[i][ii] - iii - 1] = 1;
-											paint[yokonummax[i][ii] - iii - 1][i] = 10;
-										}
-									}
+							}
+							for (iii = 0; yokonummin[i][1] > iii; iii++) {
+								if (paint[yoko - iii - 1][i] == 0) {
+									tatechk[yoko - iii - 1] = 2;
+									tatechk2[yoko - iii - 1] = 1;
+									paint[yoko - iii - 1][i] = 10;
 								}
-								for (iii = 0; yokonummin[i][1] > iii; iii++) {
-									if (paint[yoko - iii - 1][i] == 0) {
-										tatechk[yoko - iii - 1] = 2;
-										tatechk2[yoko - iii - 1] = 1;
-										paint[yoko - iii - 1][i] = 10;
-									}
-								}
-								for (iii = 0; yokonummax[i][yokonum[i][0]] > iii; iii++) {
-									if (paint[iii][i] == 0) {
-										tatechk[iii] = 2;
-										tatechk2[iii] = 1;
-										paint[iii][i] = 10;
-									}
+							}
+							for (iii = 0; yokonummax[i][yokonum[i][0]] > iii; iii++) {
+								if (paint[iii][i] == 0) {
+									tatechk[iii] = 2;
+									tatechk2[iii] = 1;
+									paint[iii][i] = 10;
 								}
 							}
 
@@ -1386,7 +1546,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 							//そこから「黒地の長さ以上の数字の中の最小値」と「最大値(二つに分ける。ギリギリ黒地にあてはまる数字は片方だけに採用)」を求める
 							for (ii = 2; ii < yoko - 2; ii++) {
 								if (paint[yoko - ii - 1][i] == 1) {
-									for (i6 = 0; i6 + ii < yoko && paint[yoko - ii - i6 - 1][i] == 1; i6++) {}
+									for (i6 = 1; i6 + ii < yoko && paint[yoko - ii - i6 - 1][i] == 1; i6++) {}
 									k1 = yoko;
 									k2 = i6;
 									k3 = i6;
@@ -1577,7 +1737,6 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 								//繰り返し中に黒地スキャンで変化が無いなら数字スキャンはしなくて良いはずである。
 								//ただし、一回目のスキャンは両方必須。
 								if (tatechk[i] == 1 && i8 > 0) { break; }
-								else if (tatechk[i] == 1) { tatechk[i] = 3; }
 								else { tatechk[i] = 1; }
 
 								//ヒントの数字をスキャンして、縦のminとmaxを調整。
@@ -1633,45 +1792,41 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 								}
 							}
 
-							//minとmaxに変化がないときはtatechk[i]=3なので塗りの一部は省略可能
-							if (tatechk[i] == 1) {
+							//やっと黒地を塗る
+							for (ii = 0; ii < tatenum[i][0]; ii++) {
+								k1 = tatenummin[i][ii + 1] + tatenum[i][ii + 1];
+								k2 = tatenummax[i][ii + 1] + tatenum[i][ii + 1];
+								for (iii = tate; iii < k1 + k2; iii++) {
+									if (paint[i][iii - k1] == 0) {
+										yokochk[iii - k1] = 2;
+										yokochk2[iii - k1] = 1;
+										paint[i][iii - k1] = 1;
+									}
+								}
+							}
 
-								//やっと黒地を塗る
-								for (ii = 0; ii < tatenum[i][0]; ii++) {
-									k1 = tatenummin[i][ii + 1] + tatenum[i][ii + 1];
-									k2 = tatenummax[i][ii + 1] + tatenum[i][ii + 1];
-									for (iii = tate; iii < k1 + k2; iii++) {
-										if (paint[i][iii - k1] == 0) {
-											yokochk[iii - k1] = 2;
-											yokochk2[iii - k1] = 1;
-											paint[i][iii - k1] = 1;
-										}
+							//縦の各数字の間や壁との間に空白が確定してたら×をつける
+							for (ii = 1; ii < tatenum[i][0]; ii++) {
+								for (iii = 0; tatenummax[i][ii] + tatenummin[i][ii + 1] > tate + iii; iii++) {
+									if (paint[i][tatenummax[i][ii] - iii - 1] == 0) {
+										yokochk[tatenummax[i][ii] - iii - 1] = 2;
+										yokochk2[tatenummax[i][ii] - iii - 1] = 1;
+										paint[i][tatenummax[i][ii] - iii - 1] = 10;
 									}
 								}
-
-								//縦の各数字の間や壁との間に空白が確定してたら×をつける
-								for (ii = 1; ii < tatenum[i][0]; ii++) {
-									for (iii = 0; tatenummax[i][ii] + tatenummin[i][ii + 1] > tate + iii; iii++) {
-										if (paint[i][tatenummax[i][ii] - iii - 1] == 0) {
-											yokochk[tatenummax[i][ii] - iii - 1] = 2;
-											yokochk2[tatenummax[i][ii] - iii - 1] = 1;
-											paint[i][tatenummax[i][ii] - iii - 1] = 10;
-										}
-									}
+							}
+							for (iii = 0; tatenummin[i][1] > iii; iii++) {
+								if (paint[i][tate - iii - 1] == 0) {
+									yokochk[tate - iii - 1] = 2;
+									yokochk2[tate - iii - 1] = 1;
+									paint[i][tate - iii - 1] = 10;
 								}
-								for (iii = 0; tatenummin[i][1] > iii; iii++) {
-									if (paint[i][tate - iii - 1] == 0) {
-										yokochk[tate - iii - 1] = 2;
-										yokochk2[tate - iii - 1] = 1;
-										paint[i][tate - iii - 1] = 10;
-									}
-								}
-								for (iii = 0; tatenummax[i][tatenum[i][0]] > iii; iii++) {
-									if (paint[i][iii] == 0) {
-										yokochk[iii] = 2;
-										yokochk2[iii] = 1;
-										paint[i][iii] = 10;
-									}
+							}
+							for (iii = 0; tatenummax[i][tatenum[i][0]] > iii; iii++) {
+								if (paint[i][iii] == 0) {
+									yokochk[iii] = 2;
+									yokochk2[iii] = 1;
+									paint[i][iii] = 10;
 								}
 							}
 
@@ -1681,7 +1836,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 							//そこから「黒地の長さ以上の数字の中の最小値」と「最大値(ギリギリの場合片方)」を求める
 							for (ii = 2; ii < tate - 2; ii++) {
 								if (paint[i][tate - ii - 1] == 1) {
-									for (i6 = 0; i6 + ii < tate && paint[i][tate - ii - i6 - 1] == 1; i6++) {}
+									for (i6 = 1; i6 + ii < tate && paint[i][tate - ii - i6 - 1] == 1; i6++) {}
 									k1 = tate;
 									k2 = i6;
 									k3 = i6;
@@ -1775,7 +1930,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 								}
 							}
 						}
-						 tatechk[i] = 0;
+						tatechk[i] = 0;
 					}
 
 					//手詰まり処理
@@ -1788,7 +1943,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 			}
 		}
 	}
-	theend:
+theend:
 
 	//結果表示
 	w = L"";
@@ -1884,8 +2039,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 		}
 	}
 
-//	w += L"  iiii=" + iiii + L"err=" + err + L"  est=" + est + L"  est2=" + est2 + L"\n";
-//	w += L"yokonummax[24][5]=" + yokonummax[24][5] + L" " + yokonummax[7][3] + L" " + yokonummax[7][2] + L" " + yokonummax[7][1] + L"\n";
+//	w += L"  estmm=" + estmm + L" estnum=" + estnum + L"  estmmchk=" + estmmchk + L"  est=" + est + L" komatta=" + komatta + L" err=" + err + L"\n";
 //	w += L"errnum[1]=" + errnum[1] + L" ii= " + ii + L" iii= " + iii + L" komatta3= " + komatta3 + L" est= " + est + L"\n";
 //	w += L"errnum[2]=" + errnum[2] + L"errnum[3]=" + errnum[3] + L"errnum[4]=" + errnum[4] + L"errnum[5]=" + errnum[5] + L"errnum[6]=" + errnum[6] + L"\n";
 //	w += L"errnum[7]=" + errnum[7] + L"errnum[8]=" + errnum[8] + L"errnum[9]=" + errnum[9] + L"errnum[10]=" + errnum[10] + L"errnum[11]=" + errnum[11] + L"\n";
