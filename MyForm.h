@@ -984,15 +984,15 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 				//いざ局面を戻す
 				if (iii == 0) {
 					for (i = 0; i < yoko*tate; i++) {
-						paint[i % yoko][i / yoko] = paint3[i % yoko][i / yoko];
+						paint[i % yoko][i / yoko] = paint4[i % yoko][i / yoko];
 					}
 					for (i = 0; i < tate*(yokotatemax + 1); i++) {
-						yokonummin[i % tate][i / tate] = yokonummin3[i % tate][i / tate];
-						yokonummax[i % tate][i / tate] = yokonummax3[i % tate][i / tate];
+						yokonummin[i % tate][i / tate] = yokonummin4[i % tate][i / tate];
+						yokonummax[i % tate][i / tate] = yokonummax4[i % tate][i / tate];
 					}
 					for (i = 0; i < yoko*(yokotatemax + 1); i++) {
-						tatenummin[i % yoko][i / yoko] = tatenummin3[i % yoko][i / yoko];
-						tatenummax[i % yoko][i / yoko] = tatenummax3[i % yoko][i / yoko];
+						tatenummin[i % yoko][i / yoko] = tatenummin4[i % yoko][i / yoko];
+						tatenummax[i % yoko][i / yoko] = tatenummax4[i % yoko][i / yoko];
 					}
 				}
 			}
