@@ -828,7 +828,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 			}
 
 			//通常背理法では嬉々として1マス塗って一度は通常探索に行ってもらう
-			if (est2 == 1) {
+			if (est3 == 1) {
 				if (pn3 == 1) { paint[estp3 % yoko][estp3 / yoko] = 10; }
 				else if (pn3 == 2) { paint[estp3 % yoko][estp3 / yoko] = 1; }
 				err = 0;
