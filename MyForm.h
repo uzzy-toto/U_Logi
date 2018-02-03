@@ -927,16 +927,73 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 
 			//手詰まりの時、仮定してたら局面を戻して次に備える
 			else {
-				for (i = 0; i < yoko*tate; i++) {
-					paint[i % yoko][i / yoko] = paint4[i % yoko][i / yoko];
+
+				//お手製背理法のときは少しでも局面を戻す処理を減らすため細かい努力をする
+				iii = 0;
+				if (est3 == 2 && estmmchk3 == 0) {
+					if (estnum3 < 130 * tate) {
+						i = estnum3 / 130;
+						ii = estnum3 % 130;
+						if (ii < yokonum[i][0] && ii > 0 && yokonummin[i][ii + 1] == yokonummin[i][ii] + yokonum[i][ii] + 1) {
+							if (yokonummax[i][ii + 1] == yoko - yokonum[i][ii + 1] - yokonummin[i][ii + 1]) {
+								estnum3++;
+							}
+							else {
+								iii = 1;
+							}
+						}
+					}
+					else if (estnum3 < 260 * tate) {
+						i = estnum3 / 130 - tate;
+						ii = yokonum[i][0] - estnum3 % 130 + 1;
+						if (ii > 1 && ii < yokonum[i][0] + 1 && yokonummax[i][ii - 1] == yokonummax[i][ii] + yokonum[i][ii] + 1) {
+							if (yokonummax[i][ii - 1] == yoko - yokonum[i][ii - 1] - yokonummin[i][ii - 1]) {
+								estnum3++;
+							}
+							else {
+								iii = 1;
+							}
+						}
+					}
+					else if (estnum3 < 260 * tate - yoko) {
+						i = estnum3 / 130 - 2 * tate;
+						ii = estnum3 % 130;
+						if (ii < tatenum[i][0] && ii > 0 && tatenummin[i][ii + 1] == tatenummin[i][ii] + tatenum[i][ii] + 1) {
+							if (tatenummax[i][ii + 1] == tate - tatenum[i][ii + 1] - tatenummin[i][ii + 1]) {
+								estnum3++;
+							}
+							else {
+								iii = 1;
+							}
+						}
+					}
+					else {
+						i = estnum3 / 130 - 2 * tate - yoko;
+						ii = tatenum[i][0] - estnum3 % 130 + 1;
+						if (ii > 1 && ii < tatenum[i][0] + 1 && tatenummax[i][ii - 1] == tatenummax[i][ii] + tatenum[i][ii] + 1) {
+							if (tatenummax[i][ii - 1] == tate - tatenum[i][ii - 1] - tatenummin[i][ii - 1]) {
+								estnum3++;
+							}
+							else {
+								iii = 1;
+							}
+						}
+					}
 				}
-				for (i = 1; i < tate*(yokotatemax + 1); i++) {
-					yokonummin[i % tate][i / tate] = yokonummin4[i % tate][i / tate];
-					yokonummax[i % tate][i / tate] = yokonummax4[i % tate][i / tate];
-				}
-				for (i = 1; i < yoko*(yokotatemax + 1); i++) {
-					tatenummin[i % yoko][i / yoko] = tatenummin4[i % yoko][i / yoko];
-					tatenummax[i % yoko][i / yoko] = tatenummax4[i % yoko][i / yoko];
+
+				//いざ局面を戻す
+				if (iii == 0) {
+					for (i = 0; i < yoko*tate; i++) {
+						paint[i % yoko][i / yoko] = paint3[i % yoko][i / yoko];
+					}
+					for (i = 0; i < tate*(yokotatemax + 1); i++) {
+						yokonummin[i % tate][i / tate] = yokonummin3[i % tate][i / tate];
+						yokonummax[i % tate][i / tate] = yokonummax3[i % tate][i / tate];
+					}
+					for (i = 0; i < yoko*(yokotatemax + 1); i++) {
+						tatenummin[i % yoko][i / yoko] = tatenummin3[i % yoko][i / yoko];
+						tatenummax[i % yoko][i / yoko] = tatenummax3[i % yoko][i / yoko];
+					}
 				}
 			}
 
@@ -958,14 +1015,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					for (ii = estnum3 % 130 + 1; ii < yokonum[i][0] + 1; ii++) {
 						estmm3 = yokonummin[i][ii];
 						if (yokonummax[i][ii] != yoko - yokonum[i][ii] - estmm3) {
-							if (komatta6 + yoko * tate + 260 * (tate + yoko) < estnum3) {
-								komatta7 = 1;
-								break;
-							}
 							est3 = 2;
 							estc3 = i;
 							estp3 = ii;
 							estnum3 = i * 130 + ii;
+							if (komatta6 + yoko * tate + 260 * (tate + yoko) < estnum3) {
+								komatta7 = 1;
+								break;
+							}
 							yokonummax[i][ii] = yoko - yokonum[i][ii] - estmm3;
 							yokochk[i] = 2;
 							break;
@@ -981,14 +1038,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					for (ii = yokonum[i][0] - estnum3 % 130; ii > 0; ii--) {
 						estmm3 = yokonummax[i][ii];
 						if (yokonummin[i][ii] != yoko - yokonum[i][ii] - estmm3) {
-							if (komatta6 + yoko * tate + 260 * (tate + yoko) < estnum3) {
-								komatta7 = 1;
-								break;
-							}
 							est3 = 2;
 							estc3 = i;
 							estp3 = ii;
 							estnum3 = (tate + i) * 130 + yokonum[i][0] - ii + 1;
+							if (komatta6 + yoko * tate + 260 * (tate + yoko) < estnum3) {
+								komatta7 = 1;
+								break;
+							}
 							yokonummin[i][ii] = yoko - yokonum[i][ii] - estmm3;
 							yokochk[i] = 2;
 							break;
@@ -1004,14 +1061,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					for (ii = estnum3 % 130 + 1; ii < tatenum[i][0] + 1; ii++) {
 						estmm3 = tatenummin[i][ii];
 						if (tatenummax[i][ii] != tate - tatenum[i][ii] - estmm3) {
-							if (komatta6 + yoko * tate + 260 * (tate + yoko) < estnum3) {
-								komatta7 = 1;
-								break;
-							}
 							est3 = 2;
 							estc3 = i;
 							estp3 = ii;
 							estnum3 = (2 * tate + i) * 130 + ii;
+							if (komatta6 + yoko * tate + 260 * (tate + yoko) < estnum3) {
+								komatta7 = 1;
+								break;
+							}
 							tatenummax[i][ii] = tate - tatenum[i][ii] - estmm3;
 							tatechk[i] = 2;
 							break;
@@ -1027,14 +1084,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					for (ii = tatenum[i][0] - estnum3 % 130; ii > 0; ii--) {
 						estmm3 = tatenummax[i][ii];
 						if (tatenummin[i][ii] != tate - tatenum[i][ii] - estmm3) {
-							if (komatta6 + yoko * tate + 260 * (tate + yoko) < estnum3) {
-								komatta7 = 1;
-								break;
-							}
 							est3 = 2;
 							estc3 = i;
 							estp3 = ii;
 							estnum3 = (2 * tate + yoko + i) * 130 + tatenum[i][0] - ii + 1;
+							if (komatta6 + yoko * tate + 260 * (tate + yoko) < estnum3) {
+								komatta7 = 1;
+								break;
+							}
 							tatenummin[i][ii] = tate - tatenum[i][ii] - estmm3;
 							tatechk[i] = 2;
 							break;
@@ -1079,6 +1136,22 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 				yokochk[estp3 / yoko] = 2;
 				tatechk[estp3 % yoko] = 2;
 			}
+
+			//お手製背理法は局面を戻さず横着していることがあるのでその対策
+			if (komatta7 == 1) {
+				for (i = 0; i < yoko*tate; i++) {
+					paint[i % yoko][i / yoko] = paint4[i % yoko][i / yoko];
+				}
+				for (i = 0; i < tate*(yokotatemax + 1); i++) {
+					yokonummin[i % tate][i / tate] = yokonummin4[i % tate][i / tate];
+					yokonummax[i % tate][i / tate] = yokonummax4[i % tate][i / tate];
+				}
+				for (i = 0; i < yoko*(yokotatemax + 1); i++) {
+					tatenummin[i % yoko][i / yoko] = tatenummin4[i % yoko][i / yoko];
+					tatenummax[i % yoko][i / yoko] = tatenummax4[i % yoko][i / yoko];
+				}
+				break;
+			}
 		}
 
 		else if (est3 == 0 && err == 1) { break; }
@@ -1095,7 +1168,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 			t2 = clock();
 			timer = t2 - t;
 			//計算進捗報告＋終われボタンの処理
-			if (timer > repotime + 100) {
+			if (timer > repotime + 80) {
 				repotime = timer;
 				w = L"";
 				for (i = 0; i < yoko*tate; i++) {
@@ -1233,16 +1306,73 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 
 				//手詰まりの時、仮定してたら局面を戻して次に備える
 				else {
-					for (i = 0; i < yoko*tate; i++) {
-						paint[i % yoko][i / yoko] = paint3[i % yoko][i / yoko];
+
+					//お手製背理法のときは少しでも局面を戻す処理を減らすため細かい努力をする
+					iii = 0;
+					if (est2 == 2 && estmmchk2 == 0) {
+						if (estnum2 < 130 * tate) {
+							i = estnum2 / 130;
+							ii = estnum2 % 130;
+							if (ii < yokonum[i][0] && ii > 0 && yokonummin[i][ii + 1] == yokonummin[i][ii] + yokonum[i][ii] + 1) {
+								if (yokonummax[i][ii + 1] == yoko - yokonum[i][ii + 1] - yokonummin[i][ii + 1]) {
+									estnum2++;
+								}
+								else {
+									iii = 1;
+								}
+							}
+						}
+						else if (estnum2 < 260 * tate) {
+							i = estnum2 / 130 - tate;
+							ii = yokonum[i][0] - estnum2 % 130 + 1;
+							if (ii > 1 && ii < yokonum[i][0] + 1 && yokonummax[i][ii - 1] == yokonummax[i][ii] + yokonum[i][ii] + 1) {
+								if (yokonummax[i][ii - 1] == yoko - yokonum[i][ii - 1] - yokonummin[i][ii - 1]) {
+									estnum2++;
+								}
+								else {
+									iii = 1;
+								}
+							}
+						}
+						else if (estnum2 < 260 * tate - yoko) {
+							i = estnum2 / 130 - 2 * tate;
+							ii = estnum2 % 130;
+							if (ii < tatenum[i][0] && ii > 0 && tatenummin[i][ii + 1] == tatenummin[i][ii] + tatenum[i][ii] + 1) {
+								if (tatenummax[i][ii + 1] == tate - tatenum[i][ii + 1] - tatenummin[i][ii + 1]) {
+									estnum2++;
+								}
+								else {
+									iii = 1;
+								}
+							}
+						}
+						else {
+							i = estnum2 / 130 - 2 * tate - yoko;
+							ii = tatenum[i][0] - estnum2 % 130 + 1;
+							if (ii > 1 && ii < tatenum[i][0] + 1 && tatenummax[i][ii - 1] == tatenummax[i][ii] + tatenum[i][ii] + 1) {
+								if (tatenummax[i][ii - 1] == tate - tatenum[i][ii - 1] - tatenummin[i][ii - 1]) {
+									estnum2++;
+								}
+								else {
+									iii = 1;
+								}
+							}
+						}
 					}
-					for (i = 0; i < tate*(yokotatemax + 1); i++) {
-						yokonummin[i % tate][i / tate] = yokonummin3[i % tate][i / tate];
-						yokonummax[i % tate][i / tate] = yokonummax3[i % tate][i / tate];
-					}
-					for (i = 0; i < yoko*(yokotatemax + 1); i++) {
-						tatenummin[i % yoko][i / yoko] = tatenummin3[i % yoko][i / yoko];
-						tatenummax[i % yoko][i / yoko] = tatenummax3[i % yoko][i / yoko];
+
+					//いざ局面を戻す
+					if (iii == 0) {
+						for (i = 0; i < yoko*tate; i++) {
+							paint[i % yoko][i / yoko] = paint3[i % yoko][i / yoko];
+						}
+						for (i = 0; i < tate*(yokotatemax + 1); i++) {
+							yokonummin[i % tate][i / tate] = yokonummin3[i % tate][i / tate];
+							yokonummax[i % tate][i / tate] = yokonummax3[i % tate][i / tate];
+						}
+						for (i = 0; i < yoko*(yokotatemax + 1); i++) {
+							tatenummin[i % yoko][i / yoko] = tatenummin3[i % yoko][i / yoko];
+							tatenummax[i % yoko][i / yoko] = tatenummax3[i % yoko][i / yoko];
+						}
 					}
 				}
 
@@ -1264,14 +1394,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 						for (ii = estnum2 % 130 + 1; ii < yokonum[i][0] + 1; ii++) {
 							estmm2 = yokonummin[i][ii];
 							if (yokonummax[i][ii] != yoko - yokonum[i][ii] - estmm2) {
-								if (komatta4 + yoko * tate + 260 * (tate + yoko) < estnum2) {
-									komatta5 = 1;
-									break;
-								}
 								est2 = 2;
 								estc2 = i;
 								estp2 = ii;
 								estnum2 = i * 130 + ii;
+								if (komatta4 + yoko * tate + 260 * (tate + yoko) < estnum2) {
+									komatta5 = 1;
+									break;
+								}
 								yokonummax[i][ii] = yoko - yokonum[i][ii] - estmm2;
 								yokochk[i] = 2;
 								break;
@@ -1287,14 +1417,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 						for (ii = yokonum[i][0] - estnum2 % 130; ii > 0; ii--) {
 							estmm2 = yokonummax[i][ii];
 							if (yokonummin[i][ii] != yoko - yokonum[i][ii] - estmm2) {
-								if (komatta4 + yoko * tate + 260 * (tate + yoko) < estnum2) {
-									komatta5 = 1;
-									break;
-								}
 								est2 = 2;
 								estc2 = i;
 								estp2 = ii;
 								estnum2 = (tate + i) * 130 + yokonum[i][0] - ii + 1;
+								if (komatta4 + yoko * tate + 260 * (tate + yoko) < estnum2) {
+									komatta5 = 1;
+									break;
+								}
 								yokonummin[i][ii] = yoko - yokonum[i][ii] - estmm2;
 								yokochk[i] = 2;
 								break;
@@ -1310,14 +1440,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 						for (ii = estnum2 % 130 + 1; ii < tatenum[i][0] + 1; ii++) {
 							estmm2 = tatenummin[i][ii];
 							if (tatenummax[i][ii] != tate - tatenum[i][ii] - estmm2) {
-								if (komatta4 + yoko * tate + 260 * (tate + yoko) < estnum2) {
-									komatta5 = 1;
-									break;
-								}
 								est2 = 2;
 								estc2 = i;
 								estp2 = ii;
 								estnum2 = (2 * tate + i) * 130 + ii;
+								if (komatta4 + yoko * tate + 260 * (tate + yoko) < estnum2) {
+									komatta5 = 1;
+									break;
+								}
 								tatenummax[i][ii] = tate - tatenum[i][ii] - estmm2;
 								tatechk[i] = 2;
 								break;
@@ -1333,14 +1463,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 						for (ii = tatenum[i][0] - estnum2 % 130; ii > 0; ii--) {
 							estmm2 = tatenummax[i][ii];
 							if (tatenummin[i][ii] != tate - tatenum[i][ii] - estmm2) {
-								if (komatta4 + yoko * tate + 260 * (tate + yoko) < estnum2) {
-									komatta5 = 1;
-									break;
-								}
 								est2 = 2;
 								estc2 = i;
 								estp2 = ii;
 								estnum2 = (2 * tate + yoko + i) * 130 + tatenum[i][0] - ii + 1;
+								if (komatta4 + yoko * tate + 260 * (tate + yoko) < estnum2) {
+									komatta5 = 1;
+									break;
+								}
 								tatenummin[i][ii] = tate - tatenum[i][ii] - estmm2;
 								tatechk[i] = 2;
 								break;
@@ -1384,6 +1514,22 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					}
 					yokochk[estp2 / yoko] = 2;
 					tatechk[estp2 % yoko] = 2;
+				}
+
+				//お手製背理法は局面を戻さず横着していることがあるのでその対策
+				if (komatta5 == 1 && iii == 1) {
+					for (i = 0; i < yoko*tate; i++) {
+						paint[i % yoko][i / yoko] = paint3[i % yoko][i / yoko];
+					}
+					for (i = 0; i < tate*(yokotatemax + 1); i++) {
+						yokonummin[i % tate][i / tate] = yokonummin3[i % tate][i / tate];
+						yokonummax[i % tate][i / tate] = yokonummax3[i % tate][i / tate];
+					}
+					for (i = 0; i < yoko*(yokotatemax + 1); i++) {
+						tatenummin[i % yoko][i / yoko] = tatenummin3[i % yoko][i / yoko];
+						tatenummax[i % yoko][i / yoko] = tatenummax3[i % yoko][i / yoko];
+					}
+					break;
 				}
 			}
 
@@ -1572,8 +1718,9 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 
 					//手詰まりの時、仮定してたら局面を戻して次に備える
 					else {
-						iii = 0;
 
+						//お手製背理法のときは少しでも局面を戻す処理を減らすため細かい努力をする
+						iii = 0;
 						if (est == 2 && estmmchk == 0) {
 							if (estnum < 130 * tate) {
 								i = estnum / 130;
@@ -1624,6 +1771,8 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 								}
 							}
 						}
+
+						//いざ局面を戻す
 						if (iii == 0) {
 							for (i = 0; i < tate; i++) {
 								if (yokochk2[i] == 1) {
@@ -1673,14 +1822,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 							for (ii = estnum % 130 + 1; ii < yokonum[i][0] + 1; ii++) {
 								estmm = yokonummin[i][ii];
 								if (yokonummax[i][ii] != yoko - yokonum[i][ii] - estmm) {
-									if (komatta2 + yoko * tate + 260 * (tate + yoko) < estnum) {
-										komatta3 = 1;
-										break;
-									}
 									est = 2;
 									estc = i;
 									estp = ii;
 									estnum = i * 130 + ii;
+									if (komatta2 + yoko * tate + 260 * (tate + yoko) < estnum) {
+										komatta3 = 1;
+										break;
+									}
 									yokonummax[i][ii] = yoko - yokonum[i][ii] - estmm;
 									yokochk[i] = 2;
 									yokochk2[i] = 1;
@@ -1697,14 +1846,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 							for (ii = yokonum[i][0] - estnum % 130; ii > 0; ii--) {
 								estmm = yokonummax[i][ii];
 								if (yokonummin[i][ii] != yoko - yokonum[i][ii] - estmm) {
-									if (komatta2 + yoko * tate + 260 * (tate + yoko) < estnum) {
-										komatta3 = 1;
-										break;
-									}
 									est = 2;
 									estc = i;
 									estp = ii;
 									estnum = (tate + i) * 130 + yokonum[i][0] - ii + 1;
+									if (komatta2 + yoko * tate + 260 * (tate + yoko) < estnum) {
+										komatta3 = 1;
+										break;
+									}
 									yokonummin[i][ii] = yoko - yokonum[i][ii] - estmm;
 									yokochk[i] = 2;
 									yokochk2[i] = 1;
@@ -1721,14 +1870,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 							for (ii = estnum % 130 + 1; ii < tatenum[i][0] + 1; ii++) {
 								estmm = tatenummin[i][ii];
 								if (tatenummax[i][ii] != tate - tatenum[i][ii] - estmm) {
-									if (komatta2 + yoko * tate + 260 * (tate + yoko) < estnum) {
-										komatta3 = 1;
-										break;
-									}
 									est = 2;
 									estc = i;
 									estp = ii;
 									estnum = (2 * tate + i) * 130 + ii;
+									if (komatta2 + yoko * tate + 260 * (tate + yoko) < estnum) {
+										komatta3 = 1;
+										break;
+									}
 									tatenummax[i][ii] = tate - tatenum[i][ii] - estmm;
 									tatechk[i] = 2;
 									tatechk2[i] = 1;
@@ -1745,14 +1894,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 							for (ii = tatenum[i][0] - estnum % 130; ii > 0; ii--) {
 								estmm = tatenummax[i][ii];
 								if (tatenummin[i][ii] != tate - tatenum[i][ii] - estmm) {
-									if (komatta2 + yoko * tate + 260 * (tate + yoko) < estnum) {
-										komatta3 = 1;
-										break;
-									}
 									est = 2;
 									estc = i;
 									estp = ii;
 									estnum = (2 * tate + yoko + i) * 130 + tatenum[i][0] - ii + 1;
+									if (komatta2 + yoko * tate + 260 * (tate + yoko) < estnum) {
+										komatta3 = 1;
+										break;
+									}
 									tatenummin[i][ii] = tate - tatenum[i][ii] - estmm;
 									tatechk[i] = 2;
 									tatechk2[i] = 1;
@@ -1800,7 +1949,9 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 						yokochk2[estp / yoko] = 1;
 						tatechk2[estp % yoko] = 1;
 					}
-					if (komatta3 == 1) {
+
+					//お手製背理法は局面を戻さず横着していることがあるのでその対策
+					if (komatta3 == 1 && iii == 1) {
 						for (i = 0; i < tate; i++) {
 							if (yokochk2[i] == 1) {
 								for (ii = 0; ii < yoko; ii++) {
