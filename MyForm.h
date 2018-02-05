@@ -1999,6 +1999,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 								iii = 1;
 								for (ii = yokonummin[i][1]; ii + yokonum[i][yokonum[i][0]] + 1 < yoko; ii++) {
 									if (paint[yoko - ii - 1][i] == 1) {
+										if (iii > yokonum[i][0]) { err = 1; goto errend; }
 
 										//maxを見ながら黒地を担当できる数字じゃなかったら却下して次の数字へ
 										while (yokonummax[i][iii] > yoko - ii - 1) {
@@ -2034,6 +2035,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 								iii = 0;
 								for (ii = yokonummax[i][yokonum[i][0]]; ii + yokonum[i][1] + 1 < yoko; ii++) {
 									if (paint[ii][i] == 1) {
+										if (iii + 1 > yokonum[i][0]) { err = 1; goto errend; }
 
 										//minを見ながら黒地を担当できる数字じゃなかったら却下して次の数字へ
 										while (yokonummin[i][yokonum[i][0] - iii] > yoko - ii - 1) {
@@ -2288,6 +2290,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 								iii = 1;
 								for (ii = tatenummin[i][1]; ii + tatenum[i][tatenum[i][0]] + 1 < tate; ii++) {
 									if (paint[i][tate - ii - 1] == 1) {
+										if (iii > tatenum[i][0]) { err = 1; goto errend; }
 
 										//maxを見ながら黒地を担当できる数字じゃなかったら却下して次の数字へ
 										while (tatenummax[i][iii] > tate - ii - 1) {
@@ -2324,6 +2327,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 								iii = 0;
 								for (ii = tatenummax[i][tatenum[i][0]]; ii + tatenum[i][1] + 1 < tate; ii++) {
 									if (paint[i][ii] == 1) {
+										if (iii + 1 > tatenum[i][0]) { err = 1; goto errend; }
 
 										//minを見ながら黒地を担当できる数字じゃなかったら却下して次の数字へ
 										while (tatenummin[i][tatenum[i][0] - iii] > tate - ii - 1) {
