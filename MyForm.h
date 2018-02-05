@@ -1549,6 +1549,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 				//背理法でエラーが出ていた時にまず局面戻す
 				if (est > 0 && err == 1) {
 					for (i = 0; i < tate; i++) {
+						yokochk[i] = 0;
 						if (yokochk2[i] == 1) {
 							for (ii = 0; ii < yoko; ii++) {
 								paint[ii][i] = paint2[ii][i];
@@ -1561,6 +1562,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 						}
 					}
 					for (i = 0; i < yoko; i++) {
+						tatechk[i] = 0;
 						if (tatechk2[i] == 1) {
 							for (ii = 0; ii < tate; ii++) {
 								paint[i][ii] = paint2[i][ii];
