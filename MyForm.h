@@ -90,6 +90,8 @@ namespace Project2 {
 	private: System::Windows::Forms::Label^  label29;
 	private: System::Windows::Forms::Label^  label30;
 	private: System::Windows::Forms::Label^  label31;
+	private: System::Windows::Forms::Label^  label32;
+	private: System::Windows::Forms::Label^  label33;
 
 
 
@@ -149,6 +151,8 @@ namespace Project2 {
 			this->label29 = (gcnew System::Windows::Forms::Label());
 			this->label30 = (gcnew System::Windows::Forms::Label());
 			this->label31 = (gcnew System::Windows::Forms::Label());
+			this->label32 = (gcnew System::Windows::Forms::Label());
+			this->label33 = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->BeginInit();
 			this->SuspendLayout();
@@ -330,7 +334,7 @@ namespace Project2 {
 			this->label8->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label8->Location = System::Drawing::Point(0, 260);
 			this->label8->Name = L"label8";
-			this->label8->Size = System::Drawing::Size(210, 1);
+			this->label8->Size = System::Drawing::Size(1206, 1);
 			this->label8->TabIndex = 18;
 			// 
 			// label9
@@ -338,7 +342,7 @@ namespace Project2 {
 			this->label9->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label9->Location = System::Drawing::Point(0, 340);
 			this->label9->Name = L"label9";
-			this->label9->Size = System::Drawing::Size(210, 1);
+			this->label9->Size = System::Drawing::Size(1206, 1);
 			this->label9->TabIndex = 19;
 			// 
 			// label10
@@ -346,7 +350,7 @@ namespace Project2 {
 			this->label10->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label10->Location = System::Drawing::Point(0, 420);
 			this->label10->Name = L"label10";
-			this->label10->Size = System::Drawing::Size(210, 1);
+			this->label10->Size = System::Drawing::Size(1206, 1);
 			this->label10->TabIndex = 20;
 			// 
 			// label11
@@ -354,7 +358,7 @@ namespace Project2 {
 			this->label11->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label11->Location = System::Drawing::Point(0, 500);
 			this->label11->Name = L"label11";
-			this->label11->Size = System::Drawing::Size(210, 1);
+			this->label11->Size = System::Drawing::Size(1206, 1);
 			this->label11->TabIndex = 21;
 			// 
 			// label12
@@ -362,7 +366,7 @@ namespace Project2 {
 			this->label12->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label12->Location = System::Drawing::Point(0, 580);
 			this->label12->Name = L"label12";
-			this->label12->Size = System::Drawing::Size(210, 1);
+			this->label12->Size = System::Drawing::Size(1206, 1);
 			this->label12->TabIndex = 22;
 			// 
 			// label13
@@ -370,7 +374,7 @@ namespace Project2 {
 			this->label13->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label13->Location = System::Drawing::Point(0, 660);
 			this->label13->Name = L"label13";
-			this->label13->Size = System::Drawing::Size(210, 1);
+			this->label13->Size = System::Drawing::Size(1206, 1);
 			this->label13->TabIndex = 23;
 			// 
 			// label14
@@ -378,7 +382,7 @@ namespace Project2 {
 			this->label14->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label14->Location = System::Drawing::Point(0, 740);
 			this->label14->Name = L"label14";
-			this->label14->Size = System::Drawing::Size(210, 1);
+			this->label14->Size = System::Drawing::Size(1206, 1);
 			this->label14->TabIndex = 24;
 			// 
 			// label15
@@ -386,7 +390,7 @@ namespace Project2 {
 			this->label15->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label15->Location = System::Drawing::Point(0, 820);
 			this->label15->Name = L"label15";
-			this->label15->Size = System::Drawing::Size(210, 1);
+			this->label15->Size = System::Drawing::Size(1206, 1);
 			this->label15->TabIndex = 25;
 			// 
 			// label16
@@ -394,7 +398,7 @@ namespace Project2 {
 			this->label16->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label16->Location = System::Drawing::Point(0, 900);
 			this->label16->Name = L"label16";
-			this->label16->Size = System::Drawing::Size(210, 1);
+			this->label16->Size = System::Drawing::Size(1206, 1);
 			this->label16->TabIndex = 26;
 			// 
 			// label17
@@ -402,7 +406,7 @@ namespace Project2 {
 			this->label17->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label17->Location = System::Drawing::Point(0, 980);
 			this->label17->Name = L"label17";
-			this->label17->Size = System::Drawing::Size(210, 1);
+			this->label17->Size = System::Drawing::Size(1206, 1);
 			this->label17->TabIndex = 27;
 			// 
 			// label18
@@ -410,7 +414,7 @@ namespace Project2 {
 			this->label18->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label18->Location = System::Drawing::Point(0, 1060);
 			this->label18->Name = L"label18";
-			this->label18->Size = System::Drawing::Size(210, 1);
+			this->label18->Size = System::Drawing::Size(1206, 1);
 			this->label18->TabIndex = 28;
 			// 
 			// label19
@@ -418,7 +422,7 @@ namespace Project2 {
 			this->label19->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label19->Location = System::Drawing::Point(0, 1140);
 			this->label19->Name = L"label19";
-			this->label19->Size = System::Drawing::Size(210, 1);
+			this->label19->Size = System::Drawing::Size(1206, 1);
 			this->label19->TabIndex = 29;
 			// 
 			// label20
@@ -426,7 +430,7 @@ namespace Project2 {
 			this->label20->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label20->Location = System::Drawing::Point(299, 0);
 			this->label20->Name = L"label20";
-			this->label20->Size = System::Drawing::Size(1, 180);
+			this->label20->Size = System::Drawing::Size(1, 1140);
 			this->label20->TabIndex = 30;
 			// 
 			// label21
@@ -434,7 +438,7 @@ namespace Project2 {
 			this->label21->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label21->Location = System::Drawing::Point(381, 0);
 			this->label21->Name = L"label21";
-			this->label21->Size = System::Drawing::Size(1, 180);
+			this->label21->Size = System::Drawing::Size(1, 1140);
 			this->label21->TabIndex = 31;
 			// 
 			// label22
@@ -442,7 +446,7 @@ namespace Project2 {
 			this->label22->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label22->Location = System::Drawing::Point(464, 0);
 			this->label22->Name = L"label22";
-			this->label22->Size = System::Drawing::Size(1, 180);
+			this->label22->Size = System::Drawing::Size(1, 1140);
 			this->label22->TabIndex = 32;
 			// 
 			// label23
@@ -450,7 +454,7 @@ namespace Project2 {
 			this->label23->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label23->Location = System::Drawing::Point(546, 0);
 			this->label23->Name = L"label23";
-			this->label23->Size = System::Drawing::Size(1, 180);
+			this->label23->Size = System::Drawing::Size(1, 1140);
 			this->label23->TabIndex = 33;
 			this->label23->Text = L"label23";
 			// 
@@ -459,7 +463,7 @@ namespace Project2 {
 			this->label24->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label24->Location = System::Drawing::Point(629, 0);
 			this->label24->Name = L"label24";
-			this->label24->Size = System::Drawing::Size(1, 180);
+			this->label24->Size = System::Drawing::Size(1, 1140);
 			this->label24->TabIndex = 34;
 			// 
 			// label25
@@ -467,7 +471,7 @@ namespace Project2 {
 			this->label25->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label25->Location = System::Drawing::Point(711, 0);
 			this->label25->Name = L"label25";
-			this->label25->Size = System::Drawing::Size(1, 180);
+			this->label25->Size = System::Drawing::Size(1, 1140);
 			this->label25->TabIndex = 35;
 			// 
 			// label26
@@ -475,7 +479,7 @@ namespace Project2 {
 			this->label26->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label26->Location = System::Drawing::Point(794, 0);
 			this->label26->Name = L"label26";
-			this->label26->Size = System::Drawing::Size(1, 180);
+			this->label26->Size = System::Drawing::Size(1, 1140);
 			this->label26->TabIndex = 36;
 			// 
 			// label27
@@ -483,7 +487,7 @@ namespace Project2 {
 			this->label27->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label27->Location = System::Drawing::Point(876, 0);
 			this->label27->Name = L"label27";
-			this->label27->Size = System::Drawing::Size(1, 180);
+			this->label27->Size = System::Drawing::Size(1, 1140);
 			this->label27->TabIndex = 37;
 			// 
 			// label28
@@ -491,7 +495,7 @@ namespace Project2 {
 			this->label28->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label28->Location = System::Drawing::Point(959, 0);
 			this->label28->Name = L"label28";
-			this->label28->Size = System::Drawing::Size(1, 180);
+			this->label28->Size = System::Drawing::Size(1, 1140);
 			this->label28->TabIndex = 38;
 			// 
 			// label29
@@ -499,7 +503,7 @@ namespace Project2 {
 			this->label29->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label29->Location = System::Drawing::Point(1041, 0);
 			this->label29->Name = L"label29";
-			this->label29->Size = System::Drawing::Size(1, 180);
+			this->label29->Size = System::Drawing::Size(1, 1140);
 			this->label29->TabIndex = 39;
 			// 
 			// label30
@@ -507,7 +511,7 @@ namespace Project2 {
 			this->label30->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label30->Location = System::Drawing::Point(1124, 0);
 			this->label30->Name = L"label30";
-			this->label30->Size = System::Drawing::Size(1, 180);
+			this->label30->Size = System::Drawing::Size(1, 1140);
 			this->label30->TabIndex = 40;
 			// 
 			// label31
@@ -515,8 +519,24 @@ namespace Project2 {
 			this->label31->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label31->Location = System::Drawing::Point(1206, 0);
 			this->label31->Name = L"label31";
-			this->label31->Size = System::Drawing::Size(1, 180);
+			this->label31->Size = System::Drawing::Size(1, 1140);
 			this->label31->TabIndex = 41;
+			// 
+			// label32
+			// 
+			this->label32->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->label32->Location = System::Drawing::Point(0, 178);
+			this->label32->Name = L"label32";
+			this->label32->Size = System::Drawing::Size(1206, 2);
+			this->label32->TabIndex = 42;
+			// 
+			// label33
+			// 
+			this->label33->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->label33->Location = System::Drawing::Point(216, 0);
+			this->label33->Name = L"label33";
+			this->label33->Size = System::Drawing::Size(2, 1140);
+			this->label33->TabIndex = 43;
 			// 
 			// U_Logi
 			// 
@@ -532,6 +552,8 @@ namespace Project2 {
 			this->Controls->Add(this->button5);
 			this->Controls->Add(this->button4);
 			this->Controls->Add(this->button3);
+			this->Controls->Add(this->label33);
+			this->Controls->Add(this->label32);
 			this->Controls->Add(this->label31);
 			this->Controls->Add(this->label30);
 			this->Controls->Add(this->label29);
