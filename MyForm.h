@@ -159,7 +159,7 @@ namespace Project2 {
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(12, 25);
+			this->button1->Location = System::Drawing::Point(12, 13);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(75, 41);
 			this->button1->TabIndex = 0;
@@ -211,7 +211,7 @@ namespace Project2 {
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(12, 72);
+			this->button2->Location = System::Drawing::Point(12, 60);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(75, 43);
 			this->button2->TabIndex = 4;
@@ -224,7 +224,7 @@ namespace Project2 {
 			this->label4->AutoSize = true;
 			this->label4->Font = (gcnew System::Drawing::Font(L"ＭＳ Ｐゴシック", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(128)));
-			this->label4->Location = System::Drawing::Point(93, 72);
+			this->label4->Location = System::Drawing::Point(93, 60);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(0, 16);
 			this->label4->TabIndex = 5;
@@ -239,7 +239,7 @@ namespace Project2 {
 			// 
 			// button3
 			// 
-			this->button3->Location = System::Drawing::Point(12, 155);
+			this->button3->Location = System::Drawing::Point(12, 143);
 			this->button3->Name = L"button3";
 			this->button3->Size = System::Drawing::Size(75, 22);
 			this->button3->TabIndex = 6;
@@ -250,7 +250,7 @@ namespace Project2 {
 			// 
 			// button4
 			// 
-			this->button4->Location = System::Drawing::Point(12, 121);
+			this->button4->Location = System::Drawing::Point(12, 109);
 			this->button4->Name = L"button4";
 			this->button4->Size = System::Drawing::Size(75, 30);
 			this->button4->TabIndex = 7;
@@ -260,7 +260,7 @@ namespace Project2 {
 			// 
 			// button5
 			// 
-			this->button5->Location = System::Drawing::Point(96, 25);
+			this->button5->Location = System::Drawing::Point(96, 13);
 			this->button5->Name = L"button5";
 			this->button5->Size = System::Drawing::Size(75, 41);
 			this->button5->TabIndex = 8;
@@ -276,7 +276,7 @@ namespace Project2 {
 			this->label5->Font = (gcnew System::Drawing::Font(L"ＭＳ Ｐゴシック", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(128)));
 			this->label5->ForeColor = System::Drawing::Color::Red;
-			this->label5->Location = System::Drawing::Point(9, 6);
+			this->label5->Location = System::Drawing::Point(9, -6);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(24, 16);
 			this->label5->TabIndex = 9;
@@ -286,7 +286,7 @@ namespace Project2 {
 			// label6
 			// 
 			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(106, 127);
+			this->label6->Location = System::Drawing::Point(106, 115);
 			this->label6->Name = L"label6";
 			this->label6->Size = System::Drawing::Size(22, 12);
 			this->label6->TabIndex = 12;
@@ -296,7 +296,7 @@ namespace Project2 {
 			// label7
 			// 
 			this->label7->AutoSize = true;
-			this->label7->Location = System::Drawing::Point(107, 153);
+			this->label7->Location = System::Drawing::Point(107, 141);
 			this->label7->Name = L"label7";
 			this->label7->Size = System::Drawing::Size(21, 12);
 			this->label7->TabIndex = 13;
@@ -308,7 +308,7 @@ namespace Project2 {
 			this->numericUpDown1->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(128)));
 			this->numericUpDown1->Increment = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5, 0, 0, 0 });
-			this->numericUpDown1->Location = System::Drawing::Point(131, 121);
+			this->numericUpDown1->Location = System::Drawing::Point(131, 109);
 			this->numericUpDown1->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 255, 0, 0, 0 });
 			this->numericUpDown1->Name = L"numericUpDown1";
 			this->numericUpDown1->ReadOnly = true;
@@ -321,7 +321,7 @@ namespace Project2 {
 			this->numericUpDown2->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 12, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(128)));
 			this->numericUpDown2->Increment = System::Decimal(gcnew cli::array< System::Int32 >(4) { 5, 0, 0, 0 });
-			this->numericUpDown2->Location = System::Drawing::Point(131, 147);
+			this->numericUpDown2->Location = System::Drawing::Point(131, 135);
 			this->numericUpDown2->Maximum = System::Decimal(gcnew cli::array< System::Int32 >(4) { 255, 0, 0, 0 });
 			this->numericUpDown2->Name = L"numericUpDown2";
 			this->numericUpDown2->ReadOnly = true;
@@ -332,97 +332,97 @@ namespace Project2 {
 			// label8
 			// 
 			this->label8->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->label8->Location = System::Drawing::Point(0, 260);
+			this->label8->Location = System::Drawing::Point(0, 259);
 			this->label8->Name = L"label8";
-			this->label8->Size = System::Drawing::Size(1206, 1);
+			this->label8->Size = System::Drawing::Size(711, 1);
 			this->label8->TabIndex = 18;
 			// 
 			// label9
 			// 
 			this->label9->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->label9->Location = System::Drawing::Point(0, 340);
+			this->label9->Location = System::Drawing::Point(0, 339);
 			this->label9->Name = L"label9";
-			this->label9->Size = System::Drawing::Size(1206, 1);
+			this->label9->Size = System::Drawing::Size(711, 1);
 			this->label9->TabIndex = 19;
 			// 
 			// label10
 			// 
 			this->label10->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->label10->Location = System::Drawing::Point(0, 420);
+			this->label10->Location = System::Drawing::Point(0, 419);
 			this->label10->Name = L"label10";
-			this->label10->Size = System::Drawing::Size(1206, 1);
+			this->label10->Size = System::Drawing::Size(711, 1);
 			this->label10->TabIndex = 20;
 			// 
 			// label11
 			// 
 			this->label11->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->label11->Location = System::Drawing::Point(0, 500);
+			this->label11->Location = System::Drawing::Point(0, 499);
 			this->label11->Name = L"label11";
-			this->label11->Size = System::Drawing::Size(1206, 1);
+			this->label11->Size = System::Drawing::Size(711, 1);
 			this->label11->TabIndex = 21;
 			// 
 			// label12
 			// 
 			this->label12->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->label12->Location = System::Drawing::Point(0, 580);
+			this->label12->Location = System::Drawing::Point(0, 579);
 			this->label12->Name = L"label12";
-			this->label12->Size = System::Drawing::Size(1206, 1);
+			this->label12->Size = System::Drawing::Size(711, 1);
 			this->label12->TabIndex = 22;
 			// 
 			// label13
 			// 
 			this->label13->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->label13->Location = System::Drawing::Point(0, 660);
+			this->label13->Location = System::Drawing::Point(0, 659);
 			this->label13->Name = L"label13";
-			this->label13->Size = System::Drawing::Size(1206, 1);
+			this->label13->Size = System::Drawing::Size(711, 1);
 			this->label13->TabIndex = 23;
 			// 
 			// label14
 			// 
 			this->label14->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->label14->Location = System::Drawing::Point(0, 740);
+			this->label14->Location = System::Drawing::Point(0, 739);
 			this->label14->Name = L"label14";
-			this->label14->Size = System::Drawing::Size(1206, 1);
+			this->label14->Size = System::Drawing::Size(711, 1);
 			this->label14->TabIndex = 24;
 			// 
 			// label15
 			// 
 			this->label15->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->label15->Location = System::Drawing::Point(0, 820);
+			this->label15->Location = System::Drawing::Point(0, 819);
 			this->label15->Name = L"label15";
-			this->label15->Size = System::Drawing::Size(1206, 1);
+			this->label15->Size = System::Drawing::Size(711, 1);
 			this->label15->TabIndex = 25;
 			// 
 			// label16
 			// 
 			this->label16->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->label16->Location = System::Drawing::Point(0, 900);
+			this->label16->Location = System::Drawing::Point(0, 899);
 			this->label16->Name = L"label16";
-			this->label16->Size = System::Drawing::Size(1206, 1);
+			this->label16->Size = System::Drawing::Size(711, 1);
 			this->label16->TabIndex = 26;
 			// 
 			// label17
 			// 
 			this->label17->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->label17->Location = System::Drawing::Point(0, 980);
+			this->label17->Location = System::Drawing::Point(0, 979);
 			this->label17->Name = L"label17";
-			this->label17->Size = System::Drawing::Size(1206, 1);
+			this->label17->Size = System::Drawing::Size(711, 1);
 			this->label17->TabIndex = 27;
 			// 
 			// label18
 			// 
 			this->label18->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->label18->Location = System::Drawing::Point(0, 1060);
+			this->label18->Location = System::Drawing::Point(0, 1059);
 			this->label18->Name = L"label18";
-			this->label18->Size = System::Drawing::Size(1206, 1);
+			this->label18->Size = System::Drawing::Size(711, 1);
 			this->label18->TabIndex = 28;
 			// 
 			// label19
 			// 
 			this->label19->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->label19->Location = System::Drawing::Point(0, 1140);
+			this->label19->Location = System::Drawing::Point(0, 1139);
 			this->label19->Name = L"label19";
-			this->label19->Size = System::Drawing::Size(1206, 1);
+			this->label19->Size = System::Drawing::Size(711, 1);
 			this->label19->TabIndex = 29;
 			// 
 			// label20
@@ -430,7 +430,7 @@ namespace Project2 {
 			this->label20->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label20->Location = System::Drawing::Point(299, 0);
 			this->label20->Name = L"label20";
-			this->label20->Size = System::Drawing::Size(1, 1140);
+			this->label20->Size = System::Drawing::Size(1, 660);
 			this->label20->TabIndex = 30;
 			// 
 			// label21
@@ -438,7 +438,7 @@ namespace Project2 {
 			this->label21->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label21->Location = System::Drawing::Point(381, 0);
 			this->label21->Name = L"label21";
-			this->label21->Size = System::Drawing::Size(1, 1140);
+			this->label21->Size = System::Drawing::Size(1, 660);
 			this->label21->TabIndex = 31;
 			// 
 			// label22
@@ -446,7 +446,7 @@ namespace Project2 {
 			this->label22->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label22->Location = System::Drawing::Point(464, 0);
 			this->label22->Name = L"label22";
-			this->label22->Size = System::Drawing::Size(1, 1140);
+			this->label22->Size = System::Drawing::Size(1, 660);
 			this->label22->TabIndex = 32;
 			// 
 			// label23
@@ -454,7 +454,7 @@ namespace Project2 {
 			this->label23->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label23->Location = System::Drawing::Point(546, 0);
 			this->label23->Name = L"label23";
-			this->label23->Size = System::Drawing::Size(1, 1140);
+			this->label23->Size = System::Drawing::Size(1, 660);
 			this->label23->TabIndex = 33;
 			this->label23->Text = L"label23";
 			// 
@@ -463,7 +463,7 @@ namespace Project2 {
 			this->label24->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label24->Location = System::Drawing::Point(629, 0);
 			this->label24->Name = L"label24";
-			this->label24->Size = System::Drawing::Size(1, 1140);
+			this->label24->Size = System::Drawing::Size(1, 660);
 			this->label24->TabIndex = 34;
 			// 
 			// label25
@@ -471,7 +471,7 @@ namespace Project2 {
 			this->label25->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label25->Location = System::Drawing::Point(711, 0);
 			this->label25->Name = L"label25";
-			this->label25->Size = System::Drawing::Size(1, 1140);
+			this->label25->Size = System::Drawing::Size(1, 660);
 			this->label25->TabIndex = 35;
 			// 
 			// label26
@@ -479,7 +479,7 @@ namespace Project2 {
 			this->label26->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label26->Location = System::Drawing::Point(794, 0);
 			this->label26->Name = L"label26";
-			this->label26->Size = System::Drawing::Size(1, 1140);
+			this->label26->Size = System::Drawing::Size(1, 660);
 			this->label26->TabIndex = 36;
 			// 
 			// label27
@@ -487,7 +487,7 @@ namespace Project2 {
 			this->label27->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label27->Location = System::Drawing::Point(876, 0);
 			this->label27->Name = L"label27";
-			this->label27->Size = System::Drawing::Size(1, 1140);
+			this->label27->Size = System::Drawing::Size(1, 660);
 			this->label27->TabIndex = 37;
 			// 
 			// label28
@@ -495,7 +495,7 @@ namespace Project2 {
 			this->label28->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label28->Location = System::Drawing::Point(959, 0);
 			this->label28->Name = L"label28";
-			this->label28->Size = System::Drawing::Size(1, 1140);
+			this->label28->Size = System::Drawing::Size(1, 660);
 			this->label28->TabIndex = 38;
 			// 
 			// label29
@@ -503,7 +503,7 @@ namespace Project2 {
 			this->label29->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label29->Location = System::Drawing::Point(1041, 0);
 			this->label29->Name = L"label29";
-			this->label29->Size = System::Drawing::Size(1, 1140);
+			this->label29->Size = System::Drawing::Size(1, 660);
 			this->label29->TabIndex = 39;
 			// 
 			// label30
@@ -511,7 +511,7 @@ namespace Project2 {
 			this->label30->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label30->Location = System::Drawing::Point(1124, 0);
 			this->label30->Name = L"label30";
-			this->label30->Size = System::Drawing::Size(1, 1140);
+			this->label30->Size = System::Drawing::Size(1, 660);
 			this->label30->TabIndex = 40;
 			// 
 			// label31
@@ -519,7 +519,7 @@ namespace Project2 {
 			this->label31->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label31->Location = System::Drawing::Point(1206, 0);
 			this->label31->Name = L"label31";
-			this->label31->Size = System::Drawing::Size(1, 1140);
+			this->label31->Size = System::Drawing::Size(1, 660);
 			this->label31->TabIndex = 41;
 			// 
 			// label32
@@ -527,7 +527,7 @@ namespace Project2 {
 			this->label32->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label32->Location = System::Drawing::Point(0, 178);
 			this->label32->Name = L"label32";
-			this->label32->Size = System::Drawing::Size(1206, 2);
+			this->label32->Size = System::Drawing::Size(711, 2);
 			this->label32->TabIndex = 42;
 			// 
 			// label33
@@ -535,7 +535,7 @@ namespace Project2 {
 			this->label33->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
 			this->label33->Location = System::Drawing::Point(216, 0);
 			this->label33->Name = L"label33";
-			this->label33->Size = System::Drawing::Size(2, 1140);
+			this->label33->Size = System::Drawing::Size(2, 660);
 			this->label33->TabIndex = 43;
 			// 
 			// U_Logi
@@ -600,6 +600,36 @@ namespace Project2 {
 		String^ w;
 		String^ w2;
 		int  hairi1, hairi2;
+
+		Void labelline() {
+			this->label8->Size = System::Drawing::Size(218 + int(yoko * 16.5), 1);
+			this->label9->Size = System::Drawing::Size(218 + int(yoko * 16.5), 1);
+			this->label10->Size = System::Drawing::Size(218 + int(yoko * 16.5), 1);
+			this->label11->Size = System::Drawing::Size(218 + int(yoko * 16.5), 1);
+			this->label12->Size = System::Drawing::Size(218 + int(yoko * 16.5), 1);
+			this->label13->Size = System::Drawing::Size(218 + int(yoko * 16.5), 1);
+			this->label14->Size = System::Drawing::Size(218 + int(yoko * 16.5), 1);
+			this->label15->Size = System::Drawing::Size(218 + int(yoko * 16.5), 1);
+			this->label16->Size = System::Drawing::Size(218 + int(yoko * 16.5), 1);
+			this->label17->Size = System::Drawing::Size(218 + int(yoko * 16.5), 1);
+			this->label18->Size = System::Drawing::Size(218 + int(yoko * 16.5), 1);
+			this->label19->Size = System::Drawing::Size(218 + int(yoko * 16.5), 1);
+			this->label32->Size = System::Drawing::Size(218 + int(yoko * 16.5), 2);
+
+			this->label20->Size = System::Drawing::Size(1, 180 + tate * 16);
+			this->label21->Size = System::Drawing::Size(1, 180 + tate * 16);
+			this->label22->Size = System::Drawing::Size(1, 180 + tate * 16);
+			this->label23->Size = System::Drawing::Size(1, 180 + tate * 16);
+			this->label24->Size = System::Drawing::Size(1, 180 + tate * 16);
+			this->label25->Size = System::Drawing::Size(1, 180 + tate * 16);
+			this->label26->Size = System::Drawing::Size(1, 180 + tate * 16);
+			this->label27->Size = System::Drawing::Size(1, 180 + tate * 16);
+			this->label28->Size = System::Drawing::Size(1, 180 + tate * 16);
+			this->label29->Size = System::Drawing::Size(1, 180 + tate * 16);
+			this->label30->Size = System::Drawing::Size(1, 180 + tate * 16);
+			this->label31->Size = System::Drawing::Size(1, 180 + tate * 16);
+			this->label33->Size = System::Drawing::Size(2, 180 + tate * 16);
+		}
 
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		int readfile[32768];
@@ -738,6 +768,8 @@ namespace Project2 {
 			label1->Text = w;
 			label2->Text = wyoko;
 			label3->Text = wtate;
+			
+			labelline();
 		}
 
 	}
@@ -2736,6 +2768,7 @@ private: System::Void button3_Click(System::Object^  sender, System::EventArgs^ 
 	if (button3->Text == L"初期化") {
 		tate = 30;
 		yoko = 30;
+		labelline();
 		numericUpDown1->Value = tate;
 		numericUpDown2->Value = yoko;
 		label1->Text = L"";
@@ -2863,6 +2896,7 @@ private: System::Void button5_Click(System::Object^  sender, System::EventArgs^ 
 		}
 		tate = Decimal::ToByte(numericUpDown1->Value);
 		yoko = Decimal::ToByte(numericUpDown2->Value);
+		labelline();
 
 		//余分な0が入っていたら亡き者とする
 		for (i = 0; i < tate; i++) {
@@ -2951,6 +2985,7 @@ private: System::Void label2_Click(System::Object^  sender, System::EventArgs^  
 
 		tate = Decimal::ToByte(numericUpDown1->Value);
 		yoko = Decimal::ToByte(numericUpDown2->Value);
+		labelline();
 
 		//最後にされてた数字入力を反映
 		if (label5->Text != L"□") {
@@ -3032,6 +3067,7 @@ private: System::Void label3_Click(System::Object^  sender, System::EventArgs^  
 
 		tate = Decimal::ToByte(numericUpDown1->Value);
 		yoko = Decimal::ToByte(numericUpDown2->Value);
+		labelline();
 
 		//最後にされてた数字入力を反映
 		if (label5->Text != L"□") {
@@ -3124,6 +3160,7 @@ private: System::Void U_Logi_KeyDown(System::Object^  sender, System::Windows::F
 
 		tate = Decimal::ToByte(numericUpDown1->Value);
 		yoko = Decimal::ToByte(numericUpDown2->Value);
+		labelline();
 
 		//数字のボタンもしくはテンキーの数字のボタンが押されたとき
 		if ((e->KeyCode > Keys::Delete && e->KeyCode < Keys::A) || (e->KeyCode > Keys::Z && e->KeyCode < Keys::Multiply)) {
