@@ -1193,16 +1193,18 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 
 			//お手製背理法は局面を戻さず横着していることがあるのでその対策
 			if (komatta7 == 1) {
-				for (i = 0; i < yoko*tate; i++) {
-					paint[i % yoko][i / yoko] = paint4[i % yoko][i / yoko];
-				}
-				for (i = 0; i < tate*(yokotatemax + 1); i++) {
-					yokonummin[i % tate][i / tate] = yokonummin4[i % tate][i / tate];
-					yokonummax[i % tate][i / tate] = yokonummax4[i % tate][i / tate];
-				}
-				for (i = 0; i < yoko*(yokotatemax + 1); i++) {
-					tatenummin[i % yoko][i / yoko] = tatenummin4[i % yoko][i / yoko];
-					tatenummax[i % yoko][i / yoko] = tatenummax4[i % yoko][i / yoko];
+				if (iii == 1) {
+					for (i = 0; i < yoko*tate; i++) {
+						paint[i % yoko][i / yoko] = paint4[i % yoko][i / yoko];
+					}
+					for (i = 0; i < tate*(yokotatemax + 1); i++) {
+						yokonummin[i % tate][i / tate] = yokonummin4[i % tate][i / tate];
+						yokonummax[i % tate][i / tate] = yokonummax4[i % tate][i / tate];
+					}
+					for (i = 0; i < yoko*(yokotatemax + 1); i++) {
+						tatenummin[i % yoko][i / yoko] = tatenummin4[i % yoko][i / yoko];
+						tatenummax[i % yoko][i / yoko] = tatenummax4[i % yoko][i / yoko];
+					}
 				}
 				break;
 			}
@@ -1571,17 +1573,19 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 				}
 
 				//お手製背理法は局面を戻さず横着していることがあるのでその対策
-				if (komatta5 == 1 && iii == 1) {
-					for (i = 0; i < yoko*tate; i++) {
-						paint[i % yoko][i / yoko] = paint3[i % yoko][i / yoko];
-					}
-					for (i = 0; i < tate*(yokotatemax + 1); i++) {
-						yokonummin[i % tate][i / tate] = yokonummin3[i % tate][i / tate];
-						yokonummax[i % tate][i / tate] = yokonummax3[i % tate][i / tate];
-					}
-					for (i = 0; i < yoko*(yokotatemax + 1); i++) {
-						tatenummin[i % yoko][i / yoko] = tatenummin3[i % yoko][i / yoko];
-						tatenummax[i % yoko][i / yoko] = tatenummax3[i % yoko][i / yoko];
+				if (komatta5 == 1) {
+					if (iii == 1) {
+						for (i = 0; i < yoko*tate; i++) {
+							paint[i % yoko][i / yoko] = paint3[i % yoko][i / yoko];
+						}
+						for (i = 0; i < tate*(yokotatemax + 1); i++) {
+							yokonummin[i % tate][i / tate] = yokonummin3[i % tate][i / tate];
+							yokonummax[i % tate][i / tate] = yokonummax3[i % tate][i / tate];
+						}
+						for (i = 0; i < yoko*(yokotatemax + 1); i++) {
+							tatenummin[i % yoko][i / yoko] = tatenummin3[i % yoko][i / yoko];
+							tatenummax[i % yoko][i / yoko] = tatenummax3[i % yoko][i / yoko];
+						}
 					}
 					break;
 				}
@@ -2016,29 +2020,31 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					}
 
 					//お手製背理法は局面を戻さず横着していることがあるのでその対策
-					if (komatta3 == 1 && iii == 1) {
-						for (i = 0; i < tate; i++) {
-							if (yokochk2[i] == 1) {
-								for (ii = 0; ii < yoko; ii++) {
-									paint[ii][i] = paint2[ii][i];
+					if (komatta3 == 1) {
+						if (iii == 1) {
+							for (i = 0; i < tate; i++) {
+								if (yokochk2[i] == 1) {
+									for (ii = 0; ii < yoko; ii++) {
+										paint[ii][i] = paint2[ii][i];
+									}
+									for (ii = 1; ii < yokonum[i][0] + 1; ii++) {
+										yokonummin[i][ii] = yokonummin2[i][ii];
+										yokonummax[i][ii] = yokonummax2[i][ii];
+									}
+									yokochk2[i] = 0;
 								}
-								for (ii = 1; ii < yokonum[i][0] + 1; ii++) {
-									yokonummin[i][ii] = yokonummin2[i][ii];
-									yokonummax[i][ii] = yokonummax2[i][ii];
-								}
-								yokochk2[i] = 0;
 							}
-						}
-						for (i = 0; i < yoko; i++) {
-							if (tatechk2[i] == 1) {
-								for (ii = 0; ii < tate; ii++) {
-									paint[i][ii] = paint2[i][ii];
+							for (i = 0; i < yoko; i++) {
+								if (tatechk2[i] == 1) {
+									for (ii = 0; ii < tate; ii++) {
+										paint[i][ii] = paint2[i][ii];
+									}
+									for (ii = 1; ii < tatenum[i][0] + 1; ii++) {
+										tatenummin[i][ii] = tatenummin2[i][ii];
+										tatenummax[i][ii] = tatenummax2[i][ii];
+									}
+									tatechk2[i] = 0;
 								}
-								for (ii = 1; ii < tatenum[i][0] + 1; ii++) {
-									tatenummin[i][ii] = tatenummin2[i][ii];
-									tatenummax[i][ii] = tatenummax2[i][ii];
-								}
-								tatechk2[i] = 0;
 							}
 						}
 						break;
