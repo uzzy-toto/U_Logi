@@ -2287,6 +2287,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 								}
 							}
 
+							//yokoumaに端から何マス埋まったか入れてみる
+							while (yokoumamin[i] < yoko && paint[yoko - yokoumamin[i] - 1][i] != 0) {
+								yokoumamin[i]++;
+							}
+							while (yokoumamax[i] < yoko && paint[yokoumamax[i]][i] != 0) {
+								yokoumamax[i]++;
+							}
+
 							//単純なminとmaxだけでは無理だが、実は確定するマスを気合で書きだす（横）
 
 							//まずは黒地の位置と長さをスキャンし、その黒地に当てはまる可能性のある数字を全てリストアップしつつ
@@ -2392,15 +2400,6 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									}
 								}
 							}
-
-							//yokoumaに端から何マス埋まったか入れてみる
-							while (yokoumamin[i] < yoko && paint[yoko - yokoumamin[i] - 1][i] != 0) {
-								yokoumamin[i]++;
-							}
-							while (yokoumamax[i] < yoko && paint[yokoumamax[i]][i] != 0) {
-								yokoumamax[i]++;
-							}
-
 						}
 						yokochk[i] = 0;
 					}
@@ -2585,6 +2584,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									paint[i][iii] = 10;
 								}
 							}
+							
+							//tateumaに端から何マス埋まったか入れてみる
+							while (tateumamin[i] < tate && paint[i][tate - tateumamin[i] - 1] != 0) {
+								tateumamin[i]++;
+							}
+							while (tateumamax[i] < tate && paint[i][tateumamax[i]] != 0) {
+								tateumamax[i]++;
+							}
 
 							//単純なminとmaxだけでは無理だが、実は確定するマスを気合で書きだす（縦）
 
@@ -2690,14 +2697,6 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										ii += 1;
 									}
 								}
-							}
-
-							//tateumaに端から何マス埋まったか入れてみる
-							while (tateumamin[i] < tate && paint[i][tate - tateumamin[i] - 1] != 0) {
-								tateumamin[i]++;
-							}
-							while (tateumamax[i] < tate && paint[i][tateumamax[i]] != 0) {
-								tateumamax[i]++;
 							}
 						}
 						tatechk[i] = 0;
