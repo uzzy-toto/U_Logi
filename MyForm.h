@@ -806,12 +806,20 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 	unsigned char tatechk[256];
 	unsigned char yokochk2[256];
 	unsigned char tatechk2[256];
+	unsigned char yokoumamin[256];
+	unsigned char yokoumamax[256];
+	unsigned char tateumamin[256];
+	unsigned char tateumamax[256];
+	unsigned char yokoumamin2[256];
+	unsigned char yokoumamax2[256];
+	unsigned char tateumamin2[256];
+	unsigned char tateumamax2[256];
 
 	unsigned char komatta, komatta3, komatta5, komatta7;
 	unsigned char yokotatemax, est, est2, est3, tuyogari;
 	int komatta2, komatta4, komatta6;
 	int i, ii, iii, iiii, i5, i6, i7, i8, i9;
-	int k1, k2, k3, k4, timer, repotime, umatta, numchk;
+	int k1, k2, k3, k4, timer, repotime, numchk;
 	int estp, estp2, estp3, count1, err, pn, pn2, pn3, estc, estc2, estc3;
 	int estnum, estmm, estmmchk, estnum2, estmm2, estmmchk2, estnum3, estmm3, estmmchk3;
 	int errnum[20] = {};
@@ -820,8 +828,16 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 	w2 = L"";
 	backgroundWorker1->ReportProgress(0);
 
-	for (i = 0; i < tate; i++) { yokochk[i] = 2; }
-	for (i = 0; i < yoko; i++) { tatechk[i] = 2; }
+	for (i = 0; i < tate; i++) {
+		yokochk[i] = 2;
+		yokoumamin[i] = 0;
+		yokoumamax[i] = 0;
+	}
+	for (i = 0; i < yoko; i++) {
+		tatechk[i] = 2;
+		tateumamin[i] = 0;
+		tateumamax[i] = 0;
+	}
 
 	err = 0;
 	komatta = 0;
@@ -829,7 +845,6 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 	komatta5 = 0;
 	komatta7 = 0;
 	tuyogari = 0;
-	umatta = 0;
 	estmmchk = 0;
 	estmmchk2 = 0;
 	estmmchk3 = 0;
@@ -1601,8 +1616,28 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 			estnum = 0;
 			estmm = 0;
 			numchk = 1;
-			for (i = 0; i < tate; i++) { yokochk2[i] = 1; }
-			for (i = 0; i < yoko; i++) { tatechk2[i] = 1; }
+			for (i = 0; i < tate; i++) {
+				yokochk2[i] = 1;
+				yokoumamin[i] = 0;
+				yokoumamax[i] = 0;
+				while (yokoumamin[i] < yoko && paint[yoko - yokoumamin[i] - 1][i] != 0) {
+					yokoumamin[i]++;
+				}
+				while (yokoumamax[i] < yoko && paint[yokoumamax[i]][i] != 0) {
+					yokoumamax[i]++;
+				}
+			}
+			for (i = 0; i < yoko; i++) {
+				tatechk2[i] = 1;
+				tateumamin[i] = 0;
+				tateumamax[i] = 0;
+				while (tateumamin[i] < tate && paint[i][tate - tateumamin[i] - 1] != 0) {
+					tateumamin[i]++;
+				}
+				while (tateumamax[i] < tate && paint[i][tateumamax[i]] != 0) {
+					tateumamax[i]++;
+				}
+			}
 			for (i5 = 0; i5 < hairi1 && komatta3 == 0; i5++) {
 
 				//背理法でエラーが出ていた時にまず局面戻す
@@ -1617,6 +1652,8 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 								yokonummin[i][ii] = yokonummin2[i][ii];
 								yokonummax[i][ii] = yokonummax2[i][ii];
 							}
+							yokoumamin[i] = yokoumamin2[i];
+							yokoumamax[i] = yokoumamax2[i];
 							yokochk2[i] = 0;
 						}
 					}
@@ -1630,6 +1667,8 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 								tatenummin[i][ii] = tatenummin2[i][ii];
 								tatenummax[i][ii] = tatenummax2[i][ii];
 							}
+							tateumamin[i] = tateumamin2[i];
+							tateumamax[i] = tateumamax2[i];
 							tatechk2[i] = 0;
 						}
 					}
@@ -1725,14 +1764,12 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					//仮定中に完成局面が一度みえたら保存しておき、次にみえたら二つを比較する。同じなら何もしない。違うなら計算終わり。
 					//仮定せずに完成局面がみえたら計算終わり。
 					if (est == 0 && est2 == 0 && est3 == 0) {
-						for (i = umatta; paint[i % yoko][i / yoko] > 0 && i < yoko*tate; i++) {
-							umatta = i + 1;
-						}
-						if (i == yoko * tate) { goto theend; }
+						for (i = 0; i < tate && yokoumamin[i] == yoko; i++) { }
+						if (i == tate) { goto theend; }
 					}
 					else {
-						for (i = umatta; paint[i % yoko][i / yoko] > 0 && i < yoko*tate; i++) {}
-						if (i == yoko * tate) {
+						for (i = 0; i < tate && yokoumamin[i] == yoko; i++) { }
+						if (i == tate) {
 							if (tuyogari == 1) {
 								for (ii = 0; ii < yoko*tate && paint[ii % yoko][ii / yoko] == paint5[ii % yoko][ii / yoko]; ii++) {}
 								if (ii != yoko * tate) { tuyogari = 2; goto theend; }
@@ -1760,6 +1797,8 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									yokonummin2[i][ii] = yokonummin[i][ii];
 									yokonummax2[i][ii] = yokonummax[i][ii];
 								}
+								yokoumamin2[i] = yokoumamin[i];
+								yokoumamax2[i] = yokoumamax[i];
 								yokochk2[i] = 0;
 							}
 						}
@@ -1772,6 +1811,8 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									tatenummin2[i][ii] = tatenummin[i][ii];
 									tatenummax2[i][ii] = tatenummax[i][ii];
 								}
+								tateumamin2[i] = tateumamin[i];
+								tateumamax2[i] = tateumamax[i];
 								tatechk2[i] = 0;
 							}
 						}
@@ -1845,6 +1886,8 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										yokonummin[i][ii] = yokonummin2[i][ii];
 										yokonummax[i][ii] = yokonummax2[i][ii];
 									}
+									yokoumamin[i] = yokoumamin2[i];
+									yokoumamax[i] = yokoumamax2[i];
 									yokochk2[i] = 0;
 								}
 							}
@@ -1857,6 +1900,8 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										tatenummin[i][ii] = tatenummin2[i][ii];
 										tatenummax[i][ii] = tatenummax2[i][ii];
 									}
+									tateumamin[i] = tateumamin2[i];
+									tateumamax[i] = tateumamax2[i];
 									tatechk2[i] = 0;
 								}
 							}
@@ -2031,6 +2076,8 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										yokonummin[i][ii] = yokonummin2[i][ii];
 										yokonummax[i][ii] = yokonummax2[i][ii];
 									}
+									yokoumamin[i] = yokoumamin2[i];
+									yokoumamax[i] = yokoumamax2[i];
 									yokochk2[i] = 0;
 								}
 							}
@@ -2043,6 +2090,8 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										tatenummin[i][ii] = tatenummin2[i][ii];
 										tatenummax[i][ii] = tatenummax2[i][ii];
 									}
+									tateumamin[i] = tateumamin2[i];
+									tateumamax[i] = tateumamax2[i];
 									tatechk2[i] = 0;
 								}
 							}
@@ -2242,7 +2291,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 
 							//まずは黒地の位置と長さをスキャンし、その黒地に当てはまる可能性のある数字を全てリストアップしつつ
 							//そこから「黒地の長さ以上の数字の中の最小値」と「最大値(二つに分ける。ギリギリ黒地にあてはまる数字は片方だけに採用)」を求める
-							for (ii = 2; ii < yoko - 2; ii++) {
+							for (ii = yokoumamin[i] + 2; ii < yoko - yokoumamax[i] - 2; ii++) {
 								if (paint[yoko - ii - 1][i] == 1) {
 									for (i6 = 1; i6 + ii < yoko && paint[yoko - ii - i6 - 1][i] == 1; i6++) {}
 									k1 = yoko;
@@ -2308,14 +2357,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 							}
 
 							//×ではさまれた空間を×で埋め尽くせる可能性
-							for (ii = 2; ii < yoko - 4; ii++) {
+							for (ii = yokoumamin[i] + 2; ii < yoko - yokoumamax[i] -  4; ii++) {
 								if (paint[yoko - ii - 1][i] > 9) {
-									for (iii = 0; paint[yoko - ii - iii - 2][i] > 9 && ii + iii + 4 < yoko; iii++) {}
+									for (iii = 0; paint[yoko - ii - iii - 2][i] > 9 && ii + iii + 4 + yokoumamax[i] < yoko; iii++) {}
 									ii += iii;
-									if (ii + 5 > yoko) { break; }
+									if (ii + 5 + yokoumamax[i] > yoko) { break; }
 									if (paint[yoko - ii - 2][i] == 0) {
-										for (iii = 1; paint[yoko - ii - iii - 2][i] == 0 && ii + iii + 3 < yoko; iii++) {}
-										if (ii + iii + 4 > yoko) { break; }
+										for (iii = 1; paint[yoko - ii - iii - 2][i] == 0 && ii + iii + 3 + yokoumamax[i] < yoko; iii++) {}
+										if (ii + iii + 4 + yokoumamax[i] > yoko) { break; }
 										if (paint[yoko - ii - iii - 2][i] > 9) {
 											k1 = yoko;
 											for (i6 = 0; i6 < yokonum[i][0]; i6++) {
@@ -2343,6 +2392,15 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									}
 								}
 							}
+
+							//yokoumaに端から何マス埋まったか入れてみる
+							while (yokoumamin[i] < yoko && paint[yoko - yokoumamin[i] - 1][i] != 0) {
+								yokoumamin[i]++;
+							}
+							while (yokoumamax[i] < yoko && paint[yokoumamax[i]][i] != 0) {
+								yokoumamax[i]++;
+							}
+
 						}
 						yokochk[i] = 0;
 					}
@@ -2532,7 +2590,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 
 							//まずは黒地の位置と長さをスキャンし、その黒地に当てはまる可能性のある数字を全てリストアップしつつ
 							//そこから「黒地の長さ以上の数字の中の最小値」と「最大値(ギリギリの場合片方)」を求める
-							for (ii = 2; ii < tate - 2; ii++) {
+							for (ii = tateumamin[i] + 2; ii < tate - tateumamax[i] - 2; ii++) {
 								if (paint[i][tate - ii - 1] == 1) {
 									for (i6 = 1; i6 + ii < tate && paint[i][tate - ii - i6 - 1] == 1; i6++) {}
 									k1 = tate;
@@ -2598,14 +2656,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 							}
 
 							//×ではさまれた空間を×で埋め尽くせる可能性
-							for (ii = 2; ii < tate - 4; ii++) {
+							for (ii = tateumamin[i] + 2; ii < tate - tateumamax[i] - 4; ii++) {
 								if (paint[i][tate - ii - 1] > 9) {
-									for (iii = 0; paint[i][tate - ii - iii - 2] > 9 && ii + iii + 4 < tate; iii++) {}
+									for (iii = 0; paint[i][tate - ii - iii - 2] > 9 && ii + iii + 4 + tateumamax[i] < tate; iii++) {}
 									ii += iii;
-									if (ii + 5 > tate) { break; }
+									if (ii + 5 + tateumamax[i] > tate) { break; }
 									if (paint[i][tate - ii - 2] == 0) {
-										for (iii = 1; paint[i][tate - ii - iii - 2] == 0 && ii + iii + 3 < tate; iii++) {}
-										if (ii + iii + 4 > tate) { break; }
+										for (iii = 1; paint[i][tate - ii - iii - 2] == 0 && ii + iii + 3 + tateumamax[i] < tate; iii++) {}
+										if (ii + iii + 4 + tateumamax[i] > tate) { break; }
 										if (paint[i][tate - ii - iii - 2] > 9) {
 											k1 = tate;
 											for (i6 = 0; i6 < tatenum[i][0]; i6++) {
@@ -2632,6 +2690,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										ii += 1;
 									}
 								}
+							}
+
+							//tateumaに端から何マス埋まったか入れてみる
+							while (tateumamin[i] < tate && paint[i][tate - tateumamin[i] - 1] != 0) {
+								tateumamin[i]++;
+							}
+							while (tateumamax[i] < tate && paint[i][tateumamax[i]] != 0) {
+								tateumamax[i]++;
 							}
 						}
 						tatechk[i] = 0;
