@@ -830,13 +830,9 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 
 	for (i = 0; i < tate; i++) {
 		yokochk[i] = 2;
-		yokoumamin[i] = 0;
-		yokoumamax[i] = 0;
 	}
 	for (i = 0; i < yoko; i++) {
 		tatechk[i] = 2;
-		tateumamin[i] = 0;
-		tateumamax[i] = 0;
 	}
 
 	err = 0;
@@ -2076,9 +2072,6 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										yokonummin[i][ii] = yokonummin2[i][ii];
 										yokonummax[i][ii] = yokonummax2[i][ii];
 									}
-									yokoumamin[i] = yokoumamin2[i];
-									yokoumamax[i] = yokoumamax2[i];
-									yokochk2[i] = 0;
 								}
 							}
 							for (i = 0; i < yoko; i++) {
@@ -2090,9 +2083,6 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										tatenummin[i][ii] = tatenummin2[i][ii];
 										tatenummax[i][ii] = tatenummax2[i][ii];
 									}
-									tateumamin[i] = tateumamin2[i];
-									tateumamax[i] = tateumamax2[i];
-									tatechk2[i] = 0;
 								}
 							}
 						}
@@ -2264,22 +2254,22 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 
 							//横の各数字の間や壁との間に空白が確定してたら×をつける
 							for (ii = 1; ii < yokonum[i][0]; ii++) {
-								for (iii = 0; yokonummax[i][ii] + yokonummin[i][ii + 1] > yoko + iii; iii++) {
-									if (paint[yokonummax[i][ii] - iii - 1][i] == 0) {
-										tatechk[yokonummax[i][ii] - iii - 1] = 2;
-										tatechk2[yokonummax[i][ii] - iii - 1] = 1;
-										paint[yokonummax[i][ii] - iii - 1][i] = 10;
+								for (iii = yokonummax[i][ii] - 1; yokonummin[i][ii + 1] > yoko - iii - 1; iii--) {
+									if (paint[iii][i] == 0) {
+										tatechk[iii] = 2;
+										tatechk2[iii] = 1;
+										paint[iii][i] = 10;
 									}
 								}
 							}
-							for (iii = 0; yokonummin[i][1] > iii; iii++) {
+							for (iii = yokoumamin[i]; yokonummin[i][1] > iii; iii++) {
 								if (paint[yoko - iii - 1][i] == 0) {
 									tatechk[yoko - iii - 1] = 2;
 									tatechk2[yoko - iii - 1] = 1;
 									paint[yoko - iii - 1][i] = 10;
 								}
 							}
-							for (iii = 0; yokonummax[i][yokonum[i][0]] > iii; iii++) {
+							for (iii = yokoumamax[i]; yokonummax[i][yokonum[i][0]] > iii; iii++) {
 								if (paint[iii][i] == 0) {
 									tatechk[iii] = 2;
 									tatechk2[iii] = 1;
@@ -2562,22 +2552,22 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 
 							//縦の各数字の間や壁との間に空白が確定してたら×をつける
 							for (ii = 1; ii < tatenum[i][0]; ii++) {
-								for (iii = 0; tatenummax[i][ii] + tatenummin[i][ii + 1] > tate + iii; iii++) {
-									if (paint[i][tatenummax[i][ii] - iii - 1] == 0) {
-										yokochk[tatenummax[i][ii] - iii - 1] = 2;
-										yokochk2[tatenummax[i][ii] - iii - 1] = 1;
-										paint[i][tatenummax[i][ii] - iii - 1] = 10;
+								for (iii = tatenummax[i][ii] - 1; tatenummin[i][ii + 1] > tate - iii - 1; iii--) {
+									if (paint[i][iii] == 0) {
+										yokochk[iii] = 2;
+										yokochk2[iii] = 1;
+										paint[i][iii] = 10;
 									}
 								}
 							}
-							for (iii = 0; tatenummin[i][1] > iii; iii++) {
+							for (iii = tateumamin[i]; tatenummin[i][1] > iii; iii++) {
 								if (paint[i][tate - iii - 1] == 0) {
 									yokochk[tate - iii - 1] = 2;
 									yokochk2[tate - iii - 1] = 1;
 									paint[i][tate - iii - 1] = 10;
 								}
 							}
-							for (iii = 0; tatenummax[i][tatenum[i][0]] > iii; iii++) {
+							for (iii = tateumamax[i]; tatenummax[i][tatenum[i][0]] > iii; iii++) {
 								if (paint[i][iii] == 0) {
 									yokochk[iii] = 2;
 									yokochk2[iii] = 1;
