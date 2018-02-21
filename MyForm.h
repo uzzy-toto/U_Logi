@@ -2287,13 +2287,14 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 							//そこから「黒地の長さ以上の数字の中の最小値」と「最大値(二つに分ける。ギリギリ黒地にあてはまる数字は片方だけに採用)」を求める
 							for (ii = yokoumamin[i] + 2; ii < yoko - yokoumamax[i] - 2; ii++) {
 								if (paint[yoko - ii - 1][i] == 1) {
-									for (i6 = 1; i6 + ii < yoko && paint[yoko - ii - i6 - 1][i] == 1; i6++) {}
+									i8 = yoko - ii;
+									for (i6 = 1; i6 + ii < yoko && paint[i8 - i6 - 1][i] == 1; i6++) {}
 									k1 = yoko;
 									k2 = i6;
 									k3 = i6;
 									k4 = 0;
 									for (iii = 0; iii < yokonum[i][0]; iii++) {
-										if (yokonummin[i][iii + 1] < ii + 1 && yokonummax[i][iii + 1] < yoko - ii) {
+										if (yokonummin[i][iii + 1] < ii + 1 && yokonummax[i][iii + 1] < i8) {
 											k4++;
 											if (k1 > yokonum[i][iii + 1] && i6 < yokonum[i][iii + 1] + 1) {
 												k1 = yokonum[i][iii + 1];
@@ -2301,7 +2302,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 											if (k2 < yokonum[i][iii + 1] && yokonummin[i][iii + 1] != ii) {
 												k2 = yokonum[i][iii + 1];
 											}
-											if (k3 < yokonum[i][iii + 1] && yokonummax[i][iii + 1] + 1 != yoko - ii) {
+											if (k3 < yokonum[i][iii + 1] && yokonummax[i][iii + 1] + i6 != i8) {
 												k3 = yokonum[i][iii + 1];
 											}
 										}
@@ -2314,37 +2315,43 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									//「黒地の長さ以上の数字の中の最小値」が黒地の長さより大きければ
 									//近辺に×があれば黒がいくらか確定する
 									for (iii = 0; iii + i6 < k1; iii++) {
-										if (paint[yoko - ii - i6 - iii - 1][i] > 9) {
-											for (i8 = 0; i8 + i6 + iii < k1; i8++) {
-												if (paint[yoko - ii + i8][i] == 0 && i8 < ii) {
-													paint[yoko - ii + i8][i] = 1;
-													tatechk[yoko - ii + i8] = 2;
-													tatechk2[yoko - ii + i8] = 1;
+										if (paint[i8 - i6 - iii - 1][i] > 9) {
+											while (i6 + iii < k1) {
+												if (paint[i8][i] == 0 && 0 < ii) {
+													paint[i8][i] = 1;
+													tatechk[i8] = 2;
+													tatechk2[i8] = 1;
 												}
+												ii--;
+												i6++;
+												i8++;
 											}
 										}
-										if (paint[yoko - ii + iii][i] > 9) {
-											for (i8 = 0; i8 + i6 + iii < k1; i8++) {
-												if (paint[yoko - ii - i6 - i8 - 1][i] == 0 && yoko > ii + i6 + i8) {
-													paint[yoko - ii - i6 - i8 - 1][i] = 1;
-													tatechk[yoko - ii - i6 - i8 - 1] = 2;
-													tatechk2[yoko - ii - i6 - i8 - 1] = 1;
+									}
+									for (iii = 0; iii + i6 < k1; iii++) {
+										if (paint[i8 + iii][i] > 9) {
+											while (i6 + iii < k1) {
+												if (paint[i8 - i6 - 1][i] == 0 && yoko > ii + i6) {
+													paint[i8 - i6 - 1][i] = 1;
+													tatechk[i8 - i6 - 1] = 2;
+													tatechk2[i8 - i6 - 1] = 1;
 												}
+												i6++;
 											}
 										}
 									}
 
 									//候補の数字の最大値が黒地の長さと等しければ、
 									//どの数字かはわからないが長さは確定し黒地を×ではさめる
-									if (k2 == i6 && paint[yoko - ii][i] == 0 && 0 < ii) {
-										paint[yoko - ii][i] = 10;
-										tatechk[yoko - ii] = 2;
-										tatechk2[yoko - ii] = 1;
+									if (k2 == i6 && paint[i8][i] == 0 && 0 < ii) {
+										paint[i8][i] = 10;
+										tatechk[i8] = 2;
+										tatechk2[i8] = 1;
 									}
-									if (k3 == i6 && paint[yoko - ii - i6 - 1][i] == 0 && ii + i6 < yoko) {
-										paint[yoko - ii - i6 - 1][i] = 10;
-										tatechk[yoko - ii - i6 - 1] = 2;
-										tatechk2[yoko - ii - i6 - 1] = 1;
+									if (k3 == i6 && paint[i8 - i6 - 1][i] == 0 && ii + i6 < yoko) {
+										paint[i8 - i6 - 1][i] = 10;
+										tatechk[i8 - i6 - 1] = 2;
+										tatechk2[i8 - i6 - 1] = 1;
 									}
 									ii += i6;
 								}
@@ -2581,21 +2588,22 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 							//そこから「黒地の長さ以上の数字の中の最小値」と「最大値(ギリギリの場合片方)」を求める
 							for (ii = tateumamin[i] + 2; ii < tate - tateumamax[i] - 2; ii++) {
 								if (paint[i][tate - ii - 1] == 1) {
-									for (i6 = 1; i6 + ii < tate && paint[i][tate - ii - i6 - 1] == 1; i6++) {}
+									i8 = tate - ii;
+									for (i6 = 1; i6 + ii < tate && paint[i][i8 - i6 - 1] == 1; i6++) {}
 									k1 = tate;
 									k2 = i6;
 									k3 = i6;
 									k4 = 0;
 									for (iii = 0; iii < tatenum[i][0]; iii++) {
-										k4++;
-										if (tatenummin[i][iii + 1] < ii + 1 && tatenummax[i][iii + 1] < tate - ii) {
+										if (tatenummin[i][iii + 1] < ii + 1 && tatenummax[i][iii + 1] < i8) {
+											k4++;
 											if (k1 > tatenum[i][iii + 1] && i6 < tatenum[i][iii + 1] + 1) {
 												k1 = tatenum[i][iii + 1];
 											}
 											if (k2 < tatenum[i][iii + 1] && tatenummin[i][iii + 1] != ii) {
 												k2 = tatenum[i][iii + 1];
 											}
-											if (k3 < tatenum[i][iii + 1] && tatenummax[i][iii + 1] + 1 != tate - ii) {
+											if (k3 < tatenum[i][iii + 1] && tatenummax[i][iii + 1] + i6 != i8) {
 												k3 = tatenum[i][iii + 1];
 											}
 										}
@@ -2608,37 +2616,43 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									//「黒地の長さ以上の数字の中の最小値」が黒地の長さより大きければ
 									//近辺に×があれば黒がいくらか確定する
 									for (iii = 0; iii + i6 < k1; iii++) {
-										if (paint[i][tate - ii - i6 - iii - 1] > 9) {
-											for (i8 = 0; i8 + i6 + iii < k1; i8++) {
-												if (paint[i][tate - ii + i8] == 0 && i8 < ii) {
-													paint[i][tate - ii + i8] = 1;
-													yokochk[tate - ii + i8] = 2;
-													yokochk2[tate - ii + i8] = 1;
+										if (paint[i][i8 - i6 - iii - 1] > 9) {
+											while (i6 + iii < k1) {
+												if (paint[i][i8] == 0 && 0 < ii) {
+													paint[i][i8] = 1;
+													yokochk[i8] = 2;
+													yokochk2[i8] = 1;
 												}
+												ii--;
+												i6++;
+												i8++;
 											}
 										}
-										if (paint[i][tate - ii + iii] > 9) {
-											for (i8 = 0; i8 + i6 + iii < k1; i8++) {
-												if (paint[i][tate - ii - i6 - i8 - 1] == 0 && tate > ii + i6 + i8) {
-													paint[i][tate - ii - i6 - i8 - 1] = 1;
-													yokochk[tate - ii - i6 - i8 - 1] = 2;
-													yokochk2[tate - ii - i6 - i8 - 1] = 1;
+									}
+									for (iii = 0; iii + i6 < k1; iii++) {
+										if (paint[i][i8 + iii] > 9) {
+											while (i6 + iii < k1) {
+												if (paint[i][i8 - i6 - 1] == 0 && tate > ii + i6) {
+													paint[i][i8 - i6 - 1] = 1;
+													yokochk[i8 - i6 - 1] = 2;
+													yokochk2[i8 - i6 - 1] = 1;
 												}
+												i6++;
 											}
 										}
 									}
 
 									//候補の数字の最大値が黒地の長さと等しければ、
 									//どの数字かはわからないが長さは確定し黒地を×ではさめる
-									if (k2 == i6 && paint[i][tate - ii] == 0 && 0 < ii) {
-										paint[i][tate - ii] = 10;
-										yokochk[tate - ii] = 2;
-										yokochk2[tate - ii] = 1;
+									if (k2 == i6 && paint[i][i8] == 0 && 0 < ii) {
+										paint[i][i8] = 10;
+										yokochk[i8] = 2;
+										yokochk2[i8] = 1;
 									}
-									if (k3 == i6 && paint[i][tate - ii - i6 - 1] == 0 && ii + i6 < tate) {
-										paint[i][tate - ii - i6 - 1] = 10;
-										yokochk[tate - ii - i6 - 1] = 2;
-										yokochk2[tate - ii - i6 - 1] = 1;
+									if (k3 == i6 && paint[i][i8 - i6 - 1] == 0 && ii + i6 < tate) {
+										paint[i][i8 - i6 - 1] = 10;
+										yokochk[i8 - i6 - 1] = 2;
+										yokochk2[i8 - i6 - 1] = 1;
 									}
 									ii += i6;
 								}
