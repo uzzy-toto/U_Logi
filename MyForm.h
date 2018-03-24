@@ -2312,6 +2312,18 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										continue;
 									}
 
+									//2つの黒地が1マスだけ離れて存在すると、間の1マスが×になる可能性があるかも
+									if (k2 == i6 + 1 && paint[i8 + 1][i] == 1 && paint[i8][i] == 0) {
+										paint[i8][i] = 10;
+										tatechk[i8] = 2;
+										tatechk2[i8] = 1;
+									}
+									if (k3 == i6 + 1 && paint[i8 - i6 - 2][i] == 1 && paint[i8 - i6 - 1][i] == 0) {
+										paint[i8 - i6 - 1][i] = 10;
+										tatechk[i8 - i6 - 1] = 2;
+										tatechk2[i8 - i6 - 1] = 1;
+									}
+
 									//「黒地の長さ以上の数字の中の最小値」が黒地の長さより大きければ
 									//近辺に×があれば黒がいくらか確定する
 									for (iii = 0; iii + i6 < k1; iii++) {
@@ -2611,6 +2623,18 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									if (k4 < 2) {
 										ii += i6;
 										continue;
+									}
+
+									//2つの黒地が1マスだけ離れて存在すると、間の1マスが×になる可能性があるかも
+									if (k2 == i6 + 1 && paint[i][i8 + 1] == 1 && paint[i][i8] == 0) {
+										paint[i][i8] = 10;
+										yokochk[i8] = 2;
+										yokochk2[i8] = 1;
+									}
+									if (k3 == i6 + 1 && paint[i][i8 - i6 - 2] == 1 && paint[i][i8 - i6 - 1] == 0) {
+										paint[i][i8 - i6 - 1] = 10;
+										yokochk[i8 - i6 - 1] = 2;
+										yokochk2[i8 - i6 - 1] = 1;
 									}
 
 									//「黒地の長さ以上の数字の中の最小値」が黒地の長さより大きければ
