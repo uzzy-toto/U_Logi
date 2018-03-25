@@ -999,49 +999,53 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					if (estnum3 < 130 * tate) {
 						i = estnum3 / 130;
 						ii = estnum3 % 130;
-						if (ii < yokonum[i][0] && yokonummin[i][ii + 1] == yokonummin[i][ii] + yokonum[i][ii] + 1) {
+						while (ii < yokonum[i][0] && yokonummin[i][ii + 1] == yokonummin[i][ii] + yokonum[i][ii] + 1) {
 							if (yokonummax[i][ii + 1] == yoko - yokonum[i][ii + 1] - yokonummin[i][ii + 1]) {
 								estnum3++;
+								ii++;
+								continue;
 							}
-							else {
-								iii = 1;
-							}
+							iii = 1;
+							break;
 						}
 					}
 					else if (estnum3 < 260 * tate) {
 						i = estnum3 / 130 - tate;
 						ii = yokonum[i][0] - estnum3 % 130 + 1;
-						if (ii > 1 && yokonummax[i][ii - 1] == yokonummax[i][ii] + yokonum[i][ii] + 1) {
+						while (ii > 1 && yokonummax[i][ii - 1] == yokonummax[i][ii] + yokonum[i][ii] + 1) {
 							if (yokonummax[i][ii - 1] == yoko - yokonum[i][ii - 1] - yokonummin[i][ii - 1]) {
 								estnum3++;
+								ii--;
+								continue;
 							}
-							else {
-								iii = 1;
-							}
+							iii = 1;
+							break;
 						}
 					}
 					else if (estnum3 < 260 * tate - yoko) {
 						i = estnum3 / 130 - 2 * tate;
 						ii = estnum3 % 130;
-						if (ii < tatenum[i][0] && tatenummin[i][ii + 1] == tatenummin[i][ii] + tatenum[i][ii] + 1) {
+						while (ii < tatenum[i][0] && tatenummin[i][ii + 1] == tatenummin[i][ii] + tatenum[i][ii] + 1) {
 							if (tatenummax[i][ii + 1] == tate - tatenum[i][ii + 1] - tatenummin[i][ii + 1]) {
 								estnum3++;
+								ii++;
+								continue;
 							}
-							else {
-								iii = 1;
-							}
+							iii = 1;
+							break;
 						}
 					}
 					else {
 						i = estnum3 / 130 - 2 * tate - yoko;
 						ii = tatenum[i][0] - estnum3 % 130 + 1;
-						if (ii > 1 && tatenummax[i][ii - 1] == tatenummax[i][ii] + tatenum[i][ii] + 1) {
+						while (ii > 1 && tatenummax[i][ii - 1] == tatenummax[i][ii] + tatenum[i][ii] + 1) {
 							if (tatenummax[i][ii - 1] == tate - tatenum[i][ii - 1] - tatenummin[i][ii - 1]) {
 								estnum3++;
+								ii--;
+								continue;
 							}
-							else {
-								iii = 1;
-							}
+							iii = 1;
+							break;
 						}
 					}
 				}
@@ -1380,49 +1384,53 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 						if (estnum2 < 130 * tate) {
 							i = estnum2 / 130;
 							ii = estnum2 % 130;
-							if (ii < yokonum[i][0] && yokonummin[i][ii + 1] == yokonummin[i][ii] + yokonum[i][ii] + 1) {
+							while (ii < yokonum[i][0] && yokonummin[i][ii + 1] == yokonummin[i][ii] + yokonum[i][ii] + 1) {
 								if (yokonummax[i][ii + 1] == yoko - yokonum[i][ii + 1] - yokonummin[i][ii + 1]) {
 									estnum2++;
+									ii++;
+									continue;
 								}
-								else {
-									iii = 1;
-								}
+								iii = 1;
+								break;
 							}
 						}
 						else if (estnum2 < 260 * tate) {
 							i = estnum2 / 130 - tate;
 							ii = yokonum[i][0] - estnum2 % 130 + 1;
-							if (ii > 1 && yokonummax[i][ii - 1] == yokonummax[i][ii] + yokonum[i][ii] + 1) {
+							while (ii > 1 && yokonummax[i][ii - 1] == yokonummax[i][ii] + yokonum[i][ii] + 1) {
 								if (yokonummax[i][ii - 1] == yoko - yokonum[i][ii - 1] - yokonummin[i][ii - 1]) {
 									estnum2++;
+									ii--;
+									continue;
 								}
-								else {
-									iii = 1;
-								}
+								iii = 1;
+								break;
 							}
 						}
 						else if (estnum2 < 260 * tate - yoko) {
 							i = estnum2 / 130 - 2 * tate;
 							ii = estnum2 % 130;
-							if (ii < tatenum[i][0] && tatenummin[i][ii + 1] == tatenummin[i][ii] + tatenum[i][ii] + 1) {
+							while (ii < tatenum[i][0] && tatenummin[i][ii + 1] == tatenummin[i][ii] + tatenum[i][ii] + 1) {
 								if (tatenummax[i][ii + 1] == tate - tatenum[i][ii + 1] - tatenummin[i][ii + 1]) {
 									estnum2++;
+									ii++;
+									continue;
 								}
-								else {
-									iii = 1;
-								}
+								iii = 1;
+								break;
 							}
 						}
 						else {
 							i = estnum2 / 130 - 2 * tate - yoko;
 							ii = tatenum[i][0] - estnum2 % 130 + 1;
-							if (ii > 1 && tatenummax[i][ii - 1] == tatenummax[i][ii] + tatenum[i][ii] + 1) {
+							while (ii > 1 && tatenummax[i][ii - 1] == tatenummax[i][ii] + tatenum[i][ii] + 1) {
 								if (tatenummax[i][ii - 1] == tate - tatenum[i][ii - 1] - tatenummin[i][ii - 1]) {
 									estnum2++;
+									ii--;
+									continue;
 								}
-								else {
-									iii = 1;
-								}
+								iii = 1;
+								break;
 							}
 						}
 					}
@@ -1824,49 +1832,53 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 							case 1:
 								i = estnum / 130;
 								ii = estnum % 130;
-								if (ii < yokonum[i][0] && yokonummin[i][ii + 1] == yokonummin[i][ii] + yokonum[i][ii] + 1) {
+								while (ii < yokonum[i][0] && yokonummin[i][ii + 1] == yokonummin[i][ii] + yokonum[i][ii] + 1) {
 									if (yokonummax[i][ii + 1] == yoko - yokonum[i][ii + 1] - yokonummin[i][ii + 1]) {
 										estnum++;
+										ii++;
+										continue;
 									}
-									else {
-										iii = 1;
-									}
+									iii = 1;
+									break;
 								}
 								break;
 							case 2:
 								i = estnum / 130 - tate;
 								ii = yokonum[i][0] - estnum % 130 + 1;
-								if (ii > 1 && yokonummax[i][ii - 1] == yokonummax[i][ii] + yokonum[i][ii] + 1) {
+								while (ii > 1 && yokonummax[i][ii - 1] == yokonummax[i][ii] + yokonum[i][ii] + 1) {
 									if (yokonummax[i][ii - 1] == yoko - yokonum[i][ii - 1] - yokonummin[i][ii - 1]) {
 										estnum++;
+										ii--;
+										continue;
 									}
-									else {
-										iii = 1;
-									}
+									iii = 1;
+									break;
 								}
 								break;
 							case 3:
 								i = estnum / 130 - 2 * tate;
 								ii = estnum % 130;
-								if (ii < tatenum[i][0] && tatenummin[i][ii + 1] == tatenummin[i][ii] + tatenum[i][ii] + 1) {
+								while (ii < tatenum[i][0] && tatenummin[i][ii + 1] == tatenummin[i][ii] + tatenum[i][ii] + 1) {
 									if (tatenummax[i][ii + 1] == tate - tatenum[i][ii + 1] - tatenummin[i][ii + 1]) {
 										estnum++;
+										ii++;
+										continue;
 									}
-									else {
-										iii = 1;
-									}
+									iii = 1;
+									break;
 								}
 								break;
 							case 4:
 								i = estnum / 130 - 2 * tate - yoko;
 								ii = tatenum[i][0] - estnum % 130 + 1;
-								if (ii > 1 && tatenummax[i][ii - 1] == tatenummax[i][ii] + tatenum[i][ii] + 1) {
+								while (ii > 1 && tatenummax[i][ii - 1] == tatenummax[i][ii] + tatenum[i][ii] + 1) {
 									if (tatenummax[i][ii - 1] == tate - tatenum[i][ii - 1] - tatenummin[i][ii - 1]) {
 										estnum++;
+										ii--;
+										continue;
 									}
-									else {
-										iii = 1;
-									}
+									iii = 1;
+									break;
 								}
 							}
 						}
