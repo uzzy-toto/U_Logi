@@ -786,6 +786,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 	unsigned char paint3[256][256] = {};
 	unsigned char paint4[256][256] = {};
 	unsigned char paint5[256][256] = {};
+	unsigned char paintkoma2[256][256] = {};
 	unsigned char yokonummin[256][129] = {};
 	unsigned char yokonummax[256][129] = {};
 	unsigned char tatenummin[256][129] = {};
@@ -802,6 +803,9 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 	unsigned char yokonummax4[256][129] = {};
 	unsigned char tatenummin4[256][129] = {};
 	unsigned char tatenummax4[256][129] = {};
+	unsigned char yokonumkoma2[256][129] = {};
+	unsigned char tatenumkoma2[256][129] = {};
+
 	unsigned char yokochk[256];
 	unsigned char tatechk[256];
 	unsigned char yokochk2[256];
@@ -819,7 +823,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 	unsigned char yokotatemax, est, est2, est3, tuyogari;
 	int komatta2, komatta4, komatta6;
 	int i, ii, iii, iiii, i5, i6, i7, i8, i9;
-	int k1, k2, k3, k4, timer, repotime, numchk;
+	int k1, k2, k3, k4, timer, repotime, numchk, komauma2;
 	int estp, estp2, estp3, count1, err, pn, pn2, pn3, estc, estc2, estc3;
 	int estnum, estmm, estmmchk, estnum2, estmm2, estmmchk2, estnum3, estmm3, estmmchk3;
 	int errnum[20] = {};
@@ -1234,6 +1238,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 		pn2 = 0;
 		estnum2 = 0;
 		estmm2 = 0;
+		komauma2 = 0;
 		for (i7 = 0; i7 < hairi2 && komatta5 == 0; i7++) {
 
 			t2 = clock();
@@ -1279,8 +1284,18 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 
 				//通常背理法では嬉々として1マス塗って一度は通常探索に行ってもらう
 				if (est2 == 1) {
-					if (pn2 == 1) { paint[estp2 % yoko][estp2 / yoko] = 10; }
-					else if (pn2 == 2) { paint[estp2 % yoko][estp2 / yoko] = 1; }
+					if (pn2 == 1) {
+						if (paintkoma2[estp2 % yoko][estp2 / yoko] != 10) {
+							komauma2 = 0;
+						}
+						paint[estp2 % yoko][estp2 / yoko] = 10;
+					}
+					else if (pn2 == 2) {
+						if (paintkoma2[estp2 % yoko][estp2 / yoko] != 1) {
+							komauma2 = 0;
+						}
+						paint[estp2 % yoko][estp2 / yoko] = 1;
+					}
 					err = 0;
 					est2 = 0;
 					komatta4 = estnum2;
@@ -1298,6 +1313,9 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					komatta4 = estnum2;
 					yokochk[estc2] = 2;
 					if (estnum2 < 130 * tate) {
+						if (estmm2 + 1 > yokonumkoma2[estc2][estp2]) {
+							komauma2 = 0;
+						}
 						if (yokonummax[estc2][estp2] == yoko - estmm2 - yokonum[estc2][estp2]) {
 							est2 = 0;
 							estmmchk2 = 0;
@@ -1311,6 +1329,9 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 						}
 					}
 					else {
+						if (estmm2 - 1 > yoko - yokonum[estc2][estp2] - yokonumkoma2[estc2][estp2] || yokonumkoma2[estc2][estp2] == 0) {
+							komauma2 = 0;
+						}
 						if (yokonummin[estc2][estp2] == yoko - estmm2 - yokonum[estc2][estp2]) {
 							est2 = 0;
 							estmmchk2 = 0;
@@ -1330,6 +1351,9 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					komatta4 = estnum2;
 					tatechk[estc2] = 2;
 					if (estnum2 < 260 * tate + 130 * yoko) {
+						if (estmm2 + 1 > tatenumkoma2[estc2][estp2]) {
+							komauma2 = 0;
+						}
 						if (tatenummax[estc2][estp2] == tate - estmm2 - tatenum[estc2][estp2]) {
 							est2 = 0;
 							estmmchk2 = 0;
@@ -1343,6 +1367,9 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 						}
 					}
 					else {
+						if (estmm2 - 1 > tate - tatenum[estc2][estp2] - tatenumkoma2[estc2][estp2] || tatenumkoma2[estc2][estp2] == 0) {
+							komauma2 = 0;
+						}
 						if (tatenummin[estc2][estp2] == tate - estmm2 - tatenum[estc2][estp2]) {
 							est2 = 0;
 							estmmchk2 = 0;
@@ -1437,6 +1464,36 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 
 					//いざ局面を戻す
 					if (iii == 0) {
+
+						//局面を戻す前に仮定結果の盤面とか定まりぶりを保存
+						ii = 0;
+						for (i = 0; i < yoko*tate; i++) {
+							if (paint[i % yoko][i / yoko] != 0) {
+								ii++;
+							}
+						}
+						if (komauma2 < ii) {
+							komauma2 = ii;
+							for (i = 0; i < yoko*tate; i++) {
+								paintkoma2[i % yoko][i / yoko] = paint[i % yoko][i / yoko];
+							}
+							for (i = 0; i < tate*(yokotatemax + 1); i++) {
+								if (yokonummax[i % tate][i / tate] + yokonummin[i % tate][i / tate] + yokonum[i % tate][i / tate] == yoko) {
+									yokonumkoma2[i % tate][i / tate] = yokonummin[i % tate][i / tate] + 1;
+								}
+								else {
+									yokonumkoma2[i % tate][i / tate] = 0;
+								}
+							}
+							for (i = 0; i < yoko*(yokotatemax + 1); i++) {
+								if (tatenummax[i % tate][i / tate] + tatenummin[i % tate][i / tate] + tatenum[i % tate][i / tate] == tate) {
+									tatenumkoma2[i % tate][i / tate] = tatenummin[i % tate][i / tate] + 1;
+								}
+								tatenumkoma2[i % tate][i / tate] = 0;
+							}
+						}
+
+						//本当に局面を戻す
 						for (i = 0; i < yoko*tate; i++) {
 							paint[i % yoko][i / yoko] = paint3[i % yoko][i / yoko];
 						}
@@ -1468,7 +1525,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					for (i = estnum2 / 130; i < tate; i++) {
 						for (ii = estnum2 % 130 + 1; ii < yokonum[i][0] + 1; ii++) {
 							estmm2 = yokonummin[i][ii];
-							if (yokonummax[i][ii] != yoko - yokonum[i][ii] - estmm2) {
+							if (yokonummax[i][ii] != yoko - yokonum[i][ii] - estmm2 && (yokonumkoma2[i][ii] == 0 || yokonumkoma2[i][ii] != estmm2 + 1 || komauma2 == 0)) {
 								est2 = 2;
 								estc2 = i;
 								estp2 = ii;
@@ -1491,7 +1548,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					for (i = estnum2 / 130 - tate; i < tate; i++) {
 						for (ii = yokonum[i][0] - estnum2 % 130; ii > 0; ii--) {
 							estmm2 = yokonummax[i][ii];
-							if (yokonummin[i][ii] != yoko - yokonum[i][ii] - estmm2) {
+							if (yokonummin[i][ii] != yoko - yokonum[i][ii] - estmm2 && (yokonumkoma2[i][ii] == 0 || yokonumkoma2[i][ii] != yoko - yokonum[i][ii] - estmm2 + 1 || komauma2 == 0)) {
 								est2 = 2;
 								estc2 = i;
 								estp2 = ii;
@@ -1514,7 +1571,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					for (i = estnum2 / 130 - 2 * tate; i < yoko; i++) {
 						for (ii = estnum2 % 130 + 1; ii < tatenum[i][0] + 1; ii++) {
 							estmm2 = tatenummin[i][ii];
-							if (tatenummax[i][ii] != tate - tatenum[i][ii] - estmm2) {
+							if (tatenummax[i][ii] != tate - tatenum[i][ii] - estmm2 && (tatenumkoma2[i][ii] == 0 || tatenumkoma2[i][ii] != estmm2 + 1 || komauma2 == 0)) {
 								est2 = 2;
 								estc2 = i;
 								estp2 = ii;
@@ -1537,7 +1594,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					for (i = estnum2 / 130 - 2 * tate - yoko; i < yoko; i++) {
 						for (ii = tatenum[i][0] - estnum2 % 130; ii > 0; ii--) {
 							estmm2 = tatenummax[i][ii];
-							if (tatenummin[i][ii] != tate - tatenum[i][ii] - estmm2) {
+							if (tatenummin[i][ii] != tate - tatenum[i][ii] - estmm2 && (tatenumkoma2[i][ii] == 0 || tatenumkoma2[i][ii] != tate - tatenum[i][ii] - estmm2 + 1 || komauma2 == 0)) {
 								est2 = 2;
 								estc2 = i;
 								estp2 = ii;
@@ -1561,7 +1618,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					est2 = 1;
 					if (pn2 == 2) { estnum2 += 1; }
 					for (i = estnum2 - 260 * (tate + yoko); i < yoko*tate; i++) {
-						if (paint[i % yoko][i / yoko] == 0) {
+						if (paint[i % yoko][i / yoko] == 0 && (paintkoma2[i % yoko][i / yoko] != 10 || pn2 != 1 || komauma2 == 0)) {
 							estnum2 = i + 260 * (tate + yoko);
 							estp2 = i;
 							break;
@@ -1579,7 +1636,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					}
 
 					//黒塗りを仮定するのか×を仮定するのか
-					else if (pn2 == 0 || pn2 == 2) {
+					else if (pn2 != 1 && (paintkoma2[i % yoko][i / yoko] != 1 || komauma2 == 0)) {
 						paint[estp2 % yoko][estp2 / yoko] = 1;
 						pn2 = 1;
 					}
