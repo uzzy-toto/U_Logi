@@ -803,8 +803,10 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 	unsigned char yokonummax4[256][129] = {};
 	unsigned char tatenummin4[256][129] = {};
 	unsigned char tatenummax4[256][129] = {};
-	unsigned char yokonumkoma2[256][129] = {};
-	unsigned char tatenumkoma2[256][129] = {};
+	unsigned char yokonumkomamin2[256][129] = {};
+	unsigned char yokonumkomamax2[256][129] = {};
+	unsigned char tatenumkomamin2[256][129] = {};
+	unsigned char tatenumkomamax2[256][129] = {};
 
 	unsigned char yokochk[256];
 	unsigned char tatechk[256];
@@ -1313,7 +1315,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					komatta4 = estnum2;
 					yokochk[estc2] = 2;
 					if (estnum2 < 130 * tate) {
-						if (estmm2 + 1 > yokonumkoma2[estc2][estp2]) {
+						if (estmm2 > yokonumkomamin2[estc2][estp2]) {
 							komauma2 = 0;
 						}
 						if (yokonummax[estc2][estp2] == yoko - estmm2 - yokonum[estc2][estp2]) {
@@ -1329,7 +1331,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 						}
 					}
 					else {
-						if (estmm2 - 1 > yoko - yokonum[estc2][estp2] - yokonumkoma2[estc2][estp2] || yokonumkoma2[estc2][estp2] == 0) {
+						if (estmm2 > yokonumkomamax2[estc2][estp2]) {
 							komauma2 = 0;
 						}
 						if (yokonummin[estc2][estp2] == yoko - estmm2 - yokonum[estc2][estp2]) {
@@ -1351,7 +1353,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					komatta4 = estnum2;
 					tatechk[estc2] = 2;
 					if (estnum2 < 260 * tate + 130 * yoko) {
-						if (estmm2 + 1 > tatenumkoma2[estc2][estp2]) {
+						if (estmm2 > tatenumkomamin2[estc2][estp2]) {
 							komauma2 = 0;
 						}
 						if (tatenummax[estc2][estp2] == tate - estmm2 - tatenum[estc2][estp2]) {
@@ -1367,7 +1369,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 						}
 					}
 					else {
-						if (estmm2 - 1 > tate - tatenum[estc2][estp2] - tatenumkoma2[estc2][estp2] || tatenumkoma2[estc2][estp2] == 0) {
+						if (estmm2 > tatenumkomamax2[estc2][estp2]) {
 							komauma2 = 0;
 						}
 						if (tatenummin[estc2][estp2] == tate - estmm2 - tatenum[estc2][estp2]) {
@@ -1465,7 +1467,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					//いざ局面を戻す
 					if (iii == 0) {
 
-						//局面を戻す前に仮定結果の盤面とか定まりぶりを保存
+						//局面を戻す前に仮定結果の盤面とかを保存
 						ii = 0;
 						for (i = 0; i < yoko*tate; i++) {
 							if (paint[i % yoko][i / yoko] != 0) {
@@ -1478,18 +1480,12 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 								paintkoma2[i % yoko][i / yoko] = paint[i % yoko][i / yoko];
 							}
 							for (i = 0; i < tate*(yokotatemax + 1); i++) {
-								if (yokonummax[i % tate][i / tate] + yokonummin[i % tate][i / tate] + yokonum[i % tate][i / tate] == yoko) {
-									yokonumkoma2[i % tate][i / tate] = yokonummin[i % tate][i / tate] + 1;
-								}
-								else {
-									yokonumkoma2[i % tate][i / tate] = 0;
-								}
+								yokonumkomamin2[i % tate][i / tate] = yokonummin[i % tate][i / tate];
+								yokonumkomamax2[i % tate][i / tate] = yokonummax[i % tate][i / tate];
 							}
 							for (i = 0; i < yoko*(yokotatemax + 1); i++) {
-								if (tatenummax[i % tate][i / tate] + tatenummin[i % tate][i / tate] + tatenum[i % tate][i / tate] == tate) {
-									tatenumkoma2[i % tate][i / tate] = tatenummin[i % tate][i / tate] + 1;
-								}
-								tatenumkoma2[i % tate][i / tate] = 0;
+								tatenumkomamin2[i % yoko][i / yoko] = tatenummin[i % yoko][i / yoko];
+								tatenumkomamax2[i % yoko][i / yoko] = tatenummax[i % yoko][i / yoko];
 							}
 						}
 
@@ -1525,7 +1521,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					for (i = estnum2 / 130; i < tate; i++) {
 						for (ii = estnum2 % 130 + 1; ii < yokonum[i][0] + 1; ii++) {
 							estmm2 = yokonummin[i][ii];
-							if (yokonummax[i][ii] != yoko - yokonum[i][ii] - estmm2 && (yokonumkoma2[i][ii] == 0 || yokonumkoma2[i][ii] != estmm2 + 1 || komauma2 == 0)) {
+							if (yokonummax[i][ii] != yoko - yokonum[i][ii] - estmm2 && (yokonumkomamax2[i][ii] != yoko - yokonum[i][ii] - estmm2 || komauma2 == 0)) {
 								est2 = 2;
 								estc2 = i;
 								estp2 = ii;
@@ -1548,7 +1544,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					for (i = estnum2 / 130 - tate; i < tate; i++) {
 						for (ii = yokonum[i][0] - estnum2 % 130; ii > 0; ii--) {
 							estmm2 = yokonummax[i][ii];
-							if (yokonummin[i][ii] != yoko - yokonum[i][ii] - estmm2 && (yokonumkoma2[i][ii] == 0 || yokonumkoma2[i][ii] != yoko - yokonum[i][ii] - estmm2 + 1 || komauma2 == 0)) {
+							if (yokonummin[i][ii] != yoko - yokonum[i][ii] - estmm2 && (yokonumkomamin2[i][ii] != yoko - yokonum[i][ii] - estmm2 || komauma2 == 0)) {
 								est2 = 2;
 								estc2 = i;
 								estp2 = ii;
@@ -1571,7 +1567,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					for (i = estnum2 / 130 - 2 * tate; i < yoko; i++) {
 						for (ii = estnum2 % 130 + 1; ii < tatenum[i][0] + 1; ii++) {
 							estmm2 = tatenummin[i][ii];
-							if (tatenummax[i][ii] != tate - tatenum[i][ii] - estmm2 && (tatenumkoma2[i][ii] == 0 || tatenumkoma2[i][ii] != estmm2 + 1 || komauma2 == 0)) {
+							if (tatenummax[i][ii] != tate - tatenum[i][ii] - estmm2 && (tatenumkomamax2[i][ii] != tate - tatenum[i][ii] - estmm2 || komauma2 == 0)) {
 								est2 = 2;
 								estc2 = i;
 								estp2 = ii;
@@ -1594,7 +1590,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					for (i = estnum2 / 130 - 2 * tate - yoko; i < yoko; i++) {
 						for (ii = tatenum[i][0] - estnum2 % 130; ii > 0; ii--) {
 							estmm2 = tatenummax[i][ii];
-							if (tatenummin[i][ii] != tate - tatenum[i][ii] - estmm2 && (tatenumkoma2[i][ii] == 0 || tatenumkoma2[i][ii] != tate - tatenum[i][ii] - estmm2 + 1 || komauma2 == 0)) {
+							if (tatenummin[i][ii] != tate - tatenum[i][ii] - estmm2 && (tatenumkomamin2[i][ii] != tate - tatenum[i][ii] - estmm2 || komauma2 == 0)) {
 								est2 = 2;
 								estc2 = i;
 								estp2 = ii;
