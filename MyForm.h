@@ -932,7 +932,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 				}
 				err = 0;
 				est3 = 0;
-				komatta6 = estp3;
+				komatta6 = estnum3;
 				pn3 = 0;
 				yokochk[estp3 / yoko] = 2;
 				tatechk[estp3 % yoko] = 2;
