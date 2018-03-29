@@ -1267,7 +1267,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 				}
 				if (i == yoko * tate) {
 					est3 = 0;
-					estp3 = 0;
+					estnum3 = 0;
 					pn3 = 0;
 					komatta6 -= yoko * tate + 260 * (tate + yoko);
 				}
