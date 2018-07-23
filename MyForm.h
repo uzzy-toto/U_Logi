@@ -92,6 +92,9 @@ namespace Project2 {
 	private: System::Windows::Forms::Label^  label31;
 	private: System::Windows::Forms::Label^  label32;
 	private: System::Windows::Forms::Label^  label33;
+	private: System::Windows::Forms::TextBox^  textBox1;
+	private: System::Windows::Forms::TextBox^  textBox2;
+	private: System::Windows::Forms::Button^  button6;
 
 
 
@@ -153,6 +156,9 @@ namespace Project2 {
 			this->label31 = (gcnew System::Windows::Forms::Label());
 			this->label32 = (gcnew System::Windows::Forms::Label());
 			this->label33 = (gcnew System::Windows::Forms::Label());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->button6 = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown1))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->numericUpDown2))->BeginInit();
 			this->SuspendLayout();
@@ -538,12 +544,48 @@ namespace Project2 {
 			this->label33->Size = System::Drawing::Size(2, 660);
 			this->label33->TabIndex = 43;
 			// 
+			// textBox1
+			// 
+			this->textBox1->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(128)));
+			this->textBox1->Location = System::Drawing::Point(794, 240);
+			this->textBox1->Multiline = true;
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(100, 500);
+			this->textBox1->TabIndex = 44;
+			this->textBox1->Visible = false;
+			// 
+			// textBox2
+			// 
+			this->textBox2->Font = (gcnew System::Drawing::Font(L"MS UI Gothic", 8.25F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(128)));
+			this->textBox2->Location = System::Drawing::Point(942, 240);
+			this->textBox2->Multiline = true;
+			this->textBox2->Name = L"textBox2";
+			this->textBox2->Size = System::Drawing::Size(100, 500);
+			this->textBox2->TabIndex = 45;
+			this->textBox2->Visible = false;
+			// 
+			// button6
+			// 
+			this->button6->Location = System::Drawing::Point(794, 183);
+			this->button6->Name = L"button6";
+			this->button6->Size = System::Drawing::Size(248, 37);
+			this->button6->TabIndex = 46;
+			this->button6->Text = L"カンマ区切り読み込み";
+			this->button6->UseVisualStyleBackColor = true;
+			this->button6->Visible = false;
+			this->button6->Click += gcnew System::EventHandler(this, &U_Logi::button6_Click);
+			// 
 			// U_Logi
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 12);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->AutoScroll = true;
-			this->ClientSize = System::Drawing::Size(1081, 788);
+			this->ClientSize = System::Drawing::Size(1098, 805);
+			this->Controls->Add(this->button6);
+			this->Controls->Add(this->textBox2);
+			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->numericUpDown2);
 			this->Controls->Add(this->numericUpDown1);
 			this->Controls->Add(this->label7);
@@ -770,6 +812,24 @@ namespace Project2 {
 			label3->Text = wtate;
 			
 			labelline();
+
+			//LogiNeko読み込んだときはカンマ区切りテキストをテキストボックスに
+			w = L"";
+			for (i = 0; i < tate; i++) {
+				for (ii = yokonum[i][0]; ii > 1; ii--) {
+					w += yokonum[i][ii] + ",";
+				}
+				w += yokonum[i][1] + L"\n";
+			}
+			textBox1->Text = w;
+			w = L"";
+			for (i = 0; i < yoko; i++) {
+				for (ii = tatenum[i][0]; ii > 1; ii--) {
+					w += tatenum[i][ii] + ",";
+				}
+				w += tatenum[i][1] + L"\n";
+			}
+			textBox2->Text = w;
 		}
 
 	}
@@ -3213,6 +3273,9 @@ private: System::Void button5_Click(System::Object^  sender, System::EventArgs^ 
 		numericUpDown2->Value = yoko;
 		label4->Text = L"方向キーが\n移動の基本！";
 		label5->Text = L"□";
+		textBox1->Visible = true;
+		textBox2->Visible = true;
+		button6->Visible = true;
 		inpnum = 0;
 		inputretu[0] = 0;
 		inputretu[1] = 0;
@@ -3231,6 +3294,9 @@ private: System::Void button5_Click(System::Object^  sender, System::EventArgs^ 
 		label7->Visible = false;
 		numericUpDown1->Visible = false;
 		numericUpDown2->Visible = false;
+		textBox1->Visible = false;
+		textBox2->Visible = false;
+		button6->Visible = false;
 
 		//最後の数字入力を反映させる
 		if (label5->Text != L"□") {
@@ -3642,6 +3708,72 @@ private: System::Void U_Logi_KeyDown(System::Object^  sender, System::Windows::F
 	}
 	e->Handled = true;
 
+}
+private: System::Void button6_Click(System::Object^  sender, System::EventArgs^  e) {
+
+	//がんばってカンマ区切り読み込み
+	String^ w1 = textBox1->Text;
+	String^ w2 = textBox2->Text;
+	String^ yokokaki = L"";
+	String^ tatekaki = L"";
+	array<String^>^ Arr1 = gcnew array<String^>(130);
+	array<String^>^ Arr2 = gcnew array<String^>(130);
+	array<String^>^ TextArr1 = gcnew array<String^>(130);
+	array<String^>^ TextArr2 = gcnew array<String^>(130);
+	int i, ii, iii, tatemax;
+
+	TextArr1 = w1->Split('\n');
+	TextArr2 = w2->Split('\n');
+
+	tate = TextArr1->Length;
+	for (i = 0; i < tate; i++) {
+		Arr1 = TextArr1[i]->Split(',');
+
+		yokonum[i][0] = Arr1->Length;
+		for (ii = 0; ii < yokonum[i][0]; ii++) {
+			Int32::TryParse(Arr1[ii], iii);
+			yokonum[i][yokonum[i][0] - ii] = iii;
+		}
+	}
+	yoko = TextArr2->Length;
+	for (i = 0; i < yoko; i++) {
+		Arr2 = TextArr2[i]->Split(',');
+
+		tatenum[i][0] = Arr2->Length;
+		for (ii = 0; ii < tatenum[i][0]; ii++) {
+			Int32::TryParse(Arr2[ii], iii);
+			tatenum[i][tatenum[i][0] - ii] = iii;
+		}
+	}
+
+	//横の数字を書く
+	for (i = 0; i < tate; i++) {
+		for (ii = 0; ii < yokonum[i][0]; ii++) {
+			if (yokonum[i][yokonum[i][0] - ii] < 10) { yokokaki += L" "; }
+			yokokaki += L" " + yokonum[i][yokonum[i][0] - ii];
+		}
+		if (yokonum[i][0] == 0) { yokokaki += L"0"; }
+		yokokaki += L"\n";
+	}
+	label2->Text = yokokaki;
+
+	//縦の数字を書く
+	tatemax = 1;
+	for (i = 0; i < yoko; i++) {
+		if (tatemax < tatenum[i][0]) { tatemax = tatenum[i][0]; }
+	}
+	for (ii = 0; ii < tatemax; ii++) {
+		for (i = 0; i < yoko; i++) {
+			if (tatenum[i][0] + ii < tatemax && ii + 1 != tatemax) { tatekaki += L"        "; }
+			else if (tatenum[i][tatemax - ii] > 9) {
+				tatekaki += tatenum[i][tatemax - ii] + L"";
+			}
+			else if (tatenum[i][0] == 0) { tatekaki += L"  0  "; }
+			else { tatekaki += L"  " + tatenum[i][tatemax - ii] + L"  "; }
+		}
+		tatekaki += L"\n";
+	}
+	label3->Text = tatekaki;
 }
 };
 }
