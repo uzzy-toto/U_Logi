@@ -2641,11 +2641,6 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									}
 
 									//2つの黒地が1マスだけ離れて存在すると、間の1マスが×になる可能性があるかも
-									if (k2 == i6 + 1 && paint[i8 + 1][i] == 1 && paint[i8][i] == 0) {
-										paint[i8][i] = 10;
-										tatechk[i8] = 2;
-										tatechk2[i8] = 1;
-									}
 									if (k3 == i6 + 1 && paint[i8 - i6 - 2][i] == 1 && paint[i8 - i6 - 1][i] == 0) {
 										paint[i8 - i6 - 1][i] = 10;
 										tatechk[i8 - i6 - 1] = 2;
@@ -2954,11 +2949,6 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									}
 
 									//2つの黒地が1マスだけ離れて存在すると、間の1マスが×になる可能性があるかも
-									if (k2 == i6 + 1 && paint[i][i8 + 1] == 1 && paint[i][i8] == 0) {
-										paint[i][i8] = 10;
-										yokochk[i8] = 2;
-										yokochk2[i8] = 1;
-									}
 									if (k3 == i6 + 1 && paint[i][i8 - i6 - 2] == 1 && paint[i][i8 - i6 - 1] == 0) {
 										paint[i][i8 - i6 - 1] = 10;
 										yokochk[i8 - i6 - 1] = 2;
