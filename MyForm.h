@@ -2610,10 +2610,10 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 							}
 
 							//単純なminとmaxだけでは無理だが、実は確定するマスを気合で書きだす（横）
-
-							//まずは黒地の位置と長さをスキャンし、その黒地に当てはまる可能性のある数字を全てリストアップしつつ
-							//そこから「黒地の長さ以上の数字の中の最小値」と「最大値(二つに分ける。ギリギリ黒地にあてはまる数字は片方だけに採用)」を求める
 							for (ii = yokoumamin[i] + 2; ii < yoko - yokoumamax[i] - 2; ii++) {
+
+								//まずは黒地の位置と長さをスキャンし、その黒地に当てはまる可能性のある数字を全てリストアップしつつ
+								//そこから「黒地の長さ以上の数字の中の最小値」と「最大値(二つに分ける。ギリギリ黒地にあてはまる数字は片方だけに採用)」を求める
 								if (paint[yoko - ii - 1][i] == 1) {
 									i8 = yoko - ii;
 									for (i6 = 1; i6 + ii < yoko && paint[i8 - i6 - 1][i] == 1; i6++) {}
@@ -2690,17 +2690,18 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									}
 									ii += i6;
 								}
-							}
 
-							//×ではさまれた空間を×で埋め尽くせる可能性
-							for (ii = yokoumamin[i] + 2; ii < yoko - yokoumamax[i] -  4; ii++) {
+								//×ではさまれた空間を×で埋め尽くせる可能性
 								if (paint[yoko - ii - 1][i] > 9) {
 									for (iii = 0; paint[yoko - ii - iii - 2][i] > 9 && ii + iii + 4 + yokoumamax[i] < yoko; iii++) {}
 									ii += iii;
-									if (ii + 5 + yokoumamax[i] > yoko) { break; }
+									if (ii + 5 + yokoumamax[i] > yoko) { continue; }
 									if (paint[yoko - ii - 2][i] == 0) {
 										for (iii = 1; paint[yoko - ii - iii - 2][i] == 0 && ii + iii + 3 + yokoumamax[i] < yoko; iii++) {}
-										if (ii + iii + 4 + yokoumamax[i] > yoko) { break; }
+										if (ii + iii + 4 + yokoumamax[i] > yoko) { 
+											ii += iii;
+											continue;
+										}
 										if (paint[yoko - ii - iii - 2][i] > 9) {
 											k1 = yoko;
 											for (i6 = 0; i6 < yokonum[i][0]; i6++) {
@@ -2720,11 +2721,8 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 											ii += iii;
 										}
 										else {
-											ii += iii + 1;
+											ii += iii - 1;
 										}
-									}
-									else {
-										ii += 1;
 									}
 								}
 							}
@@ -2918,10 +2916,10 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 							}
 
 							//単純なminとmaxだけでは無理だが、実は確定するマスを気合で書きだす（縦）
-
-							//まずは黒地の位置と長さをスキャンし、その黒地に当てはまる可能性のある数字を全てリストアップしつつ
-							//そこから「黒地の長さ以上の数字の中の最小値」と「最大値(ギリギリの場合片方)」を求める
 							for (ii = tateumamin[i] + 2; ii < tate - tateumamax[i] - 2; ii++) {
+
+								//まずは黒地の位置と長さをスキャンし、その黒地に当てはまる可能性のある数字を全てリストアップしつつ
+								//そこから「黒地の長さ以上の数字の中の最小値」と「最大値(ギリギリの場合片方)」を求める
 								if (paint[i][tate - ii - 1] == 1) {
 									i8 = tate - ii;
 									for (i6 = 1; i6 + ii < tate && paint[i][i8 - i6 - 1] == 1; i6++) {}
@@ -2998,17 +2996,18 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									}
 									ii += i6;
 								}
-							}
 
-							//×ではさまれた空間を×で埋め尽くせる可能性
-							for (ii = tateumamin[i] + 2; ii < tate - tateumamax[i] - 4; ii++) {
+								//×ではさまれた空間を×で埋め尽くせる可能性
 								if (paint[i][tate - ii - 1] > 9) {
 									for (iii = 0; paint[i][tate - ii - iii - 2] > 9 && ii + iii + 4 + tateumamax[i] < tate; iii++) {}
 									ii += iii;
-									if (ii + 5 + tateumamax[i] > tate) { break; }
+									if (ii + 5 + tateumamax[i] > tate) { continue; }
 									if (paint[i][tate - ii - 2] == 0) {
 										for (iii = 1; paint[i][tate - ii - iii - 2] == 0 && ii + iii + 3 + tateumamax[i] < tate; iii++) {}
-										if (ii + iii + 4 + tateumamax[i] > tate) { break; }
+										if (ii + iii + 4 + tateumamax[i] > tate) { 
+											ii += iii;
+											continue;
+										}
 										if (paint[i][tate - ii - iii - 2] > 9) {
 											k1 = tate;
 											for (i6 = 0; i6 < tatenum[i][0]; i6++) {
@@ -3028,11 +3027,8 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 											ii += iii;
 										}
 										else {
-											ii += iii + 1;
+											ii += iii - 1;
 										}
-									}
-									else {
-										ii += 1;
 									}
 								}
 							}
