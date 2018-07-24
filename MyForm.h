@@ -2620,10 +2620,8 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									k1 = yoko;
 									k2 = i6;
 									k3 = i6;
-									k4 = 0;
 									for (iii = 0; iii < yokonum[i][0]; iii++) {
 										if (yokonummin[i][iii + 1] < ii + 1 && yokonummax[i][iii + 1] < i8) {
-											k4++;
 											if (k1 > yokonum[i][iii + 1] && i6 < yokonum[i][iii + 1] + 1) {
 												k1 = yokonum[i][iii + 1];
 											}
@@ -2635,16 +2633,20 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 											}
 										}
 									}
-									if (k4 < 2) {
-										ii += i6;
-										continue;
-									}
 
 									//2つの黒地が1マスだけ離れて存在すると、間の1マスが×になる可能性があるかも
-									if (k3 == i6 + 1 && paint[i8 - i6 - 2][i] == 1 && paint[i8 - i6 - 1][i] == 0) {
-										paint[i8 - i6 - 1][i] = 10;
-										tatechk[i8 - i6 - 1] = 2;
-										tatechk2[i8 - i6 - 1] = 1;
+									if (paint[i8 - i6 - 1][i] == 0) {
+										for (iii = 0; iii < k3 - i6; iii++) {
+											if (paint[i8 - i6 - iii - 2][i] != 1) {
+												iii = -1;
+												break;
+											}
+										}
+										if (iii > 0) {
+											paint[i8 - i6 - 1][i] = 10;
+											tatechk[i8 - i6 - 1] = 2;
+											tatechk2[i8 - i6 - 1] = 1;
+										}
 									}
 
 									//「黒地の長さ以上の数字の中の最小値」が黒地の長さより大きければ
@@ -2926,10 +2928,8 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									k1 = tate;
 									k2 = i6;
 									k3 = i6;
-									k4 = 0;
 									for (iii = 0; iii < tatenum[i][0]; iii++) {
 										if (tatenummin[i][iii + 1] < ii + 1 && tatenummax[i][iii + 1] < i8) {
-											k4++;
 											if (k1 > tatenum[i][iii + 1] && i6 < tatenum[i][iii + 1] + 1) {
 												k1 = tatenum[i][iii + 1];
 											}
@@ -2941,16 +2941,20 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 											}
 										}
 									}
-									if (k4 < 2) {
-										ii += i6;
-										continue;
-									}
 
 									//2つの黒地が1マスだけ離れて存在すると、間の1マスが×になる可能性があるかも
-									if (k3 == i6 + 1 && paint[i][i8 - i6 - 2] == 1 && paint[i][i8 - i6 - 1] == 0) {
-										paint[i][i8 - i6 - 1] = 10;
-										yokochk[i8 - i6 - 1] = 2;
-										yokochk2[i8 - i6 - 1] = 1;
+									if (paint[i][i8 - i6 - 1] == 0) {
+										for (iii = 0; iii < k3 - i6; iii++) {
+											if (paint[i][i8 - i6 - iii - 2] != 1) {
+												iii = -1;
+												break;
+											}
+										}
+										if (iii > 0) {
+											paint[i][i8 - i6 - 1] = 10;
+											yokochk[i8 - i6 - 1] = 2;
+											yokochk2[i8 - i6 - 1] = 1;
+										}
 									}
 
 									//「黒地の長さ以上の数字の中の最小値」が黒地の長さより大きければ
