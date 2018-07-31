@@ -2179,9 +2179,9 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 								}
 								if (komauma < ii) {
 									komauma = ii;
-									for (i6 = 0; i6 < yoko; i6++) {
-										for (i8 = 0; i8 < tate; i8++) {
-											paintkoma[i6][i8] = paint[i6][i8];
+									for (i6 = 0; i6 < tate; i6++) {
+										for (i8 = yokoumamax2[i6]; i8 < yoko - yokoumamin2[i6]; i8++) {
+											paintkoma[i8][i6] = paint[i8][i6];
 										}
 									}
 									for (i = 0; i < tate*(yokotatemax + 1); i++) {
@@ -2342,7 +2342,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 								if (est == 2 || komatta3 == 1) { break; }
 								estnum = estnum - estnum % 130 + 130;
 							}
-							if (i == yoko) { numchk = 1; }
+							if (i == yoko) { numchk = 1; estnum += yoko; }
 						}
 					}
 
@@ -2350,8 +2350,8 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 					else {
 						est = 1;
 						if (pn == 2) { estnum += 1; }
-						for (i = estnum - 260 * (tate + yoko); i < yoko*tate; i++) {
-							if (paint[i % yoko][i / yoko] == 0) {
+						for (i = estnum - 260 * (tate + yoko); i < yoko * tate - yoko; i++) {
+							if (paint[i % yoko][i / yoko] == 0 && i % yoko > yokoumamax[i / yoko] && i % yoko < yoko - yokoumamin[i / yoko] - 1 && i / yoko > tateumamax[i % yoko] && i / yoko < tate - tateumamin[i % yoko] - 1) {
 								if (paintkoma[i % yoko][i / yoko] != 10 || pn != 1 || komauma + tuyogari1 == 0) {
 									estnum = i + 260 * (tate + yoko);
 									estp = i;
@@ -2366,7 +2366,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 							komatta3 = 1;
 							break;
 						}
-						if (i == yoko * tate) {
+						if (i == yoko * tate - yoko) {
 							est = 0;
 							estnum = 0;
 							pn = 0;
