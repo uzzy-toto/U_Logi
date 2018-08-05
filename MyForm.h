@@ -2183,14 +2183,16 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										for (i8 = yokoumamax2[i6]; i8 < yoko - yokoumamin2[i6]; i8++) {
 											paintkoma[i8][i6] = paint[i8][i6];
 										}
+										for (i8 = 1; i8 < yokonum[i6][0] + 1; i8++) {
+											yokonumkomamin[i6][i8] = yokonummin[i6][i8];
+											yokonumkomamax[i6][i8] = yokonummax[i6][i8];
+										}
 									}
-									for (i = 0; i < tate*(yokotatemax + 1); i++) {
-										yokonumkomamin[i % tate][i / tate] = yokonummin[i % tate][i / tate];
-										yokonumkomamax[i % tate][i / tate] = yokonummax[i % tate][i / tate];
-									}
-									for (i = 0; i < yoko*(yokotatemax + 1); i++) {
-										tatenumkomamin[i % yoko][i / yoko] = tatenummin[i % yoko][i / yoko];
-										tatenumkomamax[i % yoko][i / yoko] = tatenummax[i % yoko][i / yoko];
+									for (i6 = 0; i6 < yoko; i6++) {
+										for (i8 = 1; i8 < tatenum[i6][0] + 1; i8++) {
+											tatenumkomamin[i6][i8] = tatenummin[i6][i8];
+											tatenumkomamax[i6][i8] = tatenummax[i6][i8];
+										}
 									}
 								}
 							}
