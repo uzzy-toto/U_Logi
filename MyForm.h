@@ -2541,56 +2541,6 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 							for (i8 = 0; yokochk[i] == 2; i8++) {
 								yokochk[i] = 1;
 
-								//黒地をスキャンして、横のminとmaxを調整
-								iii = 1;
-								for (ii = 0; ii + yokonum[i][yokonum[i][0]] + 1 < yoko; ii++) {
-									if (paint[yoko - ii - 1][i] == 1) {
-										if (iii > yokonum[i][0]) { err = 1; goto errend; }
-
-										//maxを見ながら黒地を担当できる数字じゃなかったら却下して次の数字へ
-										while (yokonummax[i][iii] > yoko - ii - 1) {
-											iii++;
-											if (iii > yokonum[i][0]) { err = 1; goto errend; }
-										}
-
-										//更新してたら新しいmaxに
-										if (yokonummax[i][iii] + yokonum[i][iii] + ii < yoko) {
-											yokonummax[i][iii] = yoko - yokonum[i][iii] - ii;
-											yokochk[i] = 2;
-										}
-										ii = yoko - yokonummax[i][iii];
-										iii += 1;
-									}
-								}
-								iii = 0;
-								for (ii = 0; ii + yokonum[i][1] + 1 < yoko; ii++) {
-									if (paint[ii][i] == 1) {
-										if (iii + 1 > yokonum[i][0]) { err = 1; goto errend; }
-										k4 = yokonum[i][0] - iii;
-
-										//minを見ながら黒地を担当できる数字じゃなかったら却下して次の数字へ
-										while (yokonummin[i][k4] > yoko - ii - 1) {
-											iii++;
-											k4--;
-											if (iii + 1 > yokonum[i][0]) { err = 1; goto errend; }
-										}
-
-										//更新してたら新しいminに
-										if (yokonummin[i][k4] + yokonum[i][k4] + ii < yoko) {
-											yokonummin[i][k4] = yoko - yokonum[i][k4] - ii;
-											yokochk[i] = 2;
-										}
-										ii = yoko - yokonummin[i][k4];
-										iii += 1;
-									}
-								}
-
-								//minとmaxの調整の両輪、「黒地スキャン」「数字スキャン」を交互に繰り返させているが
-								//繰り返し中に黒地スキャンで変化が無いなら数字スキャンはしなくて良いはずである。
-								//ただし、一回目のスキャンは両方必須。
-								if (i8 > 0 && yokochk[i] == 1) { break; }
-								else { yokochk[i] = 1; }
-
 								//ヒントの数字をスキャンして、横のminとmaxを調整。
 								for (ii = 0; ii < yokonum[i][0]; ii++) {
 
@@ -2639,6 +2589,56 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									if (yokonummax[i][k4 - 1] < yokonummax[i][k4] + yokonum[i][k4] + 1) {
 										yokonummax[i][k4 - 1] = yokonummax[i][k4] + yokonum[i][k4] + 1;
 										yokochk[i] = 2;
+									}
+								}
+
+								//minとmaxの調整の両輪、「黒地スキャン」「数字スキャン」を交互に繰り返させているが
+								//繰り返し中に黒地スキャンで変化が無いなら数字スキャンはしなくて良いはずである。
+								//ただし、一回目のスキャンは両方必須。
+								if (i8 > 0 && yokochk[i] == 1) { break; }
+								else { yokochk[i] = 1; }
+
+								//黒地をスキャンして、横のminとmaxを調整
+								iii = 1;
+								for (ii = 0; ii + yokonum[i][yokonum[i][0]] + 1 < yoko; ii++) {
+									if (paint[yoko - ii - 1][i] == 1) {
+										if (iii > yokonum[i][0]) { err = 1; goto errend; }
+
+										//maxを見ながら黒地を担当できる数字じゃなかったら却下して次の数字へ
+										while (yokonummax[i][iii] > yoko - ii - 1) {
+											iii++;
+											if (iii > yokonum[i][0]) { err = 1; goto errend; }
+										}
+
+										//更新してたら新しいmaxに
+										if (yokonummax[i][iii] + yokonum[i][iii] + ii < yoko) {
+											yokonummax[i][iii] = yoko - yokonum[i][iii] - ii;
+											yokochk[i] = 2;
+										}
+										ii = yoko - yokonummax[i][iii];
+										iii += 1;
+									}
+								}
+								iii = 0;
+								for (ii = 0; ii + yokonum[i][1] + 1 < yoko; ii++) {
+									if (paint[ii][i] == 1) {
+										if (iii + 1 > yokonum[i][0]) { err = 1; goto errend; }
+										k4 = yokonum[i][0] - iii;
+
+										//minを見ながら黒地を担当できる数字じゃなかったら却下して次の数字へ
+										while (yokonummin[i][k4] > yoko - ii - 1) {
+											iii++;
+											k4--;
+											if (iii + 1 > yokonum[i][0]) { err = 1; goto errend; }
+										}
+
+										//更新してたら新しいminに
+										if (yokonummin[i][k4] + yokonum[i][k4] + ii < yoko) {
+											yokonummin[i][k4] = yoko - yokonum[i][k4] - ii;
+											yokochk[i] = 2;
+										}
+										ii = yoko - yokonummin[i][k4];
+										iii += 1;
 									}
 								}
 							}
@@ -2700,7 +2700,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									k3 = i6;
 									k4 = 0;
 									for (iii = 0; iii < yokonum[i][0]; iii++) {
-										if (yokonummin[i][iii + 1] < ii + 1 && yokonummax[i][iii + 1] < i8) {
+										if (yokonummin[i][iii + 1] < ii + 1 && yokonummax[i][iii + 1] < i8 - i6 + 1) {
 											k4++;
 											if (k1 > yokonum[i][iii + 1] && i6 < yokonum[i][iii + 1] + 1) {
 												k1 = yokonum[i][iii + 1];
@@ -2823,57 +2823,6 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 							for (i8 = 0; tatechk[i] == 2; i8++) {
 								tatechk[i] = 1;
 
-								//黒地をスキャンして、縦のminとmaxを調整
-								iii = 1;
-								for (ii = 0; ii + tatenum[i][tatenum[i][0]] + 1 < tate; ii++) {
-									if (paint[i][tate - ii - 1] == 1) {
-										if (iii > tatenum[i][0]) { err = 1; goto errend; }
-
-										//maxを見ながら黒地を担当できる数字じゃなかったら却下して次の数字へ
-										while (tatenummax[i][iii] > tate - ii - 1) {
-											iii++;
-											if (iii > tatenum[i][0]) { err = 1; goto errend; }
-										}
-
-										//更新してたら新しいmaxに
-										if (tatenummax[i][iii] + tatenum[i][iii] + ii < tate) {
-											tatenummax[i][iii] = tate - tatenum[i][iii] - ii;
-											tatechk[i] = 2;
-										}
-										ii = tate - tatenummax[i][iii];
-										iii += 1;
-									}
-								}
-
-								iii = 0;
-								for (ii = 0; ii + tatenum[i][1] + 1 < tate; ii++) {
-									if (paint[i][ii] == 1) {
-										if (iii + 1 > tatenum[i][0]) { err = 1; goto errend; }
-										k4 = tatenum[i][0] - iii;
-
-										//minを見ながら黒地を担当できる数字じゃなかったら却下して次の数字へ
-										while (tatenummin[i][k4] > tate - ii - 1) {
-											iii++;
-											k4--;
-											if (iii + 1 > tatenum[i][0]) { err = 1; goto errend; }
-										}
-
-										//更新してたら新しいminに
-										if (tatenummin[i][k4] + tatenum[i][k4] + ii < tate) {
-											tatenummin[i][k4] = tate - tatenum[i][k4] - ii;
-											tatechk[i] = 2;
-										}
-										ii = tate - tatenummin[i][k4];
-										iii += 1;
-									}
-								}
-
-								//minとmaxの調整の両輪、「黒地スキャン」「数字スキャン」を交互に繰り返させているが
-								//繰り返し中に黒地スキャンで変化が無いなら数字スキャンはしなくて良いはずである。
-								//ただし、一回目のスキャンは両方必須。
-								if (i8 > 0 && tatechk[i] == 1) { break; }
-								else { tatechk[i] = 1; }
-
 								//ヒントの数字をスキャンして、縦のminとmaxを調整。
 								for (ii = 0; ii < tatenum[i][0]; ii++) {
 
@@ -2924,6 +2873,58 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										tatechk[i] = 2;
 									}
 								}
+
+								//minとmaxの調整の両輪、「黒地スキャン」「数字スキャン」を交互に繰り返させているが
+								//繰り返し中に黒地スキャンで変化が無いなら数字スキャンはしなくて良いはずである。
+								//ただし、一回目のスキャンは両方必須。
+								if (i8 > 0 && tatechk[i] == 1) { break; }
+								else { tatechk[i] = 1; }
+
+								//黒地をスキャンして、縦のminとmaxを調整
+								iii = 1;
+								for (ii = 0; ii + tatenum[i][tatenum[i][0]] + 1 < tate; ii++) {
+									if (paint[i][tate - ii - 1] == 1) {
+										if (iii > tatenum[i][0]) { err = 1; goto errend; }
+
+										//maxを見ながら黒地を担当できる数字じゃなかったら却下して次の数字へ
+										while (tatenummax[i][iii] > tate - ii - 1) {
+											iii++;
+											if (iii > tatenum[i][0]) { err = 1; goto errend; }
+										}
+
+										//更新してたら新しいmaxに
+										if (tatenummax[i][iii] + tatenum[i][iii] + ii < tate) {
+											tatenummax[i][iii] = tate - tatenum[i][iii] - ii;
+											tatechk[i] = 2;
+										}
+										ii = tate - tatenummax[i][iii];
+										iii += 1;
+									}
+								}
+
+								iii = 0;
+								for (ii = 0; ii + tatenum[i][1] + 1 < tate; ii++) {
+									if (paint[i][ii] == 1) {
+										if (iii + 1 > tatenum[i][0]) { err = 1; goto errend; }
+										k4 = tatenum[i][0] - iii;
+
+										//minを見ながら黒地を担当できる数字じゃなかったら却下して次の数字へ
+										while (tatenummin[i][k4] > tate - ii - 1) {
+											iii++;
+											k4--;
+											if (iii + 1 > tatenum[i][0]) { err = 1; goto errend; }
+										}
+
+										//更新してたら新しいminに
+										if (tatenummin[i][k4] + tatenum[i][k4] + ii < tate) {
+											tatenummin[i][k4] = tate - tatenum[i][k4] - ii;
+											tatechk[i] = 2;
+										}
+										ii = tate - tatenummin[i][k4];
+										iii += 1;
+									}
+								}
+
 							}
 
 							//やっと黒地を塗る
@@ -2983,7 +2984,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 									k3 = i6;
 									k4 = 0;
 									for (iii = 0; iii < tatenum[i][0]; iii++) {
-										if (tatenummin[i][iii + 1] < ii + 1 && tatenummax[i][iii + 1] < i8) {
+										if (tatenummin[i][iii + 1] < ii + 1 && tatenummax[i][iii + 1] < i8 - i6 + 1) {
 											k4++;
 											if (k1 > tatenum[i][iii + 1] && i6 < tatenum[i][iii + 1] + 1) {
 												k1 = tatenum[i][iii + 1];
