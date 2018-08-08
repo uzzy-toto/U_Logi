@@ -2290,14 +2290,26 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 											paintkoma[i8][i6] = paint[i8][i6];
 										}
 										for (i8 = 1; i8 < yokonum[i6][0] + 1; i8++) {
-											yokonumkomamin[i6][i8] = yokonummin[i6][i8];
-											yokonumkomamax[i6][i8] = yokonummax[i6][i8];
+											if (yokonummin[i6][i8] + yokonummax[i6][i8] + yokonum[i6][i8] == yoko) {
+												yokonumkomamin[i6][i8] = yokonummin[i6][i8];
+												yokonumkomamax[i6][i8] = yokonummax[i6][i8];
+											}
+											else {
+												yokonumkomamin[i6][i8] = 0;
+												yokonumkomamax[i6][i8] = 0;
+											}
 										}
 									}
 									for (i6 = 0; i6 < yoko; i6++) {
 										for (i8 = 1; i8 < tatenum[i6][0] + 1; i8++) {
-											tatenumkomamin[i6][i8] = tatenummin[i6][i8];
-											tatenumkomamax[i6][i8] = tatenummax[i6][i8];
+											if (tatenummin[i6][i8] + tatenummax[i6][i8] + tatenum[i6][i8] == tate) {
+												tatenumkomamin[i6][i8] = tatenummin[i6][i8];
+												tatenumkomamax[i6][i8] = tatenummax[i6][i8];
+											}
+											else {
+												tatenumkomamin[i6][i8] = 0;
+												tatenumkomamax[i6][i8] = 0;
+											}
 										}
 									}
 								}
@@ -2736,7 +2748,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										for (iii = 0; iii + i6 < k1; iii++) {
 											if (paint[i8 - i6 - iii - 1][i] > 9) {
 												while (i6 + iii < k1) {
-													if (paint[i8][i] == 0 && 0 < ii) {
+													if (paint[i8][i] == 0) {
 														paint[i8][i] = 1;
 														tatechk[i8] = 2;
 														tatechk2[i8] = 1;
@@ -2750,7 +2762,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										for (iii = 0; iii + i6 < k1; iii++) {
 											if (paint[i8 + iii][i] > 9) {
 												while (i6 + iii < k1) {
-													if (paint[i8 - i6 - 1][i] == 0 && yoko > ii + i6) {
+													if (paint[i8 - i6 - 1][i] == 0) {
 														paint[i8 - i6 - 1][i] = 1;
 														tatechk[i8 - i6 - 1] = 2;
 														tatechk2[i8 - i6 - 1] = 1;
@@ -2762,12 +2774,12 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 
 										//候補の数字の最大値が黒地の長さと等しければ、
 										//どの数字かはわからないが長さは確定し黒地を×ではさめる
-										if (k2 == i6 && paint[i8][i] == 0 && 0 < ii) {
+										if (k2 == i6 && paint[i8][i] == 0) {
 											paint[i8][i] = 10;
 											tatechk[i8] = 2;
 											tatechk2[i8] = 1;
 										}
-										if (k3 == i6 && paint[i8 - i6 - 1][i] == 0 && ii + i6 < yoko) {
+										if (k3 == i6 && paint[i8 - i6 - 1][i] == 0) {
 											paint[i8 - i6 - 1][i] = 10;
 											tatechk[i8 - i6 - 1] = 2;
 											tatechk2[i8 - i6 - 1] = 1;
@@ -3020,7 +3032,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										for (iii = 0; iii + i6 < k1; iii++) {
 											if (paint[i][i8 - i6 - iii - 1] > 9) {
 												while (i6 + iii < k1) {
-													if (paint[i][i8] == 0 && 0 < ii) {
+													if (paint[i][i8] == 0) {
 														paint[i][i8] = 1;
 														yokochk[i8] = 2;
 														yokochk2[i8] = 1;
@@ -3034,7 +3046,7 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 										for (iii = 0; iii + i6 < k1; iii++) {
 											if (paint[i][i8 + iii] > 9) {
 												while (i6 + iii < k1) {
-													if (paint[i][i8 - i6 - 1] == 0 && tate > ii + i6) {
+													if (paint[i][i8 - i6 - 1] == 0) {
 														paint[i][i8 - i6 - 1] = 1;
 														yokochk[i8 - i6 - 1] = 2;
 														yokochk2[i8 - i6 - 1] = 1;
@@ -3046,12 +3058,12 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 
 										//候補の数字の最大値が黒地の長さと等しければ、
 										//どの数字かはわからないが長さは確定し黒地を×ではさめる
-										if (k2 == i6 && paint[i][i8] == 0 && 0 < ii) {
+										if (k2 == i6 && paint[i][i8] == 0) {
 											paint[i][i8] = 10;
 											yokochk[i8] = 2;
 											yokochk2[i8] = 1;
 										}
-										if (k3 == i6 && paint[i][i8 - i6 - 1] == 0 && ii + i6 < tate) {
+										if (k3 == i6 && paint[i][i8 - i6 - 1] == 0) {
 											paint[i][i8 - i6 - 1] = 10;
 											yokochk[i8 - i6 - 1] = 2;
 											yokochk2[i8 - i6 - 1] = 1;
