@@ -2689,19 +2689,21 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 
 									//min方向に敷き詰める
 									k2 = 1;
+									k3 = yoko - yokonummin[i][ii + 1];
 									while (k2 != 0) {
 										k1 = 0;
-										if (paint[yoko - yokonummin[i][ii + 1] - k1][i] == 1 && yokonummin[i][ii + 1] > 0) { k1 += 1; }
-										if (paint[yoko - yokonummin[i][ii + 1] - yokonum[i][ii + 1] - k1 - 1][i] == 1 && yoko > yokonummin[i][ii + 1] + yokonum[i][ii + 1] + k1) {
+										if (paint[k3 - k1][i] == 1 && yokonummin[i][ii + 1] > 0) { k1 += 1; }
+										if (paint[k3 - yokonum[i][ii + 1] - k1 - 1][i] == 1 && k3 > yokonum[i][ii + 1] + k1) {
 											k2 = k1 + 1;
 										}
 										else { k2 = k1; }
-										for (iii = 0; iii < yokonum[i][ii + 1]; iii++) {
-											if (paint[yoko - yokonummin[i][ii + 1] - iii - k1 - 1][i] > 9) { k2 = k1 + iii + 1; }
+										for (iii = yokonum[i][ii + 1] - 1; iii >= 0; iii--) {
+											if (paint[k3 - iii - k1 - 1][i] > 9) { k2 = k1 + iii + 1; break; }
 										}
-										if (yokonummin[i][ii + 1] + k2 + yokonummax[i][ii + 1] + yokonum[i][ii + 1] > yoko) { err = 1; goto errend; }
+										if (k2 + yokonummax[i][ii + 1] + yokonum[i][ii + 1] > k3) { err = 1; goto errend; }
 										if (k2 > 0) {
 											yokonummin[i][ii + 1] += k2;
+											k3 -= k2;
 											yokochk[i] = 2;
 										}
 									}
@@ -2720,8 +2722,8 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 											k2 = k1 + 1;
 										}
 										else { k2 = k1; }
-										for (iii = 0; iii < yokonum[i][k4]; iii++) {
-											if (paint[yokonummax[i][k4] + iii + k1][i] > 9) { k2 = k1 + iii + 1; }
+										for (iii = yokonum[i][k4] - 1; iii >= 0 ; iii--) {
+											if (paint[yokonummax[i][k4] + iii + k1][i] > 9) { k2 = k1 + iii + 1; break; }
 										}
 										if (yokonummin[i][k4] + k2 + yokonummax[i][k4] + yokonum[i][k4] > yoko) { err = 1; goto errend; }
 										if (k2 > 0) {
@@ -2971,19 +2973,21 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 
 									//min方向に敷き詰める
 									k2 = 1;
+									k3 = tate - tatenummin[i][ii + 1];
 									while (k2 != 0) {
 										k1 = 0;
-										if (paint[i][tate - tatenummin[i][ii + 1] - k1] == 1 && tatenummin[i][ii + 1] > 0) { k1 += 1; }
-										if (paint[i][tate - tatenummin[i][ii + 1] - tatenum[i][ii + 1] - 1 - k1] == 1 && tate > tatenummin[i][ii + 1] + tatenum[i][ii + 1] + k1) {
+										if (paint[i][k3 - k1] == 1 && tatenummin[i][ii + 1] > 0) { k1 += 1; }
+										if (paint[i][k3 - tatenum[i][ii + 1] - 1 - k1] == 1 && k3 > tatenum[i][ii + 1] + k1) {
 											k2 = k1 + 1;
 										}
 										else { k2 = k1; }
-										for (iii = 0; iii < tatenum[i][ii + 1]; iii++) {
-											if (paint[i][tate - tatenummin[i][ii + 1] - iii - 1 - k1] > 9) { k2 = k1 + iii + 1; }
+										for (iii = tatenum[i][ii + 1] - 1; iii >= 0; iii--) {
+											if (paint[i][k3 - iii - 1 - k1] > 9) { k2 = k1 + iii + 1; break; }
 										}
-										if (tatenummin[i][ii + 1] + k2 + tatenummax[i][ii + 1] + tatenum[i][ii + 1] > tate) { err = 1; goto errend; }
+										if (k2 + tatenummax[i][ii + 1] + tatenum[i][ii + 1] > k3) { err = 1; goto errend; }
 										if (k2 > 0) {
 											tatenummin[i][ii + 1] += k2;
+											k3 -= k2;
 											tatechk[i] = 2;
 										}
 									}
@@ -3002,8 +3006,8 @@ private: System::Void backgroundWorker1_DoWork(System::Object^  sender, System::
 											k2 = k1 + 1;
 										}
 										else { k2 = k1; }
-										for (iii = 0; iii < tatenum[i][k4]; iii++) {
-											if (paint[i][tatenummax[i][k4] + iii + k1] > 9) { k2 = k1 + iii + 1; }
+										for (iii = tatenum[i][k4] - 1; iii >= 0; iii--) {
+											if (paint[i][tatenummax[i][k4] + iii + k1] > 9) { k2 = k1 + iii + 1; break; }
 										}
 										if (tatenummin[i][k4] + k2 + tatenummax[i][k4] + tatenum[i][k4] > tate) { err = 1;  goto errend; }
 										if (k2 > 0) {
@@ -3316,11 +3320,11 @@ theend:
 	if (tuyogari == 2) {
 		w += L"この味は！・・・複数解の『味』だぜ　(下に複数解を表示します)\n\n";
 	}
-	else if (err == 1) {
-		w += L"矛盾発生？何かがおかしいです。\n";
-	}
 	else if (backgroundWorker1->CancellationPending) {
 		w += L"計算強制終了\n";
+	}
+	else if (err == 1) {
+		w += L"矛盾発生？何かがおかしいです。\n";
 	}
 	else if (i == yoko * tate) {
 		w += L"計算完了！複数解なし！\n計算時間 " + timer2.ToString() + L"秒\n" ;
