@@ -7,7 +7,7 @@ U_Logiは31歳にもなってプログラミングを始めてみた男の三週
 解く部分に関しては予想より良い出来栄えとなったので軽い気持ちで公開してみることにしました。  
 （追記：自分でもどうコンパイルしてるのか覚えてないレベルなので公開になっていない。）  
 Releasesにzip化された実行ファイルがあるのでご利用ください。  
-（追記：Releasesってココだよ！https://github.com/uzzy-toto/U_Logi/releases）
+（追記：Releasesってココだよ！https://github.com/uzzy-toto/U_Logi/releases
 
 ソフトの特徴は、恐ろしいほどの解答力と、最底辺のクソコードです。
 
